@@ -20,7 +20,7 @@ postsubmits:
         - build
         - racetest
         - binaries-test
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -40,63 +40,6 @@ postsubmits:
       - name: build-cache-pvc
         persistentVolumeClaim:
           claimName: build-cache-claim
-  - annotations:
-      testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio_postsubmit
-      testgrid-num-failures-to-alert: "1"
-    branches:
-    - ^master$
-    decorate: true
-    name: cache-experiment_istio_postsubmit
-    path_alias: istio.io/istio
-    skip_report: true
-    spec:
-      containers:
-      - command:
-        - entrypoint
-        - prow/integ-suite-kind.sh
-        - test.integration.conformance.kube.presubmit
-        env:
-        - name: TEST_SELECT
-          value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
-        name: ""
-        resources:
-          limits:
-            memory: 24Gi
-          requests:
-            cpu: "5"
-            memory: 3Gi
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /home/prow/go/pkg
-          name: build-cache-pvc
-          subPath: gomod
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-          readOnly: true
-        - mountPath: /var/lib/docker
-          name: docker-root
-      nodeSelector:
-        testing: test-pool
-      volumes:
-      - name: build-cache-pvc
-        persistentVolumeClaim:
-          claimName: build-cache-claim
-      - hostPath:
-          path: /lib/modules
-          type: Directory
-        name: modules
-      - hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-        name: cgroup
-      - emptyDir: {}
-        name: docker-root
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
       testgrid-dashboards: istio_istio_postsubmit
@@ -113,7 +56,7 @@ postsubmits:
       - command:
         - entrypoint
         - prow/release-commit.sh
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -145,7 +88,7 @@ postsubmits:
           value: distroless
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -195,7 +138,7 @@ postsubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -231,7 +174,7 @@ postsubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -281,7 +224,7 @@ postsubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -331,7 +274,7 @@ postsubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -381,7 +324,7 @@ postsubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -431,57 +374,7 @@ postsubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
-        name: ""
-        resources:
-          limits:
-            memory: 24Gi
-          requests:
-            cpu: "5"
-            memory: 3Gi
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-          readOnly: true
-        - mountPath: /var/lib/docker
-          name: docker-root
-      nodeSelector:
-        testing: test-pool
-      volumes:
-      - hostPath:
-          path: /lib/modules
-          type: Directory
-        name: modules
-      - hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-        name: cgroup
-      - emptyDir: {}
-        name: docker-root
-  - annotations:
-      testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio_postsubmit
-      testgrid-num-failures-to-alert: "1"
-    branches:
-    - ^master$
-    decorate: true
-    name: integ-conformance-k8s-tests_istio_postsubmit
-    path_alias: istio.io/istio
-    spec:
-      containers:
-      - command:
-        - entrypoint
-        - prow/integ-suite-kind.sh
-        - test.integration.conformance.kube
-        env:
-        - name: TEST_SELECT
-          value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -530,14 +423,14 @@ postsubmits:
         - entrypoint
         - prow/integ-suite-kind.sh
         - --node-image
-        - kindest/node:v1.15.7
+        - kindest/node:v1.15.11
         - test.integration.kube.presubmit
         env:
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -586,14 +479,14 @@ postsubmits:
         - entrypoint
         - prow/integ-suite-kind.sh
         - --node-image
-        - kindest/node:v1.16.4
+        - kindest/node:v1.16.9
         - test.integration.kube.presubmit
         env:
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -642,12 +535,12 @@ postsubmits:
         - entrypoint
         - prow/integ-suite-kind.sh
         - --node-image
-        - kindest/node:v1.17.2
+        - kindest/node:v1.17.5
         - test.integration.kube.presubmit
         env:
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -702,7 +595,7 @@ postsubmits:
         env:
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -754,7 +647,7 @@ presubmits:
         - build
         - racetest
         - binaries-test
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -774,63 +667,6 @@ presubmits:
       - name: build-cache-pvc
         persistentVolumeClaim:
           claimName: build-cache-claim
-  - always_run: true
-    annotations:
-      testgrid-dashboards: istio_istio
-    branches:
-    - ^master$
-    decorate: true
-    name: cache-experiment_istio
-    optional: true
-    path_alias: istio.io/istio
-    skip_report: true
-    spec:
-      containers:
-      - command:
-        - entrypoint
-        - prow/integ-suite-kind.sh
-        - test.integration.conformance.kube.presubmit
-        env:
-        - name: TEST_SELECT
-          value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
-        name: ""
-        resources:
-          limits:
-            memory: 24Gi
-          requests:
-            cpu: "5"
-            memory: 3Gi
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /home/prow/go/pkg
-          name: build-cache-pvc
-          subPath: gomod
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-          readOnly: true
-        - mountPath: /var/lib/docker
-          name: docker-root
-      nodeSelector:
-        testing: test-pool
-      volumes:
-      - name: build-cache-pvc
-        persistentVolumeClaim:
-          claimName: build-cache-claim
-      - hostPath:
-          path: /lib/modules
-          type: Directory
-        name: modules
-      - hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-        name: cgroup
-      - emptyDir: {}
-        name: docker-root
   - always_run: true
     annotations:
       testgrid-dashboards: istio_istio
@@ -846,7 +682,7 @@ presubmits:
       - command:
         - entrypoint
         - prow/release-test.sh
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -875,7 +711,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -924,7 +760,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -973,7 +809,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -1022,7 +858,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -1071,7 +907,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -1122,7 +958,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,+multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -1173,56 +1009,7 @@ presubmits:
           value: distroless
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
-        name: ""
-        resources:
-          limits:
-            memory: 24Gi
-          requests:
-            cpu: "5"
-            memory: 3Gi
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-          readOnly: true
-        - mountPath: /var/lib/docker
-          name: docker-root
-      nodeSelector:
-        testing: test-pool
-      volumes:
-      - hostPath:
-          path: /lib/modules
-          type: Directory
-        name: modules
-      - hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-        name: cgroup
-      - emptyDir: {}
-        name: docker-root
-  - always_run: true
-    annotations:
-      testgrid-dashboards: istio_istio
-    branches:
-    - ^master$
-    decorate: true
-    name: integ-conformance-k8s-tests_istio
-    path_alias: istio.io/istio
-    spec:
-      containers:
-      - command:
-        - entrypoint
-        - prow/integ-suite-kind.sh
-        - test.integration.conformance.kube.presubmit
-        env:
-        - name: TEST_SELECT
-          value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -1273,7 +1060,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -1322,7 +1109,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -1353,7 +1140,7 @@ presubmits:
       - command:
         - make
         - lint
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -1378,7 +1165,7 @@ presubmits:
       - command:
         - make
         - gen-check
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+        image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
         name: ""
         resources:
           limits:
@@ -1390,46 +1177,3 @@ presubmits:
           privileged: true
       nodeSelector:
         testing: test-pool
-  - always_run: true
-    annotations:
-      testgrid-dashboards: istio_istio
-    branches:
-    - ^master$
-    decorate: true
-    extra_refs:
-    - base_ref: master
-      org: istio
-      path_alias: istio.io/test-infra
-      repo: test-infra
-    name: update-ref-docs-dry-run_istio
-    optional: true
-    path_alias: istio.io/istio
-    spec:
-      containers:
-      - command:
-        - ../test-infra/tools/automator/automator.sh
-        - --org=istio
-        - --repo=istio.io
-        - --token-path=/etc/github-token/oauth
-        - --cmd=make update_ref_docs
-        - --dry-run
-        image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
-        name: ""
-        resources:
-          limits:
-            memory: 24Gi
-          requests:
-            cpu: "5"
-            memory: 3Gi
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /etc/github-token
-          name: github
-          readOnly: true
-      nodeSelector:
-        testing: test-pool
-      volumes:
-      - name: github
-        secret:
-          secretName: oauth-token

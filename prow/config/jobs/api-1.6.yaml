@@ -1,6 +1,6 @@
 branches:
 - release-1.6
-image: gcr.io/istio-testing/build-tools:release-1.6-2020-05-01T18-02-13
+image: gcr.io/istio-testing/build-tools:release-1.6-2020-05-04T23-39-13
 jobs:
 - command:
   - make
@@ -21,7 +21,7 @@ jobs:
   - --cmd=go get istio.io/api@$AUTOMATOR_SHA && go mod tidy && make gen
   name: update_api_dep
   repos:
-  - istio/test-infra
+  - istio/test-infra@master
   requirements:
   - github
   type: postsubmit

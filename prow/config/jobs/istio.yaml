@@ -1,20 +1,12 @@
 org: istio
 repo: istio
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
 
 jobs:
   - name: unit-tests
     requirements: [cache]
     command: [entrypoint, make, -e, "T=-v", build, racetest, binaries-test]
-
-  - name: cache-experiment
-    requirements: [cache, kind]
-    modifiers: [optional, hidden]
-    command: [entrypoint, prow/integ-suite-kind.sh, test.integration.conformance.kube.presubmit]
-    env:
-      - name: TEST_SELECT
-        value: "-postsubmit,-flaky,-multicluster"
 
   - name: release-test
     type: presubmit
@@ -100,14 +92,6 @@ jobs:
   #     - name: TEST_SELECT
   #       value: "-multicluster"
 
-  - name: integ-conformance-k8s-tests
-    type: presubmit
-    command: [entrypoint, prow/integ-suite-kind.sh, test.integration.conformance.kube.presubmit]
-    requirements: [kind]
-    env:
-      - name: TEST_SELECT
-        value: "-postsubmit,-flaky,-multicluster"
-
   - name: integ-operator-controller-tests
     type: presubmit
     command: [entrypoint, prow/integ-suite-kind.sh, test.integration.operator.kube.presubmit]
@@ -164,14 +148,6 @@ jobs:
       - name: TEST_SELECT
         value: "-multicluster"
 
-  - name: integ-conformance-k8s-tests
-    type: postsubmit
-    command: [entrypoint, prow/integ-suite-kind.sh, test.integration.conformance.kube]
-    requirements: [kind]
-    env:
-      - name: TEST_SELECT
-        value: "-multicluster"
-
     # The node image must be kept in sync with the kind version we use.
     # See docker/istio/shared/tools/install-golang.sh for the kind image
     # https://github.com/kubernetes-sigs/kind/releases for node corresponding node image
@@ -181,7 +157,7 @@ jobs:
       - entrypoint
       - prow/integ-suite-kind.sh
       - --node-image
-      - kindest/node:v1.15.7
+      - kindest/node:v1.15.11
       - test.integration.kube.presubmit
     requirements: [kind]
     timeout: 4h
@@ -197,7 +173,7 @@ jobs:
       - entrypoint
       - prow/integ-suite-kind.sh
       - --node-image
-      - kindest/node:v1.16.4
+      - kindest/node:v1.16.9
       - test.integration.kube.presubmit
     requirements: [kind]
     timeout: 4h
@@ -213,7 +189,7 @@ jobs:
       - entrypoint
       - prow/integ-suite-kind.sh
       - --node-image
-      - kindest/node:v1.17.2
+      - kindest/node:v1.17.5
       - test.integration.kube.presubmit
     requirements: [kind]
     timeout: 4h
@@ -244,19 +220,6 @@ jobs:
   - name: gencheck
     type: presubmit
     command: [make, gen-check]
-
-  - name: update-ref-docs-dry-run
-    type: presubmit
-    command:
-    - ../test-infra/tools/automator/automator.sh
-    - --org=istio
-    - --repo=istio.io
-    - --token-path=/etc/github-token/oauth
-    - --cmd=make update_ref_docs
-    - --dry-run
-    requirements: [github]
-    modifiers: [optional]
-    repos: [istio/test-infra]
 
 resources:
   default:

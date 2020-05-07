@@ -1,7 +1,7 @@
 
 
 istio_container_with_kind: &istio_container_with_kind
-  image: gcr.io/istio-testing/build-tools:master-2020-04-28T21-48-12
+  image: gcr.io/istio-testing/build-tools:master-2020-05-04T23-19-43
   securityContext:
     privileged: true
   resources:
@@ -35,9 +35,9 @@ periodics:
   name: daily-performance-benchmark
   branches: master
   decorate: true
-  timeout: 12h
+  timeout: 24h
   decoration_config:
-    timeout: 12h0m0s
+    timeout: 24h0m0s
   extra_refs:
     - org: istio
       repo: tools
@@ -62,16 +62,16 @@ periodics:
       testing: test-pool
 
 - cron: "0 8 * * *" # starts every day at 08:00AM UTC
-  name: daily-performance-benchmark-release-1.5
-  branches: release-1.5
+  name: daily-performance-benchmark-release-1.6
+  branches: release-1.6
   decorate: true
-  timeout: 12h
+  timeout: 24h
   decoration_config:
-    timeout: 12h0m0s
+    timeout: 24h0m0s
   extra_refs:
     - org: istio
       repo: tools
-      base_ref: release-1.5
+      base_ref: release-1.6
       path_alias: istio.io/tools
   annotations:
     testgrid-dashboards: istio_release-pipeline
@@ -84,16 +84,16 @@ periodics:
       - <<: *istio_container_with_kind
         env:
           - name: GIT_BRANCH
-            value: release-1.5
+            value: release-1.6
         command:
           - entrypoint
           - perf/benchmark/run_benchmark_job.sh
     nodeSelector:
       testing: test-pool
 
-# upgrade using istioctl from 1.4 latest to 1.5 latest
+# upgrade using istioctl from 1.5 latest to 1.6 latest
 - cron: "0 4 * * *"  # starts every day at 04:00AM UTC
-  name: istio-upgrade-using-istioctl-1.4_latest-1.5_latest
+  name: istio-upgrade-using-istioctl-1.5_latest-1.6_latest
   branches: master
   decorate: true
   extra_refs:
@@ -112,9 +112,9 @@ periodics:
       - <<: *istio_container_with_kind
         env:
           - name: SOURCE_TAG
-            value: 1.4_latest
-          - name: TARGET_TAG
             value: 1.5_latest
+          - name: TARGET_TAG
+            value: 1.6_latest
           - name: INSTALL_OPTIONS
             value: istioctl
         command:
@@ -123,9 +123,9 @@ periodics:
     nodeSelector:
       testing: test-pool
 
-# upgrade using istioctl from 1.5 latest to master
+# upgrade using istioctl from 1.6 latest to master
 - cron: "0 8 * * *"  # starts every day at 08:00AM UTC
-  name: istio-upgrade-using-istioctl-1.5_latest-master
+  name: istio-upgrade-using-istioctl-1.6_latest-master
   branches: master
   decorate: true
   extra_refs:
@@ -144,7 +144,7 @@ periodics:
       - <<: *istio_container_with_kind
         env:
           - name: SOURCE_TAG
-            value: 1.5_latest
+            value: 1.6_latest
           - name: TARGET_TAG
             value: master
           - name: INSTALL_OPTIONS
