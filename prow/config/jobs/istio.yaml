@@ -123,6 +123,19 @@ jobs:
       - name: TEST_SELECT
         value: "-multicluster"
 
+  - name: integ-pilot-multicluster-tests
+    command:
+      - entrypoint
+      - prow/integ-suite-kind.sh
+      - --topology
+      - MULTICLUSTER
+      - test.integration.pilot.kube
+    requirements: [kind]
+    modifiers: [optional, hidden, skipped]
+    env:
+      - name: TEST_SELECT
+        value: "-multicluster"
+
   - name: integ-security-k8s-tests
     type: postsubmit
     command: [entrypoint, prow/integ-suite-kind.sh, test.integration.security.kube]
@@ -155,8 +168,6 @@ jobs:
     env:
       - name: INTEGRATION_TEST_FLAGS
         value: " --istio.test.retries=1 "
-      - name: TEST_SELECT
-        value: "-multicluster"
 
   - name: integ-k8s-117
     type: postsubmit
