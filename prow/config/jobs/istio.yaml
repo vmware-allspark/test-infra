@@ -1,7 +1,7 @@
 org: istio
 repo: istio
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
 
 jobs:
   - name: unit-tests
@@ -16,6 +16,19 @@ jobs:
     type: postsubmit
     command: [entrypoint, prow/release-commit.sh]
     requirements: [gcp, docker]
+
+  - name: benchmark
+    type: presubmit
+    modifiers: [optional, skipped, hidden]
+    command: [entrypoint, make, benchtest]
+    resources: benchmark
+
+  - name: benchmark-report
+    type: postsubmit
+    modifiers: [hidden]
+    command: [entrypoint, make, benchtest, report-benchtest]
+    requirements: [gcp]
+    resources: benchmark
 
   - name: integ-galley-k8s-tests
     type: presubmit
@@ -218,3 +231,11 @@ resources:
       cpu: "3000m"
     limits:
       memory: "24Gi"
+  # Give Guaranteed QOS for consistency in the benchmarks
+  benchmark:
+    requests:
+      memory: "8Gi"
+      cpu: "8000m"
+    limits:
+      memory: "8Gi"
+      cpu: "8000m"

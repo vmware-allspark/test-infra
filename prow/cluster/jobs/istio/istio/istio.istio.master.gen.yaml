@@ -20,7 +20,7 @@ postsubmits:
         - build
         - racetest
         - binaries-test
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -48,7 +48,7 @@ postsubmits:
       - command:
         - entrypoint
         - prow/release-commit.sh
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -73,6 +73,38 @@ postsubmits:
     branches:
     - ^master$
     decorate: true
+    labels:
+      preset-service-account: "true"
+    name: benchmark-report_istio_postsubmit
+    path_alias: istio.io/istio
+    skip_report: true
+    spec:
+      containers:
+      - command:
+        - entrypoint
+        - make
+        - benchtest
+        - report-benchtest
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
+        name: ""
+        resources:
+          limits:
+            cpu: "8"
+            memory: 8Gi
+          requests:
+            cpu: "8"
+            memory: 8Gi
+        securityContext:
+          privileged: true
+      nodeSelector:
+        testing: test-pool
+  - annotations:
+      testgrid-alert-email: istio-oncall@googlegroups.com
+      testgrid-dashboards: istio_istio_postsubmit
+      testgrid-num-failures-to-alert: "1"
+    branches:
+    - ^master$
+    decorate: true
     name: integ-distroless-k8s-tests_istio_postsubmit
     path_alias: istio.io/istio
     spec:
@@ -86,7 +118,7 @@ postsubmits:
           value: distroless
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -140,7 +172,7 @@ postsubmits:
           value: ipv6
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -190,7 +222,7 @@ postsubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -240,7 +272,7 @@ postsubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -290,7 +322,7 @@ postsubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -343,7 +375,7 @@ postsubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -393,7 +425,7 @@ postsubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -443,7 +475,7 @@ postsubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -497,7 +529,7 @@ postsubmits:
         env:
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -551,7 +583,7 @@ postsubmits:
         env:
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -605,7 +637,7 @@ postsubmits:
         env:
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -657,7 +689,7 @@ presubmits:
         - build
         - racetest
         - binaries-test
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -684,7 +716,7 @@ presubmits:
       - command:
         - entrypoint
         - prow/release-test.sh
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -702,6 +734,35 @@ presubmits:
       volumes:
       - emptyDir: {}
         name: docker-root
+  - always_run: false
+    annotations:
+      testgrid-dashboards: istio_istio
+    branches:
+    - ^master$
+    decorate: true
+    name: benchmark_istio
+    optional: true
+    path_alias: istio.io/istio
+    skip_report: true
+    spec:
+      containers:
+      - command:
+        - entrypoint
+        - make
+        - benchtest
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
+        name: ""
+        resources:
+          limits:
+            cpu: "8"
+            memory: 8Gi
+          requests:
+            cpu: "8"
+            memory: 8Gi
+        securityContext:
+          privileged: true
+      nodeSelector:
+        testing: test-pool
   - always_run: true
     annotations:
       testgrid-dashboards: istio_istio
@@ -719,7 +780,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -768,7 +829,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -817,7 +878,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -866,7 +927,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -915,7 +976,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -966,7 +1027,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,+multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -1017,7 +1078,7 @@ presubmits:
           value: distroless
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -1070,7 +1131,7 @@ presubmits:
           value: ipv6
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -1119,7 +1180,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -1172,7 +1233,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -1217,7 +1278,7 @@ presubmits:
       - command:
         - make
         - lint
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
@@ -1242,7 +1303,7 @@ presubmits:
       - command:
         - make
         - gen-check
-        image: gcr.io/istio-testing/build-tools:master-2020-07-08T14-39-36
+        image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
         name: ""
         resources:
           limits:
