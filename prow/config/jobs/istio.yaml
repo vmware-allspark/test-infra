@@ -1,7 +1,7 @@
 org: istio
 repo: istio
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools:master-2020-07-10T02-22-20
+image: gcr.io/istio-testing/build-tools:master-2020-07-13T16-10-49
 
 jobs:
   - name: unit-tests
@@ -200,7 +200,7 @@ jobs:
       - entrypoint
       - prow/integ-suite-kind.sh
       - --node-image
-      - gcr.io/istio-testing/kind-node:v1.19.0-beta.1
+      - gcr.io/istio-testing/kind-node:v1.19.0-rc.1
       - test.integration.kube.presubmit
     requirements: [kind]
     timeout: 4h
