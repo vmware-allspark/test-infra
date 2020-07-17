@@ -1,7 +1,7 @@
 org: istio
 repo: istio
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools:master-2020-07-13T16-10-49
+image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
 
 jobs:
   - name: unit-tests
@@ -244,11 +244,10 @@ resources:
       cpu: "3000m"
     limits:
       memory: "24Gi"
-  # Give Guaranteed QOS for consistency in the benchmarks
+  # Give 15 CPUs which will put us on a dedicate node, for consistency
   benchmark:
     requests:
       memory: "8Gi"
-      cpu: "8000m"
+      cpu: "15000m"
     limits:
       memory: "24Gi"
-      cpu: "8000m"
