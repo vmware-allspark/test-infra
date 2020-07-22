@@ -5,7 +5,7 @@ plank:
     '*': https://prow.istio.io/view/gcs/
     istio-private: https://prow-private.istio.io/view/gcs/
   pod_pending_timeout: 15m
-  pod_unscheduled_timeout: 5m
+  pod_unscheduled_timeout: 30m
   default_decoration_configs:
     '*':
       timeout: 2h
@@ -188,6 +188,11 @@ branch-protection:
               restrictions:
                 teams:
                 - release-managers-1.6
+            release-1.7: &release17
+              protect: true
+              restrictions:
+                teams:
+                - release-managers-1.7
         operator:
           branches: *blocked_branches
         istio.io:
@@ -247,6 +252,8 @@ branch-protection:
               <<: *release15
             release-1.6:
               <<: *release16
+            release-1.7:
+              <<: *release17
         proxy:
           branches:
             <<: *blocked_branches

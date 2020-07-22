@@ -3,19 +3,19 @@ postsubmits:
   istio/release-builder:
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_release-1.4_release-builder_postsubmit
+      testgrid-dashboards: istio_release-1.7_release-builder_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^release-1.4$
+    - ^release-1.7$
     decorate: true
-    name: lint_release-builder_release-1.4_postsubmit
+    name: lint_release-builder_release-1.7_postsubmit
     path_alias: istio.io/release-builder
     spec:
       containers:
       - command:
         - make
         - lint
-        image: gcr.io/istio-testing/build-tools:release-1.4-2020-02-14T15-30-45
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -39,19 +39,19 @@ postsubmits:
         name: build-cache
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_release-1.4_release-builder_postsubmit
+      testgrid-dashboards: istio_release-1.7_release-builder_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^release-1.4$
+    - ^release-1.7$
     decorate: true
-    name: test_release-builder_release-1.4_postsubmit
+    name: test_release-builder_release-1.7_postsubmit
     path_alias: istio.io/release-builder
     spec:
       containers:
       - command:
         - make
         - test
-        image: gcr.io/istio-testing/build-tools:release-1.4-2020-02-14T15-30-45
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -75,19 +75,19 @@ postsubmits:
         name: build-cache
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_release-1.4_release-builder_postsubmit
+      testgrid-dashboards: istio_release-1.7_release-builder_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^release-1.4$
+    - ^release-1.7$
     decorate: true
-    name: gencheck_release-builder_release-1.4_postsubmit
+    name: gencheck_release-builder_release-1.7_postsubmit
     path_alias: istio.io/release-builder
     spec:
       containers:
       - command:
         - make
         - gen-check
-        image: gcr.io/istio-testing/build-tools:release-1.4-2020-02-14T15-30-45
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -111,14 +111,14 @@ postsubmits:
         name: build-cache
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_release-1.4_release-builder_postsubmit
+      testgrid-dashboards: istio_release-1.7_release-builder_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^release-1.4$
+    - ^release-1.7$
     decorate: true
     labels:
       preset-service-account: "true"
-    name: dry-run_release-builder_release-1.4_postsubmit
+    name: dry-run_release-builder_release-1.7_postsubmit
     path_alias: istio.io/release-builder
     run_if_changed: \.go$|\.sh$
     spec:
@@ -126,7 +126,7 @@ postsubmits:
       - command:
         - entrypoint
         - test/publish.sh
-        image: gcr.io/istio-testing/build-tools:release-1.4-2020-02-14T15-30-45
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -141,6 +141,8 @@ postsubmits:
         - mountPath: /home/prow/go/pkg
           name: build-cache
           subPath: gomod
+        - mountPath: /var/lib/docker
+          name: docker-root
       nodeSelector:
         testing: test-pool
       volumes:
@@ -148,16 +150,18 @@ postsubmits:
           path: /tmp/prow/cache
           type: DirectoryOrCreate
         name: build-cache
+      - emptyDir: {}
+        name: docker-root
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_release-1.4_release-builder_postsubmit
+      testgrid-dashboards: istio_release-1.7_release-builder_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^release-1.4$
+    - ^release-1.7$
     decorate: true
     labels:
       preset-release-pipeline: "true"
-    name: build-release_release-builder_release-1.4_postsubmit
+    name: build-release_release-builder_release-1.7_postsubmit
     path_alias: istio.io/release-builder
     run_if_changed: ^release/trigger-build$
     spec:
@@ -165,7 +169,7 @@ postsubmits:
       - command:
         - entrypoint
         - release/build.sh
-        image: gcr.io/istio-testing/build-tools:release-1.4-2020-02-14T15-30-45
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -180,6 +184,8 @@ postsubmits:
         - mountPath: /home/prow/go/pkg
           name: build-cache
           subPath: gomod
+        - mountPath: /var/lib/docker
+          name: docker-root
       nodeSelector:
         testing: test-pool
       volumes:
@@ -187,16 +193,18 @@ postsubmits:
           path: /tmp/prow/cache
           type: DirectoryOrCreate
         name: build-cache
+      - emptyDir: {}
+        name: docker-root
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_release-1.4_release-builder_postsubmit
+      testgrid-dashboards: istio_release-1.7_release-builder_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^release-1.4$
+    - ^release-1.7$
     decorate: true
     labels:
       preset-release-pipeline: "true"
-    name: publish-release_release-builder_release-1.4_postsubmit
+    name: publish-release_release-builder_release-1.7_postsubmit
     path_alias: istio.io/release-builder
     run_if_changed: ^release/trigger-publish$
     spec:
@@ -204,7 +212,7 @@ postsubmits:
       - command:
         - entrypoint
         - release/publish.sh
-        image: gcr.io/istio-testing/build-tools:release-1.4-2020-02-14T15-30-45
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -219,6 +227,8 @@ postsubmits:
         - mountPath: /home/prow/go/pkg
           name: build-cache
           subPath: gomod
+        - mountPath: /var/lib/docker
+          name: docker-root
       nodeSelector:
         testing: test-pool
       volumes:
@@ -226,22 +236,24 @@ postsubmits:
           path: /tmp/prow/cache
           type: DirectoryOrCreate
         name: build-cache
+      - emptyDir: {}
+        name: docker-root
 presubmits:
   istio/release-builder:
   - always_run: true
     annotations:
-      testgrid-dashboards: istio_release-1.4_release-builder
+      testgrid-dashboards: istio_release-1.7_release-builder
     branches:
-    - ^release-1.4$
+    - ^release-1.7$
     decorate: true
-    name: lint_release-builder_release-1.4
+    name: lint_release-builder_release-1.7
     path_alias: istio.io/release-builder
     spec:
       containers:
       - command:
         - make
         - lint
-        image: gcr.io/istio-testing/build-tools:release-1.4-2020-02-14T15-30-45
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -265,18 +277,18 @@ presubmits:
         name: build-cache
   - always_run: true
     annotations:
-      testgrid-dashboards: istio_release-1.4_release-builder
+      testgrid-dashboards: istio_release-1.7_release-builder
     branches:
-    - ^release-1.4$
+    - ^release-1.7$
     decorate: true
-    name: test_release-builder_release-1.4
+    name: test_release-builder_release-1.7
     path_alias: istio.io/release-builder
     spec:
       containers:
       - command:
         - make
         - test
-        image: gcr.io/istio-testing/build-tools:release-1.4-2020-02-14T15-30-45
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -300,18 +312,18 @@ presubmits:
         name: build-cache
   - always_run: true
     annotations:
-      testgrid-dashboards: istio_release-1.4_release-builder
+      testgrid-dashboards: istio_release-1.7_release-builder
     branches:
-    - ^release-1.4$
+    - ^release-1.7$
     decorate: true
-    name: gencheck_release-builder_release-1.4
+    name: gencheck_release-builder_release-1.7
     path_alias: istio.io/release-builder
     spec:
       containers:
       - command:
         - make
         - gen-check
-        image: gcr.io/istio-testing/build-tools:release-1.4-2020-02-14T15-30-45
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -335,13 +347,13 @@ presubmits:
         name: build-cache
   - always_run: false
     annotations:
-      testgrid-dashboards: istio_release-1.4_release-builder
+      testgrid-dashboards: istio_release-1.7_release-builder
     branches:
-    - ^release-1.4$
+    - ^release-1.7$
     decorate: true
     labels:
       preset-service-account: "true"
-    name: dry-run_release-builder_release-1.4
+    name: dry-run_release-builder_release-1.7
     path_alias: istio.io/release-builder
     run_if_changed: \.go$|\.sh$
     spec:
@@ -349,7 +361,7 @@ presubmits:
       - command:
         - entrypoint
         - test/publish.sh
-        image: gcr.io/istio-testing/build-tools:release-1.4-2020-02-14T15-30-45
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -364,6 +376,8 @@ presubmits:
         - mountPath: /home/prow/go/pkg
           name: build-cache
           subPath: gomod
+        - mountPath: /var/lib/docker
+          name: docker-root
       nodeSelector:
         testing: test-pool
       volumes:
@@ -371,13 +385,15 @@ presubmits:
           path: /tmp/prow/cache
           type: DirectoryOrCreate
         name: build-cache
+      - emptyDir: {}
+        name: docker-root
   - always_run: false
     annotations:
-      testgrid-dashboards: istio_release-1.4_release-builder
+      testgrid-dashboards: istio_release-1.7_release-builder
     branches:
-    - ^release-1.4$
+    - ^release-1.7$
     decorate: true
-    name: build-warning_release-builder_release-1.4
+    name: build-warning_release-builder_release-1.7
     optional: true
     path_alias: istio.io/release-builder
     run_if_changed: ^release/trigger-build$
@@ -385,7 +401,7 @@ presubmits:
       containers:
       - command:
         - release/build-warning.sh
-        image: gcr.io/istio-testing/build-tools:release-1.4-2020-02-14T15-30-45
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -409,11 +425,11 @@ presubmits:
         name: build-cache
   - always_run: false
     annotations:
-      testgrid-dashboards: istio_release-1.4_release-builder
+      testgrid-dashboards: istio_release-1.7_release-builder
     branches:
-    - ^release-1.4$
+    - ^release-1.7$
     decorate: true
-    name: publish-warning_release-builder_release-1.4
+    name: publish-warning_release-builder_release-1.7
     optional: true
     path_alias: istio.io/release-builder
     run_if_changed: ^release/trigger-publish$
@@ -421,7 +437,7 @@ presubmits:
       containers:
       - command:
         - release/publish-warning.sh
-        image: gcr.io/istio-testing/build-tools:release-1.4-2020-02-14T15-30-45
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:

@@ -3,12 +3,12 @@ postsubmits:
   istio/istio:
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio_postsubmit
+      testgrid-dashboards: istio_release-1.7_istio_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: unit-tests_istio_postsubmit
+    name: unit-tests_istio_release-1.7_postsubmit
     path_alias: istio.io/istio
     spec:
       containers:
@@ -20,7 +20,7 @@ postsubmits:
         - build
         - racetest
         - binaries-test
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -43,21 +43,21 @@ postsubmits:
         name: build-cache
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio_postsubmit
+      testgrid-dashboards: istio_release-1.7_istio_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
     labels:
       preset-service-account: "true"
-    name: release_istio_postsubmit
+    name: release_istio_release-1.7_postsubmit
     path_alias: istio.io/istio
     spec:
       containers:
       - command:
         - entrypoint
         - prow/release-commit.sh
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -84,14 +84,14 @@ postsubmits:
         name: docker-root
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio_postsubmit
+      testgrid-dashboards: istio_release-1.7_istio_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
     labels:
       preset-service-account: "true"
-    name: benchmark-report_istio_postsubmit
+    name: benchmark-report_istio_release-1.7_postsubmit
     path_alias: istio.io/istio
     spec:
       containers:
@@ -100,7 +100,7 @@ postsubmits:
         - make
         - benchtest
         - report-benchtest
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -123,12 +123,12 @@ postsubmits:
         name: build-cache
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio_postsubmit
+      testgrid-dashboards: istio_release-1.7_istio_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: integ-distroless-k8s-tests_istio_postsubmit
+    name: integ-distroless-k8s-tests_istio_release-1.7_postsubmit
     path_alias: istio.io/istio
     spec:
       containers:
@@ -141,7 +141,7 @@ postsubmits:
           value: distroless
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -182,12 +182,12 @@ postsubmits:
         name: docker-root
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio_postsubmit
+      testgrid-dashboards: istio_release-1.7_istio_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: integ-ipv6-k8s-tests_istio_postsubmit
+    name: integ-ipv6-k8s-tests_istio_release-1.7_postsubmit
     path_alias: istio.io/istio
     spec:
       containers:
@@ -202,7 +202,7 @@ postsubmits:
           value: ipv6
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -243,12 +243,12 @@ postsubmits:
         name: docker-root
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio_postsubmit
+      testgrid-dashboards: istio_release-1.7_istio_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: integ-galley-k8s-tests_istio_postsubmit
+    name: integ-galley-k8s-tests_istio_release-1.7_postsubmit
     path_alias: istio.io/istio
     spec:
       containers:
@@ -259,7 +259,7 @@ postsubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -300,12 +300,69 @@ postsubmits:
         name: docker-root
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio_postsubmit
+      testgrid-dashboards: istio_release-1.7_istio_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: integ-pilot-k8s-tests_istio_postsubmit
+    name: integ-mixer-k8s-tests_istio_release-1.7_postsubmit
+    path_alias: istio.io/istio
+    spec:
+      containers:
+      - command:
+        - entrypoint
+        - prow/integ-suite-kind.sh
+        - test.integration.mixer.kube
+        env:
+        - name: TEST_SELECT
+          value: -multicluster
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
+        name: ""
+        resources:
+          limits:
+            memory: 24Gi
+          requests:
+            cpu: "5"
+            memory: 3Gi
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /home/prow/go/pkg
+          name: build-cache
+          subPath: gomod
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+          readOnly: true
+        - mountPath: /var/lib/docker
+          name: docker-root
+      nodeSelector:
+        testing: test-pool
+      volumes:
+      - hostPath:
+          path: /tmp/prow/cache
+          type: DirectoryOrCreate
+        name: build-cache
+      - hostPath:
+          path: /lib/modules
+          type: Directory
+        name: modules
+      - hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+        name: cgroup
+      - emptyDir: {}
+        name: docker-root
+  - annotations:
+      testgrid-alert-email: istio-oncall@googlegroups.com
+      testgrid-dashboards: istio_release-1.7_istio_postsubmit
+      testgrid-num-failures-to-alert: "1"
+    branches:
+    - ^release-1.7$
+    decorate: true
+    name: integ-pilot-k8s-tests_istio_release-1.7_postsubmit
     path_alias: istio.io/istio
     spec:
       containers:
@@ -316,7 +373,7 @@ postsubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -357,12 +414,12 @@ postsubmits:
         name: docker-root
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio_postsubmit
+      testgrid-dashboards: istio_release-1.7_istio_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: integ-pilot-multicluster-tests_istio_postsubmit
+    name: integ-pilot-multicluster-tests_istio_release-1.7_postsubmit
     path_alias: istio.io/istio
     skip_report: true
     spec:
@@ -376,7 +433,7 @@ postsubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -417,12 +474,12 @@ postsubmits:
         name: docker-root
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio_postsubmit
+      testgrid-dashboards: istio_release-1.7_istio_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: integ-security-k8s-tests_istio_postsubmit
+    name: integ-security-k8s-tests_istio_release-1.7_postsubmit
     path_alias: istio.io/istio
     spec:
       containers:
@@ -433,7 +490,7 @@ postsubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -474,12 +531,12 @@ postsubmits:
         name: docker-root
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio_postsubmit
+      testgrid-dashboards: istio_release-1.7_istio_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: integ-telemetry-k8s-tests_istio_postsubmit
+    name: integ-telemetry-k8s-tests_istio_release-1.7_postsubmit
     path_alias: istio.io/istio
     spec:
       containers:
@@ -490,7 +547,7 @@ postsubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -531,14 +588,14 @@ postsubmits:
         name: docker-root
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio_postsubmit
+      testgrid-dashboards: istio_release-1.7_istio_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
     decoration_config:
       timeout: 4h0m0s
-    name: integ-k8s-116_istio_postsubmit
+    name: integ-k8s-116_istio_release-1.7_postsubmit
     path_alias: istio.io/istio
     spec:
       containers:
@@ -551,7 +608,7 @@ postsubmits:
         env:
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -592,14 +649,14 @@ postsubmits:
         name: docker-root
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio_postsubmit
+      testgrid-dashboards: istio_release-1.7_istio_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
     decoration_config:
       timeout: 4h0m0s
-    name: integ-k8s-117_istio_postsubmit
+    name: integ-k8s-117_istio_release-1.7_postsubmit
     path_alias: istio.io/istio
     spec:
       containers:
@@ -612,7 +669,7 @@ postsubmits:
         env:
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -653,14 +710,14 @@ postsubmits:
         name: docker-root
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio_postsubmit
+      testgrid-dashboards: istio_release-1.7_istio_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
     decoration_config:
       timeout: 4h0m0s
-    name: integ-k8s-119_istio_postsubmit
+    name: integ-k8s-119_istio_release-1.7_postsubmit
     path_alias: istio.io/istio
     spec:
       containers:
@@ -673,7 +730,7 @@ postsubmits:
         env:
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -714,12 +771,12 @@ postsubmits:
         name: docker-root
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio_postsubmit
+      testgrid-dashboards: istio_release-1.7_istio_postsubmit
       testgrid-num-failures-to-alert: "1"
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: install-cni-test_istio_postsubmit
+    name: install-cni-test_istio_release-1.7_postsubmit
     path_alias: istio.io/istio
     skip_report: true
     spec:
@@ -728,7 +785,7 @@ postsubmits:
         - entrypoint
         - make
         - cni.install-test
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -757,11 +814,11 @@ presubmits:
   istio/istio:
   - always_run: true
     annotations:
-      testgrid-dashboards: istio_istio
+      testgrid-dashboards: istio_release-1.7_istio
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: unit-tests_istio
+    name: unit-tests_istio_release-1.7
     path_alias: istio.io/istio
     spec:
       containers:
@@ -773,7 +830,7 @@ presubmits:
         - build
         - racetest
         - binaries-test
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -796,20 +853,20 @@ presubmits:
         name: build-cache
   - always_run: true
     annotations:
-      testgrid-dashboards: istio_istio
+      testgrid-dashboards: istio_release-1.7_istio
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
     labels:
       preset-service-account: "true"
-    name: release-test_istio
+    name: release-test_istio_release-1.7
     path_alias: istio.io/istio
     spec:
       containers:
       - command:
         - entrypoint
         - prow/release-test.sh
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -836,11 +893,11 @@ presubmits:
         name: docker-root
   - always_run: false
     annotations:
-      testgrid-dashboards: istio_istio
+      testgrid-dashboards: istio_release-1.7_istio
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: benchmark_istio
+    name: benchmark_istio_release-1.7
     optional: true
     path_alias: istio.io/istio
     spec:
@@ -849,7 +906,7 @@ presubmits:
         - entrypoint
         - make
         - benchtest
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -872,11 +929,11 @@ presubmits:
         name: build-cache
   - always_run: true
     annotations:
-      testgrid-dashboards: istio_istio
+      testgrid-dashboards: istio_release-1.7_istio
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: integ-galley-k8s-tests_istio
+    name: integ-galley-k8s-tests_istio_release-1.7
     path_alias: istio.io/istio
     spec:
       containers:
@@ -887,7 +944,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -928,11 +985,67 @@ presubmits:
         name: docker-root
   - always_run: true
     annotations:
-      testgrid-dashboards: istio_istio
+      testgrid-dashboards: istio_release-1.7_istio
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: integ-pilot-k8s-tests_istio
+    name: integ-mixer-k8s-tests_istio_release-1.7
+    path_alias: istio.io/istio
+    spec:
+      containers:
+      - command:
+        - entrypoint
+        - prow/integ-suite-kind.sh
+        - test.integration.mixer.kube.presubmit
+        env:
+        - name: TEST_SELECT
+          value: -postsubmit,-flaky,-multicluster
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
+        name: ""
+        resources:
+          limits:
+            memory: 24Gi
+          requests:
+            cpu: "5"
+            memory: 3Gi
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /home/prow/go/pkg
+          name: build-cache
+          subPath: gomod
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+          readOnly: true
+        - mountPath: /var/lib/docker
+          name: docker-root
+      nodeSelector:
+        testing: test-pool
+      volumes:
+      - hostPath:
+          path: /tmp/prow/cache
+          type: DirectoryOrCreate
+        name: build-cache
+      - hostPath:
+          path: /lib/modules
+          type: Directory
+        name: modules
+      - hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+        name: cgroup
+      - emptyDir: {}
+        name: docker-root
+  - always_run: true
+    annotations:
+      testgrid-dashboards: istio_release-1.7_istio
+    branches:
+    - ^release-1.7$
+    decorate: true
+    name: integ-pilot-k8s-tests_istio_release-1.7
     path_alias: istio.io/istio
     spec:
       containers:
@@ -943,7 +1056,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -984,11 +1097,11 @@ presubmits:
         name: docker-root
   - always_run: true
     annotations:
-      testgrid-dashboards: istio_istio
+      testgrid-dashboards: istio_release-1.7_istio
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: integ-security-k8s-tests_istio
+    name: integ-security-k8s-tests_istio_release-1.7
     path_alias: istio.io/istio
     spec:
       containers:
@@ -999,7 +1112,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -1040,11 +1153,11 @@ presubmits:
         name: docker-root
   - always_run: true
     annotations:
-      testgrid-dashboards: istio_istio
+      testgrid-dashboards: istio_release-1.7_istio
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: integ-telemetry-k8s-tests_istio
+    name: integ-telemetry-k8s-tests_istio_release-1.7
     path_alias: istio.io/istio
     spec:
       containers:
@@ -1055,7 +1168,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -1096,11 +1209,11 @@ presubmits:
         name: docker-root
   - always_run: true
     annotations:
-      testgrid-dashboards: istio_istio
+      testgrid-dashboards: istio_release-1.7_istio
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: integ-multicluster-k8s-tests_istio
+    name: integ-multicluster-k8s-tests_istio_release-1.7
     path_alias: istio.io/istio
     spec:
       containers:
@@ -1113,7 +1226,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,+multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -1154,11 +1267,11 @@ presubmits:
         name: docker-root
   - always_run: true
     annotations:
-      testgrid-dashboards: istio_istio
+      testgrid-dashboards: istio_release-1.7_istio
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: integ-distroless-k8s-tests_istio
+    name: integ-distroless-k8s-tests_istio_release-1.7
     path_alias: istio.io/istio
     spec:
       containers:
@@ -1171,7 +1284,7 @@ presubmits:
           value: distroless
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -1212,11 +1325,11 @@ presubmits:
         name: docker-root
   - always_run: true
     annotations:
-      testgrid-dashboards: istio_istio
+      testgrid-dashboards: istio_release-1.7_istio
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: integ-ipv6-k8s-tests_istio
+    name: integ-ipv6-k8s-tests_istio_release-1.7
     path_alias: istio.io/istio
     spec:
       containers:
@@ -1231,7 +1344,7 @@ presubmits:
           value: ipv6
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -1272,11 +1385,11 @@ presubmits:
         name: docker-root
   - always_run: true
     annotations:
-      testgrid-dashboards: istio_istio
+      testgrid-dashboards: istio_release-1.7_istio
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: integ-operator-controller-tests_istio
+    name: integ-operator-controller-tests_istio_release-1.7
     path_alias: istio.io/istio
     spec:
       containers:
@@ -1287,7 +1400,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -postsubmit,-flaky,-multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -1328,11 +1441,11 @@ presubmits:
         name: docker-root
   - always_run: false
     annotations:
-      testgrid-dashboards: istio_istio
+      testgrid-dashboards: istio_release-1.7_istio
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: integ-pilot-multicluster-tests_istio
+    name: integ-pilot-multicluster-tests_istio_release-1.7
     optional: true
     path_alias: istio.io/istio
     skip_report: true
@@ -1347,7 +1460,7 @@ presubmits:
         env:
         - name: TEST_SELECT
           value: -multicluster
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -1388,11 +1501,11 @@ presubmits:
         name: docker-root
   - always_run: true
     annotations:
-      testgrid-dashboards: istio_istio
+      testgrid-dashboards: istio_release-1.7_istio
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: install-cni-test_istio
+    name: install-cni-test_istio_release-1.7
     optional: true
     path_alias: istio.io/istio
     skip_report: true
@@ -1402,7 +1515,7 @@ presubmits:
         - entrypoint
         - make
         - cni.install-test
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -1429,11 +1542,11 @@ presubmits:
         name: docker-root
   - always_run: false
     annotations:
-      testgrid-dashboards: istio_istio
+      testgrid-dashboards: istio_release-1.7_istio
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: analyze-tests_istio
+    name: analyze-tests_istio_release-1.7
     optional: true
     path_alias: istio.io/istio
     spec:
@@ -1441,7 +1554,7 @@ presubmits:
       - command:
         - make
         - test.integration.analyze
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -1464,18 +1577,18 @@ presubmits:
         name: build-cache
   - always_run: true
     annotations:
-      testgrid-dashboards: istio_istio
+      testgrid-dashboards: istio_release-1.7_istio
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: lint_istio
+    name: lint_istio_release-1.7
     path_alias: istio.io/istio
     spec:
       containers:
       - command:
         - make
         - lint
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -1498,18 +1611,18 @@ presubmits:
         name: build-cache
   - always_run: true
     annotations:
-      testgrid-dashboards: istio_istio
+      testgrid-dashboards: istio_release-1.7_istio
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
-    name: gencheck_istio
+    name: gencheck_istio_release-1.7
     path_alias: istio.io/istio
     spec:
       containers:
       - command:
         - make
         - gen-check
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:
@@ -1532,16 +1645,16 @@ presubmits:
         name: build-cache
   - always_run: true
     annotations:
-      testgrid-dashboards: istio_istio
+      testgrid-dashboards: istio_release-1.7_istio
     branches:
-    - ^master$
+    - ^release-1.7$
     decorate: true
     extra_refs:
     - base_ref: master
       org: istio
       path_alias: istio.io/test-infra
       repo: test-infra
-    name: release-notes_istio
+    name: release-notes_istio_release-1.7
     optional: true
     path_alias: istio.io/istio
     spec:
@@ -1549,7 +1662,7 @@ presubmits:
       - command:
         - ../test-infra/tools/check_release_notes.sh
         - --token-path=/etc/github-token/oauth
-        image: gcr.io/istio-testing/build-tools:master-2020-07-16T22-57-32
+        image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
         name: ""
         resources:
           limits:

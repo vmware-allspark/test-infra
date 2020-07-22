@@ -1,6 +1,6 @@
 branches:
-- release-1.4
-image: gcr.io/istio-testing/build-tools:release-1.4-2020-02-14T15-30-45
+- release-1.7
+image: gcr.io/istio-testing/build-tools:release-release-1.7-2020-07-16T22-57-32
 jobs:
 - command:
   - make
@@ -12,15 +12,15 @@ jobs:
   name: lint
 - command:
   - make
-  - test
-  name: test
+  - gen-check
+  name: gencheck
 org: istio
-repo: tools
+repo: gogo-genproto
 resources:
   default:
     limits:
       cpu: "3"
       memory: 24Gi
     requests:
-      cpu: 500m
+      cpu: "1"
       memory: 3Gi
