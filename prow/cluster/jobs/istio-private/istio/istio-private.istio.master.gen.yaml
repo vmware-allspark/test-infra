@@ -68,7 +68,7 @@ postsubmits:
         - entrypoint
         - make
         - -e
-        - T=-v
+        - T=-v -count=1
         - build
         - racetest
         - binaries-test
@@ -680,7 +680,7 @@ postsubmits:
         - entrypoint
         - prow/integ-suite-kind.sh
         - --node-image
-        - gcr.io/istio-testing/kind-node:v1.19.0-rc.1
+        - gcr.io/istio-testing/kind-node:v1.19.0-rc.2
         - test.integration.kube.presubmit
         env:
         - name: INTEGRATION_TEST_FLAGS
@@ -791,7 +791,7 @@ presubmits:
         - entrypoint
         - make
         - -e
-        - T=-v
+        - T=-v -count=1
         - build
         - racetest
         - binaries-test
@@ -809,6 +809,9 @@ presubmits:
         - mountPath: /home/prow/go/pkg
           name: build-cache
           subPath: gomod
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
       nodeSelector:
         testing: test-pool
       volumes:
@@ -852,6 +855,9 @@ presubmits:
           subPath: gomod
         - mountPath: /var/lib/docker
           name: docker-root
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
       nodeSelector:
         testing: test-pool
       volumes:
@@ -896,6 +902,9 @@ presubmits:
         - mountPath: /home/prow/go/pkg
           name: build-cache
           subPath: gomod
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
       nodeSelector:
         testing: test-pool
       volumes:
@@ -948,6 +957,9 @@ presubmits:
           readOnly: true
         - mountPath: /var/lib/docker
           name: docker-root
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
       nodeSelector:
         testing: test-pool
       volumes:
@@ -1010,6 +1022,9 @@ presubmits:
           readOnly: true
         - mountPath: /var/lib/docker
           name: docker-root
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
       nodeSelector:
         testing: test-pool
       volumes:
@@ -1072,6 +1087,9 @@ presubmits:
           readOnly: true
         - mountPath: /var/lib/docker
           name: docker-root
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
       nodeSelector:
         testing: test-pool
       volumes:
@@ -1134,6 +1152,9 @@ presubmits:
           readOnly: true
         - mountPath: /var/lib/docker
           name: docker-root
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
       nodeSelector:
         testing: test-pool
       volumes:
@@ -1198,6 +1219,9 @@ presubmits:
           readOnly: true
         - mountPath: /var/lib/docker
           name: docker-root
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
       nodeSelector:
         testing: test-pool
       volumes:
@@ -1262,6 +1286,9 @@ presubmits:
           readOnly: true
         - mountPath: /var/lib/docker
           name: docker-root
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
       nodeSelector:
         testing: test-pool
       volumes:
@@ -1328,6 +1355,9 @@ presubmits:
           readOnly: true
         - mountPath: /var/lib/docker
           name: docker-root
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
       nodeSelector:
         testing: test-pool
       volumes:
@@ -1390,6 +1420,9 @@ presubmits:
           readOnly: true
         - mountPath: /var/lib/docker
           name: docker-root
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
       nodeSelector:
         testing: test-pool
       volumes:
@@ -1456,6 +1489,9 @@ presubmits:
           readOnly: true
         - mountPath: /var/lib/docker
           name: docker-root
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
       nodeSelector:
         testing: test-pool
       volumes:
@@ -1511,6 +1547,9 @@ presubmits:
           subPath: gomod
         - mountPath: /var/lib/docker
           name: docker-root
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
       nodeSelector:
         testing: test-pool
       volumes:
@@ -1554,6 +1593,9 @@ presubmits:
         - mountPath: /home/prow/go/pkg
           name: build-cache
           subPath: gomod
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
       nodeSelector:
         testing: test-pool
       volumes:
@@ -1594,6 +1636,9 @@ presubmits:
         - mountPath: /home/prow/go/pkg
           name: build-cache
           subPath: gomod
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
       nodeSelector:
         testing: test-pool
       volumes:
@@ -1634,6 +1679,9 @@ presubmits:
         - mountPath: /home/prow/go/pkg
           name: build-cache
           subPath: gomod
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
       nodeSelector:
         testing: test-pool
       volumes:
@@ -1684,6 +1732,9 @@ presubmits:
         - mountPath: /etc/github-token
           name: github
           readOnly: true
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
       nodeSelector:
         testing: test-pool
       volumes:
