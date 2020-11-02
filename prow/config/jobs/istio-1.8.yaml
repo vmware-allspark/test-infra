@@ -1,6 +1,6 @@
 branches:
 - release-1.8
-image: gcr.io/istio-testing/build-tools:release-1.8-2020-10-21T02-26-15
+image: gcr.io/istio-testing/build-tools:release-1.8-2020-10-30T18-41-36
 jobs:
 - command:
   - entrypoint
@@ -227,6 +227,13 @@ jobs:
   requirements:
   - kind
   type: postsubmit
+- command:
+  - entrypoint
+  - prow/integ-suite-kind.sh
+  - test.integration.helm.kube
+  name: integ-helm-tests
+  requirements:
+  - kind
 - command:
   - entrypoint
   - prow/integ-suite-kind.sh
