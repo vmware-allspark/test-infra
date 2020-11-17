@@ -139,7 +139,6 @@ postsubmits:
     decorate: true
     name: integ-telemetry-mc-k8s-tests_istio_release-1.8_postsubmit
     path_alias: istio.io/istio
-    skip_report: true
     spec:
       containers:
       - command:
@@ -388,7 +387,6 @@ postsubmits:
     decorate: true
     name: integ-pilot-multicluster-tests_istio_release-1.8_postsubmit
     path_alias: istio.io/istio
-    skip_report: true
     spec:
       containers:
       - command:
@@ -576,7 +574,6 @@ postsubmits:
     decorate: true
     name: integ-security-multicluster-tests_istio_release-1.8_postsubmit
     path_alias: istio.io/istio
-    skip_report: true
     spec:
       containers:
       - command:
@@ -1415,7 +1412,7 @@ presubmits:
         name: cgroup
       - emptyDir: {}
         name: docker-root
-  - always_run: false
+  - always_run: true
     annotations:
       testgrid-dashboards: istio_release-1.8_istio
     branches:
@@ -1424,7 +1421,6 @@ presubmits:
     name: integ-telemetry-mc-k8s-tests_istio_release-1.8
     optional: true
     path_alias: istio.io/istio
-    skip_report: true
     spec:
       containers:
       - command:
@@ -1729,9 +1725,7 @@ presubmits:
     - ^release-1.8$
     decorate: true
     name: integ-pilot-multicluster-tests_istio_release-1.8
-    optional: true
     path_alias: istio.io/istio
-    skip_report: true
     spec:
       containers:
       - command:
@@ -1850,7 +1844,7 @@ presubmits:
         name: cgroup
       - emptyDir: {}
         name: docker-root
-  - always_run: false
+  - always_run: true
     annotations:
       testgrid-dashboards: istio_release-1.8_istio
     branches:
@@ -1859,7 +1853,6 @@ presubmits:
     name: integ-security-multicluster-tests_istio_release-1.8
     optional: true
     path_alias: istio.io/istio
-    skip_report: true
     spec:
       containers:
       - command:
