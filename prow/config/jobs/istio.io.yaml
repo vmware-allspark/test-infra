@@ -1,7 +1,7 @@
 org: istio
 repo: istio.io
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools:master-2021-01-13T15-02-13
+image: gcr.io/istio-testing/build-tools:master-2021-01-14T20-42-32
 
 jobs:
   - name: lint
@@ -11,22 +11,25 @@ jobs:
     command: [make, gen-check]
 
   - name: doc.test.profile_default
+    types: [presubmit]
     command: [entrypoint, prow/integ-suite-kind.sh, doc.test.profile_default]
     requirements: [kind]
     modifiers: [optional]
 
   - name: doc.test.profile_demo
+    types: [presubmit]
     command: [entrypoint, prow/integ-suite-kind.sh, doc.test.profile_demo]
     requirements: [kind]
     modifiers: [optional]
 
   - name: doc.test.profile_none
+    types: [presubmit]
     command: [entrypoint, prow/integ-suite-kind.sh, doc.test.profile_none]
     requirements: [kind]
     modifiers: [optional]
-  
+
   - name: doc.test.multicluster
-    command: 
+    command:
     - entrypoint
     - prow/integ-suite-kind.sh
     - --topology

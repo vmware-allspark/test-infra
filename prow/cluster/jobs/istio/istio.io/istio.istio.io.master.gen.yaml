@@ -23,7 +23,7 @@ periodics:
       - --modifier=refdocs
       - --token-path=/etc/github-token/oauth
       - --cmd=make update_ref_docs
-      image: gcr.io/istio-testing/build-tools:master-2021-01-13T15-02-13
+      image: gcr.io/istio-testing/build-tools:master-2021-01-14T20-42-32
       name: ""
       resources:
         limits:
@@ -67,7 +67,7 @@ postsubmits:
       - command:
         - make
         - lint
-        image: gcr.io/istio-testing/build-tools:master-2021-01-13T15-02-13
+        image: gcr.io/istio-testing/build-tools:master-2021-01-14T20-42-32
         name: ""
         resources:
           limits:
@@ -103,7 +103,7 @@ postsubmits:
       - command:
         - make
         - gen-check
-        image: gcr.io/istio-testing/build-tools:master-2021-01-13T15-02-13
+        image: gcr.io/istio-testing/build-tools:master-2021-01-14T20-42-32
         name: ""
         resources:
           limits:
@@ -125,171 +125,6 @@ postsubmits:
           path: /tmp/prow/cache
           type: DirectoryOrCreate
         name: build-cache
-  - annotations:
-      testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio.io_postsubmit
-      testgrid-num-failures-to-alert: "1"
-    branches:
-    - ^master$
-    decorate: true
-    name: doc.test.profile_default_istio.io_postsubmit
-    path_alias: istio.io/istio.io
-    spec:
-      containers:
-      - command:
-        - entrypoint
-        - prow/integ-suite-kind.sh
-        - doc.test.profile_default
-        image: gcr.io/istio-testing/build-tools:master-2021-01-13T15-02-13
-        name: ""
-        resources:
-          limits:
-            cpu: "8"
-            memory: 24Gi
-          requests:
-            cpu: "5"
-            memory: 3Gi
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /home/prow/go/pkg
-          name: build-cache
-          subPath: gomod
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-          readOnly: true
-        - mountPath: /var/lib/docker
-          name: docker-root
-      nodeSelector:
-        testing: test-pool
-      volumes:
-      - hostPath:
-          path: /tmp/prow/cache
-          type: DirectoryOrCreate
-        name: build-cache
-      - hostPath:
-          path: /lib/modules
-          type: Directory
-        name: modules
-      - hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-        name: cgroup
-      - emptyDir: {}
-        name: docker-root
-  - annotations:
-      testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio.io_postsubmit
-      testgrid-num-failures-to-alert: "1"
-    branches:
-    - ^master$
-    decorate: true
-    name: doc.test.profile_demo_istio.io_postsubmit
-    path_alias: istio.io/istio.io
-    spec:
-      containers:
-      - command:
-        - entrypoint
-        - prow/integ-suite-kind.sh
-        - doc.test.profile_demo
-        image: gcr.io/istio-testing/build-tools:master-2021-01-13T15-02-13
-        name: ""
-        resources:
-          limits:
-            cpu: "8"
-            memory: 24Gi
-          requests:
-            cpu: "5"
-            memory: 3Gi
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /home/prow/go/pkg
-          name: build-cache
-          subPath: gomod
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-          readOnly: true
-        - mountPath: /var/lib/docker
-          name: docker-root
-      nodeSelector:
-        testing: test-pool
-      volumes:
-      - hostPath:
-          path: /tmp/prow/cache
-          type: DirectoryOrCreate
-        name: build-cache
-      - hostPath:
-          path: /lib/modules
-          type: Directory
-        name: modules
-      - hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-        name: cgroup
-      - emptyDir: {}
-        name: docker-root
-  - annotations:
-      testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_istio.io_postsubmit
-      testgrid-num-failures-to-alert: "1"
-    branches:
-    - ^master$
-    decorate: true
-    name: doc.test.profile_none_istio.io_postsubmit
-    path_alias: istio.io/istio.io
-    spec:
-      containers:
-      - command:
-        - entrypoint
-        - prow/integ-suite-kind.sh
-        - doc.test.profile_none
-        image: gcr.io/istio-testing/build-tools:master-2021-01-13T15-02-13
-        name: ""
-        resources:
-          limits:
-            cpu: "8"
-            memory: 24Gi
-          requests:
-            cpu: "5"
-            memory: 3Gi
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /home/prow/go/pkg
-          name: build-cache
-          subPath: gomod
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-          readOnly: true
-        - mountPath: /var/lib/docker
-          name: docker-root
-      nodeSelector:
-        testing: test-pool
-      volumes:
-      - hostPath:
-          path: /tmp/prow/cache
-          type: DirectoryOrCreate
-        name: build-cache
-      - hostPath:
-          path: /lib/modules
-          type: Directory
-        name: modules
-      - hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-        name: cgroup
-      - emptyDir: {}
-        name: docker-root
   - annotations:
       testgrid-alert-email: istio-oncall@googlegroups.com
       testgrid-dashboards: istio_istio.io_postsubmit
@@ -307,7 +142,7 @@ postsubmits:
         - --topology
         - MULTICLUSTER
         - doc.test.multicluster
-        image: gcr.io/istio-testing/build-tools:master-2021-01-13T15-02-13
+        image: gcr.io/istio-testing/build-tools:master-2021-01-14T20-42-32
         name: ""
         resources:
           limits:
@@ -362,7 +197,7 @@ presubmits:
       - command:
         - make
         - lint
-        image: gcr.io/istio-testing/build-tools:master-2021-01-13T15-02-13
+        image: gcr.io/istio-testing/build-tools:master-2021-01-14T20-42-32
         name: ""
         resources:
           limits:
@@ -397,7 +232,7 @@ presubmits:
       - command:
         - make
         - gen-check
-        image: gcr.io/istio-testing/build-tools:master-2021-01-13T15-02-13
+        image: gcr.io/istio-testing/build-tools:master-2021-01-14T20-42-32
         name: ""
         resources:
           limits:
@@ -434,7 +269,7 @@ presubmits:
         - entrypoint
         - prow/integ-suite-kind.sh
         - doc.test.profile_default
-        image: gcr.io/istio-testing/build-tools:master-2021-01-13T15-02-13
+        image: gcr.io/istio-testing/build-tools:master-2021-01-14T20-42-32
         name: ""
         resources:
           limits:
@@ -489,7 +324,7 @@ presubmits:
         - entrypoint
         - prow/integ-suite-kind.sh
         - doc.test.profile_demo
-        image: gcr.io/istio-testing/build-tools:master-2021-01-13T15-02-13
+        image: gcr.io/istio-testing/build-tools:master-2021-01-14T20-42-32
         name: ""
         resources:
           limits:
@@ -544,7 +379,7 @@ presubmits:
         - entrypoint
         - prow/integ-suite-kind.sh
         - doc.test.profile_none
-        image: gcr.io/istio-testing/build-tools:master-2021-01-13T15-02-13
+        image: gcr.io/istio-testing/build-tools:master-2021-01-14T20-42-32
         name: ""
         resources:
           limits:
@@ -601,7 +436,7 @@ presubmits:
         - --topology
         - MULTICLUSTER
         - doc.test.multicluster
-        image: gcr.io/istio-testing/build-tools:master-2021-01-13T15-02-13
+        image: gcr.io/istio-testing/build-tools:master-2021-01-14T20-42-32
         name: ""
         resources:
           limits:
@@ -664,7 +499,7 @@ presubmits:
         - --token-path=/etc/github-token/oauth
         - --cmd=make update_ref_docs
         - --dry-run
-        image: gcr.io/istio-testing/build-tools:master-2021-01-13T15-02-13
+        image: gcr.io/istio-testing/build-tools:master-2021-01-14T20-42-32
         name: ""
         resources:
           limits:
