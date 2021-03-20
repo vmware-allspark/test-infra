@@ -39,6 +39,7 @@ deploy-velodrome: get-cluster-credentials get-api-resources
 
 # TODO(clarketm): enable pruning
 deploy-monitoring: get-cluster-credentials
+	kubectl apply -f ./cluster/monitoring/prometheus-operator-crds/
 	$(MAKE) -C cluster/monitoring/mixins clean apply
 	kubectl apply -f ./cluster/monitoring/ -n prow-monitoring
 
