@@ -9,12 +9,12 @@ presubmits:
       testgrid-create-test-group: "false"
     spec:
       containers:
-      - image: gcr.io/k8s-prow/transfigure
+      - image: gcr.io/k8s-prow/transfigure:v20210322-23ade8ba07
         command:
         - /transfigure.sh
         args:
         - test
         - prow/config.yaml
         - prow/cluster/jobs
-        - testgrid/default.yaml
+        - testgrid/config.yaml
         - istio
