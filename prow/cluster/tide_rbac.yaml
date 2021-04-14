@@ -3,10 +3,8 @@ kind: ServiceAccount
 metadata:
   annotations:
     iam.gke.io/gcp-service-account: prow-control-plane@istio-testing.iam.gserviceaccount.com
-  labels:
-    app.kubernetes.io/part-of: prow
   namespace: default
-  name: "hook"
+  name: tide
 ---
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
@@ -14,7 +12,7 @@ metadata:
   labels:
     app.kubernetes.io/part-of: prow
   namespace: default
-  name: "hook"
+  name: tide
 rules:
   - apiGroups:
       - "prow.k8s.io"
@@ -22,17 +20,9 @@ rules:
       - prowjobs
     verbs:
       - create
-      - get
       - list
-      - update
-  - apiGroups:
-      - ""
-    resources:
-      - configmaps
-    verbs:
-      - create
       - get
-      - update
+      - watch
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -40,11 +30,11 @@ metadata:
   labels:
     app.kubernetes.io/part-of: prow
   namespace: default
-  name: "hook"
+  name: tide
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: "hook"
+  name: tide
 subjects:
 - kind: ServiceAccount
-  name: "hook"
+  name: tide
