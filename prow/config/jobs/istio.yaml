@@ -1,13 +1,15 @@
 org: istio
 repo: istio
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools:master-2021-05-07T04-05-01
+image: gcr.io/istio-testing/build-tools:master-2021-05-25T23-11-11
 jobs:
   - name: unit-tests
     command: [entrypoint, make, -e, "T=-v -count=1", build, racetest, binaries-test]
 
+  # TODO(https://github.com/istio/istio/issues/32985) make this required again
   - name: release-test
     types: [presubmit]
+    modifiers: [optional, skipped]
     command: [entrypoint, prow/release-test.sh]
     requirements: [gcp, docker]
 
