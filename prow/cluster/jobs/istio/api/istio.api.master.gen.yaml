@@ -15,7 +15,7 @@ postsubmits:
       - command:
         - make
         - presubmit
-        image: gcr.io/istio-testing/build-tools:master-2021-07-13T15-25-11
+        image: gcr.io/istio-testing/build-tools:master-2021-07-13T17-42-03
         name: ""
         resources:
           limits:
@@ -51,7 +51,7 @@ postsubmits:
       - command:
         - make
         - gen-check
-        image: gcr.io/istio-testing/build-tools:master-2021-07-13T15-25-11
+        image: gcr.io/istio-testing/build-tools:master-2021-07-13T17-42-03
         name: ""
         resources:
           limits:
@@ -85,14 +85,68 @@ postsubmits:
       org: istio
       path_alias: istio.io/test-infra
       repo: test-infra
-    name: update_api_dep_api_postsubmit
+    name: update_api_dep_client_go_api_postsubmit
     path_alias: istio.io/api
     spec:
       containers:
       - command:
         - ../test-infra/tools/automator/automator.sh
         - --org=istio
-        - --repo=istio,client-go
+        - --repo=client-go
+        - '--title=Automator: update istio/api@$AUTOMATOR_SRC_BRANCH dependency in
+          $AUTOMATOR_ORG/$AUTOMATOR_REPO@$AUTOMATOR_BRANCH'
+        - --labels=auto-merge,release-notes-none
+        - --modifier=update_api_dep
+        - --token-path=/etc/github-token/oauth
+        - --cmd=go get istio.io/api@$AUTOMATOR_SHA && go mod tidy && make clean gen
+        image: gcr.io/istio-testing/build-tools:master-2021-07-13T17-42-03
+        name: ""
+        resources:
+          limits:
+            cpu: "3"
+            memory: 24Gi
+          requests:
+            cpu: "1"
+            memory: 3Gi
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /home/prow/go/pkg
+          name: build-cache
+          subPath: gomod
+        - mountPath: /etc/github-token
+          name: github
+          readOnly: true
+      nodeSelector:
+        testing: test-pool
+      volumes:
+      - hostPath:
+          path: /tmp/prow/cache
+          type: DirectoryOrCreate
+        name: build-cache
+      - name: github
+        secret:
+          secretName: oauth-token
+  - annotations:
+      testgrid-alert-email: istio-oncall@googlegroups.com
+      testgrid-dashboards: istio_api_postsubmit
+      testgrid-num-failures-to-alert: "1"
+    branches:
+    - ^master$
+    decorate: true
+    extra_refs:
+    - base_ref: master
+      org: istio
+      path_alias: istio.io/test-infra
+      repo: test-infra
+    name: update_api_dep_istio_api_postsubmit
+    path_alias: istio.io/api
+    spec:
+      containers:
+      - command:
+        - ../test-infra/tools/automator/automator.sh
+        - --org=istio
+        - --repo=istio
         - '--title=Automator: update istio/api@$AUTOMATOR_SRC_BRANCH dependency in
           $AUTOMATOR_ORG/$AUTOMATOR_REPO@$AUTOMATOR_BRANCH'
         - --labels=auto-merge,release-notes-none
@@ -100,7 +154,7 @@ postsubmits:
         - --token-path=/etc/github-token/oauth
         - --git-exclude=^common/
         - --cmd=go get istio.io/api@$AUTOMATOR_SHA && go mod tidy && make clean gen
-        image: gcr.io/istio-testing/build-tools:master-2021-07-13T15-25-11
+        image: gcr.io/istio-testing/build-tools:master-2021-07-13T17-42-03
         name: ""
         resources:
           limits:
@@ -143,7 +197,7 @@ presubmits:
       - command:
         - make
         - presubmit
-        image: gcr.io/istio-testing/build-tools:master-2021-07-13T15-25-11
+        image: gcr.io/istio-testing/build-tools:master-2021-07-13T17-42-03
         name: ""
         resources:
           limits:
@@ -178,7 +232,7 @@ presubmits:
       - command:
         - make
         - gen-check
-        image: gcr.io/istio-testing/build-tools:master-2021-07-13T15-25-11
+        image: gcr.io/istio-testing/build-tools:master-2021-07-13T17-42-03
         name: ""
         resources:
           limits:
@@ -223,7 +277,7 @@ presubmits:
       - command:
         - ../test-infra/tools/check_release_notes.sh
         - --token-path=/etc/github-token/oauth
-        image: gcr.io/istio-testing/build-tools:master-2021-07-13T15-25-11
+        image: gcr.io/istio-testing/build-tools:master-2021-07-13T17-42-03
         name: ""
         resources:
           limits:
