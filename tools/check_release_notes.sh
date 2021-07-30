@@ -71,10 +71,6 @@ get_opts() {
             PULL_NUMBER="$2"
             shift 2
             ;;
-        --base-sha)
-            base_sha="$2"
-            shift 2
-            ;;
         --pr-head-sha)
             PULL_PULL_SHA="$2"
             shift 2
@@ -92,6 +88,10 @@ get_opts() {
             ;;
         esac
     done
+
+    if [[ ${token} != "" ]]; then
+        export GH_TOKEN=${token}
+    fi
 }
 
 #This script relies on the REPO_OWNER, REPO_NAME, and PULL_NUMBER environment
@@ -129,17 +129,12 @@ validate_opts() {
         echo "Using REPO_PATH ${REPO_PATH}"
     fi
 
-        if [ -z "${base_sha:-}" ]; then
-        echo "base-sha not specified. Calculating from the PULL_NUMBER"
-        base_sha=$(curl -s -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/"${REPO_OWNER}"/"${REPO_NAME}"/pulls/"${PULL_NUMBER}"/commits | jq -r '.[0].parents[0].sha')
-        echo "base_sha: ""${base_sha}"""
-    fi
 }
 
 # Curl the GitHub API to get a list of files for the specified PR. If files are
 # found, exit. We might eventually want to validate the data here.
 checkForFiles() {
-    echo "Checking files from pull request ${REPO_OWNER}/${REPO_NAME}#${PULL_NUMBER} head SHA: ${PULL_PULL_SHA} destination branch: ${PULL_BASE_REF}, base SHA: ${base_sha}"
+    echo "Checking files from pull request ${REPO_OWNER}/${REPO_NAME}#${PULL_NUMBER}"
 
     pushd "${REPO_PATH}"
 
@@ -149,7 +144,7 @@ checkForFiles() {
     popd
 
     set +e
-    "${GEN_RELEASE_NOTES_PATH}"/gen-release-notes --oldBranch "${base_sha}" --newBranch "${PULL_PULL_SHA}" --templates "${GEN_RELEASE_NOTES_PATH}"/templates --notes . --validateOnly
+    "${GEN_RELEASE_NOTES_PATH}"/gen-release-notes --pullRequest "${PULL_NUMBER}" --templates "${GEN_RELEASE_NOTES_PATH}"/templates --notes . --validateOnly
     returnCode=$?
     set -e
 
@@ -167,7 +162,9 @@ checkForFiles() {
 
 ## Validate the release notes against the schema
 function validateNote() {
-    out=$(../tools/cmd/schema-validator/schema-validator  --schemaPath ../tools/cmd/gen-release-notes/release_notes_schema.json --documentPath "${1}")
+    cmd="../tools/cmd/schema-validator/schema-validator  --schemaPath ../tools/cmd/gen-release-notes/release_notes_schema.json --documentPath ${1}"
+    echo "Executing ${cmd}"
+    out=$(${cmd})
     returnCode=$?
     if [ "${returnCode}" != 0 ]; then
         echo "${out}"
@@ -182,14 +179,16 @@ function validateNotes() {
     go build
     popd
 
+    pushd "${REPO_PATH}"
     local errorOccurred=0
-    git diff-tree -r --diff-filter=AMR --name-only --relative=releasenotes/notes "${base_sha}" "${PULL_PULL_SHA}" | \
+    gh pr view "https://github.com/${REPO_OWNER}/${REPO_NAME}/pull/${PULL_NUMBER}" --json files | jq -r '.files[].path' | grep -E '^releasenotes' | \
     {
     set +e
     while read -r line; do
-    if ! validateNote "./releasenotes/notes/${line}"; then
+    if ! validateNote "./${line}"; then
         errorOccurred=1
     fi
+    popd
 
     done
     set -e
