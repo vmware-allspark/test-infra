@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: crier
+  namespace: default
   labels:
     app.kubernetes.io/part-of: prow
     app: crier
@@ -19,7 +20,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: crier
-        image: gcr.io/k8s-prow/crier:v20210827-98f54bde95
+        image: gcr.io/k8s-prow/crier:v20210830-ebb631f3fe
         args:
         - --blob-storage-workers=1
         - --config-path=/etc/config/config.yaml

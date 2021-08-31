@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deck
+  namespace: default
   labels:
     app.kubernetes.io/part-of: prow
     app: deck
@@ -24,7 +25,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: deck
-        image: gcr.io/k8s-prow/deck:v20210827-98f54bde95
+        image: gcr.io/k8s-prow/deck:v20210830-ebb631f3fe
         ports:
         - name: http
           containerPort: 8080

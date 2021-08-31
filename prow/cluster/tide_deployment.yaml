@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tide
+  namespace: default
   labels:
     app.kubernetes.io/part-of: prow
     app: tide
@@ -18,7 +19,7 @@ spec:
       serviceAccountName: tide
       containers:
       - name: tide
-        image: gcr.io/k8s-prow/tide:v20210827-98f54bde95
+        image: gcr.io/k8s-prow/tide:v20210830-ebb631f3fe
         args:
         - --config-path=/etc/config/config.yaml
         - --dry-run=false
