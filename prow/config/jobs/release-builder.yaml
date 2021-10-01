@@ -1,7 +1,7 @@
 org: istio
 repo: release-builder
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools:master-2021-09-13T18-33-43
+image: gcr.io/istio-testing/build-tools:master-2021-10-01T16-47-52
 
 jobs:
   - name: lint
@@ -42,6 +42,16 @@ jobs:
     types: [postsubmit]
     regex: '^release/trigger-publish$'
     command: [entrypoint, release/publish.sh]
+    requirements: [release, docker]
+    resources: build
+
+  - name: build-base-images
+    types: [periodic]
+    cron: "0 19 * * *"  # every day at 07:00 PM UTC (12:00 PM PST)
+    env:
+    - name: BUILD_BASE_IMAGES
+      value: "true"
+    command: [entrypoint, release/build.sh]
     requirements: [release, docker]
     resources: build
 
