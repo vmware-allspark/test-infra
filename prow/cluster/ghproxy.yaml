@@ -34,13 +34,16 @@ spec:
     spec:
       containers:
       - name: ghproxy
-        image: gcr.io/k8s-prow/ghproxy:v20211019-c35849068d
+        image: gcr.io/k8s-prow/ghproxy:v20211019-5763223177
         args:
         - --cache-dir=/cache
         - --cache-sizeGB=99
         - --serve-metrics=true
         ports:
-        - containerPort: 8888
+        - name: main
+          containerPort: 8888
+        - name: metrics
+          containerPort: 9090
         volumeMounts:
         - name: cache
           mountPath: /cache

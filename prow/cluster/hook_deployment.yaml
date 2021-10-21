@@ -25,7 +25,7 @@ spec:
       terminationGracePeriodSeconds: 180
       containers:
       - name: hook
-        image: gcr.io/k8s-prow/hook:v20211019-c35849068d
+        image: gcr.io/k8s-prow/hook:v20211019-5763223177
         args:
         - --config-path=/etc/config/config.yaml
         - --dry-run=false
@@ -35,8 +35,10 @@ spec:
         - --github-endpoint=https://api.github.com
         - --github-token-path=/etc/github/oauth
         ports:
-          - name: http
-            containerPort: 8888
+        - name: http
+          containerPort: 8888
+        - name: metrics
+          containerPort: 9090
         volumeMounts:
         - name: hmac
           mountPath: /etc/webhook

@@ -19,12 +19,15 @@ spec:
       serviceAccountName: sinker
       containers:
       - name: sinker
-        image: gcr.io/k8s-prow/sinker:v20211019-c35849068d
+        image: gcr.io/k8s-prow/sinker:v20211019-5763223177
         args:
         - --config-path=/etc/config/config.yaml
         - --dry-run=false
         - --job-config-path=/etc/job-config
         - --kubeconfig=/etc/kubeconfig/istio-config
+        ports:
+        - name: metrics
+          containerPort: 9090
         volumeMounts:
         - name: config
           mountPath: /etc/config
