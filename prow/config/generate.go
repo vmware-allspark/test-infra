@@ -111,6 +111,7 @@ type Job struct {
 	Name    string   `json:"name,omitempty"`
 	Command []string `json:"command,omitempty"`
 	Args    []string `json:"args,omitempty"`
+	Tags    []string `json:"tags,omitempty"`
 	Types   []string `json:"types,omitempty"`
 	Repos   []string `json:"repos,omitempty"`
 
@@ -425,6 +426,7 @@ func (cli *Client) ConvertJobConfig(jobsConfig *JobsConfig, branch string) confi
 					JobBase:  createJobBase(baseConfig, jobsConfig, job, name, branch, jobsConfig.ResourcePresets),
 					Interval: job.Interval,
 					Cron:     job.Cron,
+					Tags:     job.Tags,
 				}
 				if testgridConfig.Enabled {
 					periodic.JobBase.Annotations = mergeMaps(periodic.JobBase.Annotations, map[string]string{
@@ -451,7 +453,7 @@ func (cli *Client) ConvertJobConfig(jobsConfig *JobsConfig, branch string) confi
 	return output
 }
 
-func (cli *Client) CheckConfig(jobs config.JobConfig, currentConfigFile string) error {
+func (cli *Client) CheckConfig(jobs config.JobConfig, currentConfigFile string, header string) error {
 	current, err := ioutil.ReadFile(currentConfigFile)
 	if err != nil {
 		return fmt.Errorf("failed to read current config for %s: %v", currentConfigFile, err)
@@ -461,7 +463,10 @@ func (cli *Client) CheckConfig(jobs config.JobConfig, currentConfigFile string) 
 	if err != nil {
 		return fmt.Errorf("failed to marshal result: %v", err)
 	}
-	output := []byte(cli.BaseConfig.AutogenHeader)
+	if header == "" {
+		header = DefaultAutogenHeader
+	}
+	output := []byte(header + "\n")
 	output = append(output, newConfig...)
 
 	if diff := cmp.Diff(output, current); diff != "" {
@@ -479,7 +484,10 @@ func Write(jobs config.JobConfig, fname, header string) {
 	if err := os.MkdirAll(dir, os.ModePerm); err != nil {
 		exit(err, "failed to create directory: "+dir)
 	}
-	output := []byte(header)
+	if header == "" {
+		header = DefaultAutogenHeader
+	}
+	output := []byte(header + "\n")
 	output = append(output, bs...)
 	err = ioutil.WriteFile(fname, output, 0644)
 	if err != nil {
