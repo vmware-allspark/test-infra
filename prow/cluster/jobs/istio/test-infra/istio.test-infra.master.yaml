@@ -9,9 +9,9 @@ presubmits:
       testgrid-create-test-group: "false"
     spec:
       containers:
-      - image: gcr.io/k8s-prow/configurator
+      - image: gcr.io/k8s-prow/configurator:v20220224-d83a570741
         command:
-        - /app/testgrid/cmd/configurator/app.binary
+        - configurator
         args:
         - --yaml=testgrid/config.yaml
         - --default=testgrid/default.yaml
