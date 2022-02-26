@@ -30,11 +30,10 @@ postsubmits:
         name: ""
         resources:
           limits:
-            cpu: "5"
             memory: 24Gi
           requests:
-            cpu: "5"
-            memory: 3Gi
+            cpu: "15"
+            memory: 8Gi
         securityContext:
           privileged: true
         volumeMounts:
@@ -84,11 +83,10 @@ postsubmits:
         name: ""
         resources:
           limits:
-            cpu: "5"
             memory: 24Gi
           requests:
-            cpu: "5"
-            memory: 3Gi
+            cpu: "15"
+            memory: 8Gi
         securityContext:
           privileged: true
         volumeMounts:
@@ -1987,11 +1985,10 @@ presubmits:
         name: ""
         resources:
           limits:
-            cpu: "5"
             memory: 24Gi
           requests:
-            cpu: "5"
-            memory: 3Gi
+            cpu: "15"
+            memory: 8Gi
         securityContext:
           privileged: true
         volumeMounts:
@@ -2032,11 +2029,10 @@ presubmits:
         name: ""
         resources:
           limits:
-            cpu: "5"
             memory: 24Gi
           requests:
-            cpu: "5"
-            memory: 3Gi
+            cpu: "15"
+            memory: 8Gi
         securityContext:
           privileged: true
         volumeMounts:
