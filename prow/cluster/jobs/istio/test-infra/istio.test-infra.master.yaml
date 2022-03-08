@@ -9,7 +9,7 @@ presubmits:
       testgrid-create-test-group: "false"
     spec:
       containers:
-      - image: gcr.io/k8s-prow/configurator:v20220305-a9a1fd8e47
+      - image: gcr.io/k8s-prow/configurator:v20220308-20455104ba
         command:
         - configurator
         args:
@@ -63,7 +63,7 @@ postsubmits:
         - deploy-monitoring
         - deploy-build
         - deploy-private
-        image: gcr.io/istio-testing/build-tools:master-2022-03-04T20-43-10
+        image: gcr.io/istio-testing/build-tools:master-2022-03-08T17-25-08
         resources:
           limits:
             cpu: "3"
@@ -102,7 +102,7 @@ postsubmits:
         - -C
         - boskos
         - deploy
-        image: gcr.io/istio-testing/build-tools:master-2022-03-04T20-43-10
+        image: gcr.io/istio-testing/build-tools:master-2022-03-08T17-25-08
         resources:
           limits:
             cpu: "3"
@@ -141,7 +141,7 @@ postsubmits:
         - -C
         - boskos
         - boskos-config
-        image: gcr.io/istio-testing/build-tools:master-2022-03-04T20-43-10
+        image: gcr.io/istio-testing/build-tools:master-2022-03-08T17-25-08
         name: ""
         resources:
           limits:
