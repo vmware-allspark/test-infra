@@ -26,6 +26,7 @@ import (
 	"sort"
 	"strings"
 
+	dockername "github.com/google/go-containerregistry/pkg/name"
 	flag "github.com/spf13/pflag"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/util/sets"
@@ -83,6 +84,7 @@ func (o *options) parseOpts() {
 	flag.StringVar(&o.SSHKeySecret, "ssh-key-secret", "", "GKE cluster secrets containing the Github ssh private key.")
 	flag.StringVar(&o.Modifier, "modifier", defaultModifier, "Modifier to apply to generated file and job name(s).")
 	flag.StringVar(&o.ServiceAccount, "service-account", "", "Service Account to apply to generated files.")
+	flag.StringVar(&o.Tag, "tag", "", "Override docker image tag for generated job(s).")
 	flag.StringVarP(&o.Input, "input", "i", ".", "Input file or directory containing job(s) to convert.")
 	flag.StringVarP(&o.Output, "output", "o", ".", "Output file or directory to write generated job(s).")
 	flag.StringVarP(&o.Sort, "sort", "s", "", "Sort the job(s) by name: (e.g. (asc)ending, (desc)ending).")
@@ -98,6 +100,7 @@ func (o *options) parseOpts() {
 	flag.StringToStringVarP(&o.Env, "env", "e", map[string]string{}, "Environment variables to set for the job(s).")
 	flag.StringToStringVarP(&o.OrgMap, "mapping", "m", map[string]string{}, "Mapping between public and private Github organization(s).")
 	flag.StringToStringVar(&o.RefOrgMap, "ref-mapping", map[string]string{}, "Mapping between public and private Github organization(s) in refs.")
+	flag.StringToStringVar(&o.HubMap, "hub-mapping", map[string]string{}, "Docker image hub mapping.")
 	flag.StringToStringVarP(&o.Annotations, "annotations", "a", map[string]string{}, "Annotations to apply to the job(s)")
 	flag.StringSliceVar(&o.EnvDenylist, "env-denylist", []string{}, "Env(s) to denylist in generation process.")
 	flag.StringSliceVar(&o.VolumeDenylist, "volume-denylist", []string{}, "Volume(s) to denylist in generation process.")
@@ -337,6 +340,12 @@ func applyDefaultTransforms(dst *configuration.Transform, srcs ...*configuration
 		}
 		if len(dst.RefOrgMap) == 0 {
 			dst.RefOrgMap = src.RefOrgMap
+		}
+		if len(dst.HubMap) == 0 {
+			dst.HubMap = src.HubMap
+		}
+		if dst.Tag == "" {
+			dst.Tag = src.Tag
 		}
 		if !dst.DryRun {
 			dst.DryRun = src.DryRun
@@ -799,6 +808,35 @@ func updateExtraRefs(o options, job *config.UtilityConfig) {
 	}
 }
 
+// updateHubs updates the docker hubs for container images
+func updateHubs(o options, job *config.JobBase) {
+	for i := range job.Spec.Containers {
+		tag, _ := dockername.NewTag(job.Spec.Containers[i].Image)
+		baseref := tag.Context().Name()
+		for in, out := range o.HubMap {
+			baseref = strings.ReplaceAll(
+				baseref,
+				in,
+				out,
+			)
+		}
+		newTag, _ := dockername.NewTag(fmt.Sprintf("%s:%s", baseref, tag.TagStr()))
+		job.Spec.Containers[i].Image = newTag.Name()
+	}
+}
+
+// updateTags forces an override of the docker tags for container images
+func updateTags(o options, job *config.JobBase) {
+	if o.Tag == "" {
+		return
+	}
+	for i := range job.Spec.Containers {
+		tag, _ := dockername.NewTag(job.Spec.Containers[i].Image)
+		baseref := tag.Context().Name()
+		job.Spec.Containers[i].Image = baseref + ":" + o.Tag
+	}
+}
+
 // sortJobs sorts jobs based on a provided sort order.
 func sortJobs(o options, pre map[string][]config.Presubmit, post map[string][]config.Postsubmit, per []config.Periodic) {
 	if o.Sort == "" {
@@ -1039,6 +1077,8 @@ func generateJobs(o options) {
 				updateGerritReportingLabels(o, job.SkipReport, job.Optional, job.Labels)
 				resolvePresets(o, job.Labels, &job.JobBase, append(presets, jobs.Presets...))
 				pruneJobBase(o, &job.JobBase)
+				updateHubs(o, &job.JobBase)
+				updateTags(o, &job.JobBase)
 
 				presubmit[orgrepo] = append(presubmit[orgrepo], job)
 			}
@@ -1063,6 +1103,8 @@ func generateJobs(o options) {
 				updateUtilityConfig(o, &job.UtilityConfig)
 				resolvePresets(o, job.Labels, &job.JobBase, append(presets, jobs.Presets...))
 				pruneJobBase(o, &job.JobBase)
+				updateHubs(o, &job.JobBase)
+				updateTags(o, &job.JobBase)
 
 				postsubmit[orgrepo] = append(postsubmit[orgrepo], job)
 			}
@@ -1095,6 +1137,8 @@ func generateJobs(o options) {
 			updateUtilityConfig(o, &job.UtilityConfig)
 			resolvePresets(o, job.Labels, &job.JobBase, append(presets, jobs.Presets...))
 			pruneJobBase(o, &job.JobBase)
+			updateHubs(o, &job.JobBase)
+			updateTags(o, &job.JobBase)
 
 			periodic = append(periodic, job)
 		}
