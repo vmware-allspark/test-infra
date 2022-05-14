@@ -1,7 +1,7 @@
 org: istio
 repo: istio
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools:master-2022-05-11T14-57-36
+image: gcr.io/istio-testing/build-tools:master-2022-05-12T19-59-01
 jobs:
   - name: unit-tests
     command: [entrypoint, make, -e, "T=-v -count=1", build, racetest, binaries-test]
@@ -351,7 +351,7 @@ jobs:
   - name: build-base-images
     repos: [istio/release-builder@master]
     types: [postsubmit]
-    regex: '^docker/Dockerfile.base$'
+    regex: '^(docker|pkg/.*)/Dockerfile.([a-zA-Z0-9_]+_)?base(_[a-zA-Z0-9_]+)?$'
     env:
     - name: BUILD_BASE_IMAGES
       value: "true"
