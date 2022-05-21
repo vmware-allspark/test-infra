@@ -1,7 +1,7 @@
 org: istio
 repo: istio
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools:master-2022-05-19T17-27-24
+image: gcr.io/istio-testing/build-tools:master-2022-05-20T20-45-15
 jobs:
   - name: unit-tests
     command: [entrypoint, make, -e, "T=-v -count=1", build, racetest, binaries-test]
@@ -66,6 +66,9 @@ jobs:
       - test.integration.telemetry.kube
     requirements: [kind]
     resources: multicluster
+    env:
+      - name: INTEGRATION_TEST_FLAGS
+        value: --istio.test.skipVM
 
   - name: integ-distroless
     command: [entrypoint, prow/integ-suite-kind.sh, test.integration.kube.environment]
