@@ -20,6 +20,8 @@ postsubmits:
         - entrypoint
         - ./prow/proxy-postsubmit.sh
         env:
+        - name: BUILD_WITH_CONTAINER
+          value: "0"
         - name: BAZEL_BUILD_RBE_INSTANCE
         - name: DOCKER_REPOSITORY
           value: istio-prow-build/envoy
@@ -48,6 +50,10 @@ postsubmits:
           subPath: gomod
         - mountPath: /var/lib/docker
           name: docker-root
+        - mountPath: /home/.netrc
+          name: netrc
+          readOnly: true
+          subPath: .netrc
       nodeSelector:
         testing: build-pool
       serviceAccountName: prowjob-private-sa
@@ -58,6 +64,13 @@ postsubmits:
         name: build-cache
       - emptyDir: {}
         name: docker-root
+      - name: netrc
+        secret:
+          items:
+          - key: secret
+            mode: 384
+            path: .netrc
+          secretName: netrc-secret
   - annotations:
       testgrid-create-test-group: "false"
     branches:
@@ -76,6 +89,8 @@ postsubmits:
       - command:
         - ./prow/proxy-postsubmit-centos.sh
         env:
+        - name: BUILD_WITH_CONTAINER
+          value: "0"
         - name: BAZEL_BUILD_RBE_INSTANCE
         - name: DOCKER_REPOSITORY
           value: istio-prow-build/envoy
@@ -102,6 +117,10 @@ postsubmits:
         - mountPath: /home/prow/go/pkg
           name: build-cache
           subPath: gomod
+        - mountPath: /home/.netrc
+          name: netrc
+          readOnly: true
+          subPath: .netrc
       nodeSelector:
         testing: build-pool
       serviceAccountName: prowjob-private-sa
@@ -110,6 +129,13 @@ postsubmits:
           path: /var/tmp/prow/cache
           type: DirectoryOrCreate
         name: build-cache
+      - name: netrc
+        secret:
+          items:
+          - key: secret
+            mode: 384
+            path: .netrc
+          secretName: netrc-secret
 presubmits:
   istio-private/proxy:
   - always_run: true
@@ -131,6 +157,8 @@ presubmits:
       - command:
         - ./prow/proxy-presubmit.sh
         env:
+        - name: BUILD_WITH_CONTAINER
+          value: "0"
         - name: BAZEL_BUILD_RBE_INSTANCE
         - name: ENVOY_PREFIX
           value: envoy
@@ -151,6 +179,10 @@ presubmits:
         - mountPath: /home/prow/go/pkg
           name: build-cache
           subPath: gomod
+        - mountPath: /home/.netrc
+          name: netrc
+          readOnly: true
+          subPath: .netrc
       nodeSelector:
         testing: build-pool
       serviceAccountName: prowjob-private-sa
@@ -159,6 +191,13 @@ presubmits:
           path: /var/tmp/prow/cache
           type: DirectoryOrCreate
         name: build-cache
+      - name: netrc
+        secret:
+          items:
+          - key: secret
+            mode: 384
+            path: .netrc
+          secretName: netrc-secret
   - always_run: true
     annotations:
       testgrid-create-test-group: "false"
@@ -178,6 +217,8 @@ presubmits:
       - command:
         - ./prow/proxy-presubmit-asan.sh
         env:
+        - name: BUILD_WITH_CONTAINER
+          value: "0"
         - name: BAZEL_BUILD_RBE_INSTANCE
         - name: ENVOY_PREFIX
           value: envoy
@@ -198,6 +239,10 @@ presubmits:
         - mountPath: /home/prow/go/pkg
           name: build-cache
           subPath: gomod
+        - mountPath: /home/.netrc
+          name: netrc
+          readOnly: true
+          subPath: .netrc
       nodeSelector:
         testing: build-pool
       serviceAccountName: prowjob-private-sa
@@ -206,6 +251,13 @@ presubmits:
           path: /var/tmp/prow/cache
           type: DirectoryOrCreate
         name: build-cache
+      - name: netrc
+        secret:
+          items:
+          - key: secret
+            mode: 384
+            path: .netrc
+          secretName: netrc-secret
   - always_run: true
     annotations:
       testgrid-create-test-group: "false"
@@ -225,6 +277,8 @@ presubmits:
       - command:
         - ./prow/proxy-presubmit-tsan.sh
         env:
+        - name: BUILD_WITH_CONTAINER
+          value: "0"
         - name: BAZEL_BUILD_RBE_INSTANCE
         - name: ENVOY_PREFIX
           value: envoy
@@ -245,6 +299,10 @@ presubmits:
         - mountPath: /home/prow/go/pkg
           name: build-cache
           subPath: gomod
+        - mountPath: /home/.netrc
+          name: netrc
+          readOnly: true
+          subPath: .netrc
       nodeSelector:
         testing: build-pool
       serviceAccountName: prowjob-private-sa
@@ -253,6 +311,13 @@ presubmits:
           path: /var/tmp/prow/cache
           type: DirectoryOrCreate
         name: build-cache
+      - name: netrc
+        secret:
+          items:
+          - key: secret
+            mode: 384
+            path: .netrc
+          secretName: netrc-secret
   - always_run: true
     annotations:
       testgrid-create-test-group: "false"
@@ -272,6 +337,8 @@ presubmits:
       - command:
         - ./prow/proxy-presubmit-release.sh
         env:
+        - name: BUILD_WITH_CONTAINER
+          value: "0"
         - name: BAZEL_BUILD_RBE_INSTANCE
         - name: ENVOY_PREFIX
           value: envoy
@@ -292,6 +359,10 @@ presubmits:
         - mountPath: /home/prow/go/pkg
           name: build-cache
           subPath: gomod
+        - mountPath: /home/.netrc
+          name: netrc
+          readOnly: true
+          subPath: .netrc
       nodeSelector:
         testing: build-pool
       serviceAccountName: prowjob-private-sa
@@ -300,6 +371,13 @@ presubmits:
           path: /var/tmp/prow/cache
           type: DirectoryOrCreate
         name: build-cache
+      - name: netrc
+        secret:
+          items:
+          - key: secret
+            mode: 384
+            path: .netrc
+          secretName: netrc-secret
   - always_run: true
     annotations:
       testgrid-create-test-group: "false"
@@ -319,6 +397,8 @@ presubmits:
       - command:
         - ./prow/proxy-presubmit-centos-release.sh
         env:
+        - name: BUILD_WITH_CONTAINER
+          value: "0"
         - name: BAZEL_BUILD_RBE_INSTANCE
         - name: ENVOY_PREFIX
           value: envoy
@@ -339,6 +419,10 @@ presubmits:
         - mountPath: /home/prow/go/pkg
           name: build-cache
           subPath: gomod
+        - mountPath: /home/.netrc
+          name: netrc
+          readOnly: true
+          subPath: .netrc
       nodeSelector:
         testing: build-pool
       serviceAccountName: prowjob-private-sa
@@ -347,6 +431,13 @@ presubmits:
           path: /var/tmp/prow/cache
           type: DirectoryOrCreate
         name: build-cache
+      - name: netrc
+        secret:
+          items:
+          - key: secret
+            mode: 384
+            path: .netrc
+          secretName: netrc-secret
   - always_run: true
     annotations:
       testgrid-create-test-group: "false"
@@ -367,6 +458,8 @@ presubmits:
         - entrypoint
         - ./prow/proxy-presubmit-wasm.sh
         env:
+        - name: BUILD_WITH_CONTAINER
+          value: "0"
         - name: BAZEL_BUILD_RBE_INSTANCE
         - name: ENVOY_PREFIX
           value: envoy
@@ -389,6 +482,10 @@ presubmits:
           subPath: gomod
         - mountPath: /var/lib/docker
           name: docker-root
+        - mountPath: /home/.netrc
+          name: netrc
+          readOnly: true
+          subPath: .netrc
       nodeSelector:
         testing: build-pool
       serviceAccountName: prowjob-private-sa
@@ -399,3 +496,10 @@ presubmits:
         name: build-cache
       - emptyDir: {}
         name: docker-root
+      - name: netrc
+        secret:
+          items:
+          - key: secret
+            mode: 384
+            path: .netrc
+          secretName: netrc-secret
