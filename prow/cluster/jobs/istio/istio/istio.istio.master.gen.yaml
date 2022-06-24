@@ -21,7 +21,7 @@ periodics:
       env:
       - name: BUILD_WITH_CONTAINER
         value: "0"
-      image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+      image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
       name: ""
       resources:
         limits:
@@ -89,7 +89,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -131,7 +131,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -180,7 +180,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -224,7 +224,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -288,7 +288,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -356,7 +356,7 @@ postsubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: --istio.test.skipVM
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -420,7 +420,7 @@ postsubmits:
           value: "0"
         - name: VARIANT
           value: distroless
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -486,7 +486,7 @@ postsubmits:
           value: "true"
         - name: IP_FAMILY
           value: ipv6
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -548,7 +548,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -610,7 +610,71 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
+        name: ""
+        resources:
+          limits:
+            cpu: "5"
+            memory: 24Gi
+          requests:
+            cpu: "5"
+            memory: 3Gi
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /home/prow/go/pkg
+          name: build-cache
+          subPath: gomod
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+          readOnly: true
+        - mountPath: /var/lib/docker
+          name: docker-root
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        testing: test-pool
+      volumes:
+      - hostPath:
+          path: /var/tmp/prow/cache
+          type: DirectoryOrCreate
+        name: build-cache
+      - hostPath:
+          path: /lib/modules
+          type: Directory
+        name: modules
+      - hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+        name: cgroup
+      - emptyDir: {}
+        name: docker-root
+  - annotations:
+      testgrid-alert-email: istio-oncall@googlegroups.com
+      testgrid-dashboards: istio_istio_postsubmit
+      testgrid-num-failures-to-alert: "1"
+    branches:
+    - ^master$
+    decorate: true
+    name: integ-pilot-cpp_istio_postsubmit
+    path_alias: istio.io/istio
+    spec:
+      containers:
+      - command:
+        - entrypoint
+        - prow/integ-suite-kind.sh
+        - test.integration.pilot.kube
+        env:
+        - name: BUILD_WITH_CONTAINER
+          value: "0"
+        - name: GRPC_ECHO_IMAGE
+          value: grpctesting/istio_echo_cpp
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -674,7 +738,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -742,7 +806,7 @@ postsubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: --istio.test.skipVM
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -810,7 +874,7 @@ postsubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: --istio.test.skipVM
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -872,7 +936,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -936,7 +1000,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -1004,7 +1068,7 @@ postsubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: --istio.test.skipVM
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -1066,7 +1130,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -1136,7 +1200,7 @@ postsubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -1206,7 +1270,7 @@ postsubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -1276,7 +1340,7 @@ postsubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -1346,7 +1410,7 @@ postsubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -1416,7 +1480,7 @@ postsubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -1486,7 +1550,7 @@ postsubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -1556,7 +1620,7 @@ postsubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -1624,7 +1688,7 @@ postsubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -1696,7 +1760,7 @@ postsubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.retries=1 '
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -1764,7 +1828,7 @@ postsubmits:
           value: ' --istio.test.retries=1 --istio.test.istio.enableCNI=true '
         - name: TEST_SELECT
           value: -flaky
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -1830,7 +1894,7 @@ postsubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.istio.operatorOptions=values.pilot.env.UNSAFE_PILOT_ENABLE_RUNTIME_ASSERTIONS=true '
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -1916,7 +1980,7 @@ postsubmits:
           value: /etc/grafana/token
         - name: GOOGLE_APPLICATION_CREDENTIALS
           value: /etc/service-account/rel-pipeline-service-account.json
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -1999,7 +2063,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -2040,7 +2104,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -2088,7 +2152,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -2132,7 +2196,7 @@ presubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.istio.enableCNI=true '
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -2193,7 +2257,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -2256,7 +2320,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -2323,7 +2387,7 @@ presubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: --istio.test.skipVM
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -2386,7 +2450,7 @@ presubmits:
           value: "0"
         - name: VARIANT
           value: distroless
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -2451,7 +2515,7 @@ presubmits:
           value: "true"
         - name: IP_FAMILY
           value: ipv6
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -2512,7 +2576,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -2573,7 +2637,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -2636,7 +2700,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -2703,7 +2767,7 @@ presubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: --istio.test.skipVM
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -2770,7 +2834,7 @@ presubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: --istio.test.skipVM
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -2831,7 +2895,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -2894,7 +2958,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -2961,7 +3025,7 @@ presubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: --istio.test.skipVM
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -3022,7 +3086,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -3088,7 +3152,7 @@ presubmits:
           value: "0"
         - name: INTEGRATION_TEST_FLAGS
           value: ' --istio.test.istio.operatorOptions=values.pilot.env.UNSAFE_PILOT_ENABLE_RUNTIME_ASSERTIONS=true '
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -3148,7 +3212,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -3190,7 +3254,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -3231,7 +3295,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
@@ -3282,7 +3346,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-2022-06-13T19-37-37
+        image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
         name: ""
         resources:
           limits:
