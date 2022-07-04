@@ -1,7 +1,7 @@
 org: istio
 repo: istio
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools:master-8811c381c3cf639afbd4b50f36bfbf2131659ca4
+image: gcr.io/istio-testing/build-tools:master-f208294727fba3e0eab51c80f3d2fcf9b3ea992c
 jobs:
   - name: unit-tests
     command: [entrypoint, make, -e, "T=-v -count=1", build, racetest, binaries-test]

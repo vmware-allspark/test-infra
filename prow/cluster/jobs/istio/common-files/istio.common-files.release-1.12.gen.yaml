@@ -18,7 +18,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.12-2022-05-23T15-37-29
+        image: gcr.io/istio-testing/build-tools:release-1.12-2022-06-28T09-02-11
         name: ""
         resources:
           limits:
@@ -70,7 +70,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.12-2022-05-23T15-37-29
+        image: gcr.io/istio-testing/build-tools:release-1.12-2022-06-28T09-02-11
         name: ""
         resources:
           limits:
@@ -128,7 +128,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.12-2022-05-23T15-37-29
+        image: gcr.io/istio-testing/build-tools:release-1.12-2022-06-28T09-02-11
         name: ""
         resources:
           limits:
@@ -184,13 +184,11 @@ postsubmits:
         - --script-path=../test-infra/tools/automator/scripts/update-images.sh
         - --labels=release-notes-none
         - --verbose
-        - --
-        - --post=make gen
         - --source=$AUTOMATOR_ROOT_DIR/files/common/scripts/setup_env.sh
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.12-2022-05-23T15-37-29
+        image: gcr.io/istio-testing/build-tools:release-1.12-2022-06-28T09-02-11
         name: ""
         resources:
           limits:
@@ -237,7 +235,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.12-2022-05-23T15-37-29
+        image: gcr.io/istio-testing/build-tools:release-1.12-2022-06-28T09-02-11
         name: ""
         resources:
           limits:
