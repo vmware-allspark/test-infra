@@ -1,6 +1,6 @@
 branches:
 - release-1.14
-image: gcr.io/istio-testing/build-tools:release-1.14-f77fd7ec70158fe5e3af4869d3e0c2df152f4c94
+image: gcr.io/istio-testing/build-tools:release-1.14-79fe917b1d4737b48faed28e7a6343e16d6c8512
 jobs:
 - command:
   - entrypoint
@@ -3773,7 +3773,7 @@ jobs:
   - entrypoint
   - prow/integ-suite-kind.sh
   - --node-image
-  - gcr.io/istio-testing/kind-node:v1.24.0-beta.0
+  - gcr.io/istio-testing/kind-node:v1.24.0-0.13.0
   - test.integration.kube
   env:
   - name: INTEGRATION_TEST_FLAGS
@@ -3899,7 +3899,7 @@ jobs:
   - entrypoint
   - prow/integ-suite-kind.sh
   - --node-image
-  - gcr.io/istio-testing/kind-node:v1.25.0-alpha.1
+  - gcr.io/istio-testing/kind-node:v1.25.0-alpha.2
   - test.integration.kube
   env:
   - name: INTEGRATION_TEST_FLAGS
