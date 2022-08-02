@@ -32,7 +32,7 @@ periodics:
       env:
       - name: BUILD_WITH_CONTAINER
         value: "0"
-      image: gcr.io/istio-testing/build-tools:master-88a79b0889d7cefe8cefd4cd3cf051c626efb2d7
+      image: gcr.io/istio-testing/build-tools:master-0167bb3e0eb427414fcb23f016f24d117b04db5e
       name: ""
       resources:
         limits:
@@ -80,7 +80,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-88a79b0889d7cefe8cefd4cd3cf051c626efb2d7
+        image: gcr.io/istio-testing/build-tools:master-0167bb3e0eb427414fcb23f016f24d117b04db5e
         name: ""
         resources:
           limits:
@@ -120,7 +120,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-88a79b0889d7cefe8cefd4cd3cf051c626efb2d7
+        image: gcr.io/istio-testing/build-tools:master-0167bb3e0eb427414fcb23f016f24d117b04db5e
         name: ""
         resources:
           limits:
@@ -160,7 +160,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-88a79b0889d7cefe8cefd4cd3cf051c626efb2d7
+        image: gcr.io/istio-testing/build-tools:master-0167bb3e0eb427414fcb23f016f24d117b04db5e
         name: ""
         resources:
           limits:
@@ -192,56 +192,6 @@ postsubmits:
     cluster: test-infra-trusted
     decorate: true
     max_concurrency: 1
-    name: push-mason_test-infra_postsubmit
-    path_alias: istio.io/test-infra
-    run_if_changed: ^boskos/cmd/mason/.+
-    spec:
-      containers:
-      - command:
-        - make
-        - -C
-        - boskos
-        - mason-image
-        env:
-        - name: BUILD_WITH_CONTAINER
-          value: "0"
-        image: gcr.io/istio-testing/build-tools:master-88a79b0889d7cefe8cefd4cd3cf051c626efb2d7
-        name: ""
-        resources:
-          limits:
-            cpu: "3"
-            memory: 24Gi
-          requests:
-            cpu: "1"
-            memory: 3Gi
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /home/prow/go/pkg
-          name: build-cache
-          subPath: gomod
-        - mountPath: /var/lib/docker
-          name: docker-root
-      nodeSelector:
-        kubernetes.io/arch: amd64
-        prod: prow
-      serviceAccountName: prowjob-advanced-sa
-      volumes:
-      - hostPath:
-          path: /var/tmp/prow/cache
-          type: DirectoryOrCreate
-        name: build-cache
-      - emptyDir: {}
-        name: docker-root
-  - annotations:
-      testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_test-infra_postsubmit
-      testgrid-num-failures-to-alert: "1"
-    branches:
-    - ^master$
-    cluster: test-infra-trusted
-    decorate: true
-    max_concurrency: 1
     name: push-prowbazel_test-infra_postsubmit
     path_alias: istio.io/test-infra
     run_if_changed: ^docker/prowbazel/Makefile$
@@ -257,7 +207,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-88a79b0889d7cefe8cefd4cd3cf051c626efb2d7
+        image: gcr.io/istio-testing/build-tools:master-0167bb3e0eb427414fcb23f016f24d117b04db5e
         name: ""
         resources:
           limits:
@@ -308,7 +258,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-88a79b0889d7cefe8cefd4cd3cf051c626efb2d7
+        image: gcr.io/istio-testing/build-tools:master-0167bb3e0eb427414fcb23f016f24d117b04db5e
         name: ""
         resources:
           limits:
@@ -359,7 +309,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-88a79b0889d7cefe8cefd4cd3cf051c626efb2d7
+        image: gcr.io/istio-testing/build-tools:master-0167bb3e0eb427414fcb23f016f24d117b04db5e
         name: ""
         resources:
           limits:
@@ -410,7 +360,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-88a79b0889d7cefe8cefd4cd3cf051c626efb2d7
+        image: gcr.io/istio-testing/build-tools:master-0167bb3e0eb427414fcb23f016f24d117b04db5e
         name: ""
         resources:
           limits:
@@ -456,7 +406,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-88a79b0889d7cefe8cefd4cd3cf051c626efb2d7
+        image: gcr.io/istio-testing/build-tools:master-0167bb3e0eb427414fcb23f016f24d117b04db5e
         name: ""
         resources:
           limits:
@@ -495,7 +445,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-88a79b0889d7cefe8cefd4cd3cf051c626efb2d7
+        image: gcr.io/istio-testing/build-tools:master-0167bb3e0eb427414fcb23f016f24d117b04db5e
         name: ""
         resources:
           limits:
@@ -534,49 +484,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-88a79b0889d7cefe8cefd4cd3cf051c626efb2d7
-        name: ""
-        resources:
-          limits:
-            cpu: "3"
-            memory: 24Gi
-          requests:
-            cpu: "1"
-            memory: 3Gi
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /home/prow/go/pkg
-          name: build-cache
-          subPath: gomod
-      nodeSelector:
-        kubernetes.io/arch: amd64
-        testing: test-pool
-      volumes:
-      - hostPath:
-          path: /var/tmp/prow/cache
-          type: DirectoryOrCreate
-        name: build-cache
-  - always_run: false
-    annotations:
-      testgrid-dashboards: istio_test-infra
-    branches:
-    - ^master$
-    decorate: true
-    name: unit-test-authentikos_test-infra
-    path_alias: istio.io/test-infra
-    run_if_changed: ^authentikos/(.+\.go|go\.mod)$
-    spec:
-      containers:
-      - command:
-        - make
-        - -C
-        - authentikos
-        - unit-test
-        env:
-        - name: BUILD_WITH_CONTAINER
-          value: "0"
-        image: gcr.io/istio-testing/build-tools:master-88a79b0889d7cefe8cefd4cd3cf051c626efb2d7
+        image: gcr.io/istio-testing/build-tools:master-0167bb3e0eb427414fcb23f016f24d117b04db5e
         name: ""
         resources:
           limits:

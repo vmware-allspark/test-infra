@@ -1,6 +1,6 @@
 org: istio
 repo: test-infra
-image: gcr.io/istio-testing/build-tools:master-88a79b0889d7cefe8cefd4cd3cf051c626efb2d7
+image: gcr.io/istio-testing/build-tools:master-0167bb3e0eb427414fcb23f016f24d117b04db5e
 
 jobs:
   - name: lint
@@ -11,14 +11,6 @@ jobs:
 
   - name: gencheck
     command: [make, gen-check]
-
-  - name: unit-test-authentikos
-    types: [presubmit]
-    # trigger on changes in `authentikos/` directory to the following:
-    # - `.go`    : Golang source files. When the source code changes, test the validity of the change.
-    # - `go.mod` : Golang module dependencies. When the dependencies change, test the compatibility of the change.
-    regex: '^authentikos/(.+\.go|go\.mod)$'
-    command: [make, -C, authentikos, unit-test]
 
 # disable as it requires GOOGLE_AUTHENTICATION_CREDENTIALs which is no longer supported
 #  - name: integ-test-authentikos
@@ -32,21 +24,6 @@ jobs:
 #    regex: '^authentikos/(test/.+|.+\.go|go\.mod)$'
 #    command: [entrypoint, make, -C, authentikos, integ-test]
 #    requirements: [kind]
-
-  - name: push-mason
-    service_account_name: prowjob-advanced-sa
-    types: [postsubmit]
-    regex: '^boskos/cmd/mason/.+'
-    cluster: test-infra-trusted
-    max_concurrency: 1
-    command:
-    - make
-    - -C
-    - boskos
-    - mason-image
-    requirements: [docker]
-    node_selector:
-        prod: prow
 
   - name: push-prowbazel
     service_account_name: prowjob-advanced-sa
