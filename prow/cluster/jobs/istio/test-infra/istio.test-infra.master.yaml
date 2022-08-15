@@ -9,7 +9,7 @@ presubmits:
       testgrid-create-test-group: "false"
     spec:
       containers:
-      - image: gcr.io/k8s-prow/configurator:v20220811-228f8bc1d6
+      - image: gcr.io/k8s-prow/configurator:v20220813-fe50cd493f
         command:
         - configurator
         args:
@@ -49,7 +49,7 @@ postsubmits:
         report_template: 'Deploying prow: {{.Status.State}}. <{{.Spec.Refs.BaseLink}}|Commit
           {{.Spec.Refs.BaseSHA}}> <{{.Status.URL}}|View logs> <https://testgrid.k8s.io/istio_test-infra_postsubmit#deploy-prow_test-infra_postsubmit|Job
           history on Testgrid>'
-    run_if_changed: ^prow/cluster/(?:gcsweb/|velodrome/|monitoring/|build/|private/|[^/]+\.yaml$)
+    run_if_changed: ^prow/cluster/(?:gcsweb/|monitoring/|build/|private/|[^/]+\.yaml$)
     spec:
       serviceAccountName: prow-deployer
       containers:
@@ -59,11 +59,10 @@ postsubmits:
         - prow
         - deploy
         - deploy-gcsweb
-        - deploy-velodrome
         - deploy-monitoring
         - deploy-build
         - deploy-private
-        image: gcr.io/istio-testing/build-tools:master-d630410610242ef7bc250b49d66e0de8af856f10
+        image: gcr.io/istio-testing/build-tools:master-a0bd585758d9a997e9a824f957a242338cc78c53
         resources:
           limits:
             cpu: "3"
