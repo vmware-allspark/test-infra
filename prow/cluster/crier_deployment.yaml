@@ -19,7 +19,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: crier
-        image: gcr.io/k8s-prow/crier:v20221028-a8625c1f93
+        image: gcr.io/k8s-prow/crier:v20221102-8efc754883
         args:
         - --blob-storage-workers=1
         - --config-path=/etc/config/config.yaml
@@ -32,6 +32,10 @@ spec:
         - --kubernetes-blob-storage-workers=1
         - --slack-token-file=/etc/slack/token
         - --slack-workers=1
+        env:
+        # Use KUBECONFIG envvar rather than --kubeconfig flag in order to provide multiple configs to merge.
+        - name: KUBECONFIG
+          value: "/etc/kubeconfig/istio-config:/etc/kubeconfig-build-test-infra-trusted/kubeconfig"
         ports:
         - name: metrics
           containerPort: 9090
@@ -44,6 +48,9 @@ spec:
           readOnly: true
         - mountPath: /etc/kubeconfig
           name: kubeconfig
+          readOnly: true
+        - mountPath: /etc/kubeconfig-build-test-infra-trusted
+          name: kubeconfig-build-test-infra-trusted
           readOnly: true
         - name: config
           mountPath: /etc/config
@@ -62,6 +69,10 @@ spec:
         secret:
           defaultMode: 420
           secretName: kubeconfig
+      - name: kubeconfig-build-test-infra-trusted
+        secret:
+          defaultMode: 420
+          secretName: kubeconfig-build-test-infra-trusted
       - name: config
         configMap:
           name: config

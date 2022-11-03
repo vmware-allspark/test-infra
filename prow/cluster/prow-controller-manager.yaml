@@ -19,13 +19,16 @@ spec:
       serviceAccountName: prow-controller-manager
       containers:
       - name: prow-controller-manager
-        image: gcr.io/k8s-prow/prow-controller-manager:v20221028-a8625c1f93
+        image: gcr.io/k8s-prow/prow-controller-manager:v20221102-8efc754883
         args:
         - --config-path=/etc/config/config.yaml
         - --dry-run=false
         - --enable-controller=plank
         - --job-config-path=/etc/job-config
-        - --kubeconfig=/etc/kubeconfig/istio-config
+        env:
+        # Use KUBECONFIG envvar rather than --kubeconfig flag in order to provide multiple configs to merge.
+        - name: KUBECONFIG
+          value: "/etc/kubeconfig/istio-config:/etc/kubeconfig-build-test-infra-trusted/kubeconfig"
         ports:
         - name: metrics
           containerPort: 9090
@@ -39,6 +42,9 @@ spec:
         - mountPath: /etc/kubeconfig
           name: kubeconfig
           readOnly: true
+        - mountPath: /etc/kubeconfig-build-test-infra-trusted
+          name: kubeconfig-build-test-infra-trusted
+          readOnly: true
       volumes:
       - name: config
         configMap:
@@ -50,6 +56,10 @@ spec:
         secret:
           defaultMode: 420
           secretName: kubeconfig
+      - name: kubeconfig-build-test-infra-trusted
+        secret:
+          defaultMode: 420
+          secretName: kubeconfig-build-test-infra-trusted
 ---
 apiVersion: v1
 kind: ServiceAccount

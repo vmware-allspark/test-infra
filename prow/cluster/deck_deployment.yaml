@@ -24,7 +24,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: deck
-        image: gcr.io/k8s-prow/deck:v20221028-a8625c1f93
+        image: gcr.io/k8s-prow/deck:v20221102-8efc754883
         ports:
         - name: http
           containerPort: 8080
@@ -37,7 +37,6 @@ spec:
         - --redirect-http-to=prow.istio.io
         - --spyglass
         - --tide-url=http://tide/
-        - --kubeconfig=/etc/kubeconfig/istio-config
         - --rerun-creates-job
         - --oauth-url=/github-login
         - --github-token-path=/etc/github/oauth
@@ -45,6 +44,10 @@ spec:
         - --github-endpoint=https://api.github.com
         - --github-oauth-config-file=/etc/githuboauth/secret
         - --cookie-secret=/etc/cookie/secret
+        env:
+        # Use KUBECONFIG envvar rather than --kubeconfig flag in order to provide multiple configs to merge.
+        - name: KUBECONFIG
+          value: "/etc/kubeconfig/istio-config:/etc/kubeconfig-build-test-infra-trusted/kubeconfig"
         volumeMounts:
         - name: oauth-config
           mountPath: /etc/githuboauth
@@ -63,6 +66,9 @@ spec:
           readOnly: true
         - mountPath: /etc/kubeconfig
           name: kubeconfig
+          readOnly: true
+        - mountPath: /etc/kubeconfig-build-test-infra-trusted
+          name: kubeconfig-build-test-infra-trusted
           readOnly: true
         livenessProbe:
           httpGet:
@@ -97,3 +103,7 @@ spec:
         secret:
           defaultMode: 420
           secretName: kubeconfig
+      - name: kubeconfig-build-test-infra-trusted
+        secret:
+          defaultMode: 420
+          secretName: kubeconfig-build-test-infra-trusted
