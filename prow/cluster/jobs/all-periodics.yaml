@@ -1,5 +1,5 @@
 istio_container_with_kind: &istio_container_with_kind
-  image: gcr.io/istio-testing/build-tools:master-22361bb38783e99292f4c2b6695f46669f6ed6e8
+  image: gcr.io/istio-testing/build-tools:master-d9e298f7cf9bb76b7f5dd9f18367725b05ad626b
   securityContext:
     privileged: true
   resources:
