@@ -1,7 +1,7 @@
 org: istio
 repo: istio
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools:master-ed24c9f15e5b6d2698260ca67704ecc0965cd798
+image: gcr.io/istio-testing/build-tools:master-67f86458b964c032be51b78e94216b00c5cae21b
 jobs:
   - name: unit-tests
     architectures: [amd64, arm64]
@@ -340,16 +340,15 @@ jobs:
       - name: INTEGRATION_TEST_FLAGS
         value: " --istio.test.retries=1 "
 
-  - name: integ-k8s-126
+  - name: integ-k8s-125
     types: [postsubmit]
     command:
       - entrypoint
       - prow/integ-suite-kind.sh
       - --node-image
-      - gcr.io/istio-testing/kind-node:v1.26.0
+      - gcr.io/istio-testing/kind-node:v1.25.4
       - test.integration.kube
     requirements: [kind]
-    modifiers: [hidden] # Hidden until job is stable
     timeout: 4h
     env:
       - name: INTEGRATION_TEST_FLAGS
