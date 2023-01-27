@@ -1,7 +1,7 @@
 org: istio
 repo: istio.io
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools:master-4054415f72c76fb65f422860bf5995ca22eeda9d
+image: gcr.io/istio-testing/build-tools:master-96522631475bda0114bcab54c375877727c58132
 
 jobs:
   - name: lint
@@ -13,6 +13,7 @@ jobs:
   - name: doc.test.profile_default
     command: [entrypoint, prow/integ-suite-kind.sh, doc.test.profile_default]
     requirements: [kind]
+    resources: 4Gi
 
   - name: doc.test.profile_demo
     command: [entrypoint, prow/integ-suite-kind.sh, doc.test.profile_demo]
@@ -27,6 +28,7 @@ jobs:
     requirements: [kind]
     types: [presubmit]
     modifiers: [presubmit_optional, hidden]
+    resources: 4Gi
 
   - name: doc.test.multicluster
     command:
@@ -96,3 +98,11 @@ resources_presets:
     limits:
       memory: "24Gi"
       cpu: "5000m"
+  # some gateway-api tests require more memory
+  4Gi:
+    requests:
+      memory: "4Gi"
+      cpu: "5000m"
+    limits:
+      memory: "24Gi"
+      cpu: "8000m"
