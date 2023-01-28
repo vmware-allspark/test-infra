@@ -30,7 +30,7 @@ periodics:
       env:
       - name: BUILD_WITH_CONTAINER
         value: "0"
-      image: gcr.io/istio-testing/build-tools:master-96522631475bda0114bcab54c375877727c58132
+      image: gcr.io/istio-testing/build-tools:master-6feecaa7b2e32bece24b06e719407e524a85fa61
       name: ""
       resources:
         limits:
@@ -88,7 +88,7 @@ periodics:
       env:
       - name: BUILD_WITH_CONTAINER
         value: "0"
-      image: gcr.io/istio-testing/build-tools:master-96522631475bda0114bcab54c375877727c58132
+      image: gcr.io/istio-testing/build-tools:master-6feecaa7b2e32bece24b06e719407e524a85fa61
       name: ""
       resources:
         limits:
@@ -136,7 +136,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-96522631475bda0114bcab54c375877727c58132
+        image: gcr.io/istio-testing/build-tools:master-6feecaa7b2e32bece24b06e719407e524a85fa61
         name: ""
         resources:
           limits:
@@ -176,7 +176,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-96522631475bda0114bcab54c375877727c58132
+        image: gcr.io/istio-testing/build-tools:master-6feecaa7b2e32bece24b06e719407e524a85fa61
         name: ""
         resources:
           limits:
@@ -217,7 +217,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-96522631475bda0114bcab54c375877727c58132
+        image: gcr.io/istio-testing/build-tools:master-6feecaa7b2e32bece24b06e719407e524a85fa61
         name: ""
         resources:
           limits:
@@ -276,7 +276,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-96522631475bda0114bcab54c375877727c58132
+        image: gcr.io/istio-testing/build-tools:master-6feecaa7b2e32bece24b06e719407e524a85fa61
         name: ""
         resources:
           limits:
@@ -335,7 +335,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-96522631475bda0114bcab54c375877727c58132
+        image: gcr.io/istio-testing/build-tools:master-6feecaa7b2e32bece24b06e719407e524a85fa61
         name: ""
         resources:
           limits:
@@ -396,7 +396,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-96522631475bda0114bcab54c375877727c58132
+        image: gcr.io/istio-testing/build-tools:master-6feecaa7b2e32bece24b06e719407e524a85fa61
         name: ""
         resources:
           limits:
@@ -456,7 +456,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-96522631475bda0114bcab54c375877727c58132
+        image: gcr.io/istio-testing/build-tools:master-6feecaa7b2e32bece24b06e719407e524a85fa61
         name: ""
         resources:
           limits:
@@ -497,7 +497,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-96522631475bda0114bcab54c375877727c58132
+        image: gcr.io/istio-testing/build-tools:master-6feecaa7b2e32bece24b06e719407e524a85fa61
         name: ""
         resources:
           limits:
@@ -539,7 +539,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-96522631475bda0114bcab54c375877727c58132
+        image: gcr.io/istio-testing/build-tools:master-6feecaa7b2e32bece24b06e719407e524a85fa61
         name: ""
         resources:
           limits:
@@ -600,7 +600,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-96522631475bda0114bcab54c375877727c58132
+        image: gcr.io/istio-testing/build-tools:master-6feecaa7b2e32bece24b06e719407e524a85fa61
         name: ""
         resources:
           limits:
@@ -661,7 +661,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-96522631475bda0114bcab54c375877727c58132
+        image: gcr.io/istio-testing/build-tools:master-6feecaa7b2e32bece24b06e719407e524a85fa61
         name: ""
         resources:
           limits:
@@ -710,71 +710,6 @@ presubmits:
     branches:
     - ^master$
     decorate: true
-    name: doc.test.profile_default_gateway_istio.io
-    optional: true
-    path_alias: istio.io/istio.io
-    reporter_config:
-      slack: {}
-    rerun_command: /test doc.test.profile_default_gateway
-    skip_report: true
-    spec:
-      containers:
-      - command:
-        - entrypoint
-        - prow/integ-suite-kind.sh
-        - doc.test.profile_default_gateway
-        env:
-        - name: BUILD_WITH_CONTAINER
-          value: "0"
-        image: gcr.io/istio-testing/build-tools:master-96522631475bda0114bcab54c375877727c58132
-        name: ""
-        resources:
-          limits:
-            cpu: "8"
-            memory: 24Gi
-          requests:
-            cpu: "5"
-            memory: 6Gi
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /home/prow/go/pkg
-          name: build-cache
-          subPath: gomod
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-          readOnly: true
-        - mountPath: /var/lib/docker
-          name: docker-root
-      nodeSelector:
-        kubernetes.io/arch: amd64
-        testing: test-pool
-      volumes:
-      - hostPath:
-          path: /var/tmp/prow/cache
-          type: DirectoryOrCreate
-        name: build-cache
-      - hostPath:
-          path: /lib/modules
-          type: Directory
-        name: modules
-      - hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-        name: cgroup
-      - emptyDir: {}
-        name: docker-root
-    trigger: ((?m)^/test( | .* )doc.test.profile_default_gateway,?($|\s.*))|((?m)^/test(
-      | .* )doc.test.profile_default_gateway_istio.io,?($|\s.*))
-  - always_run: true
-    annotations:
-      testgrid-dashboards: istio_istio.io
-    branches:
-    - ^master$
-    decorate: true
     name: doc.test.multicluster_istio.io
     path_alias: istio.io/istio.io
     rerun_command: /test doc.test.multicluster
@@ -789,7 +724,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-96522631475bda0114bcab54c375877727c58132
+        image: gcr.io/istio-testing/build-tools:master-6feecaa7b2e32bece24b06e719407e524a85fa61
         name: ""
         resources:
           limits:
@@ -859,7 +794,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-96522631475bda0114bcab54c375877727c58132
+        image: gcr.io/istio-testing/build-tools:master-6feecaa7b2e32bece24b06e719407e524a85fa61
         name: ""
         resources:
           limits:
