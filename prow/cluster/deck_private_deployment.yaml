@@ -19,7 +19,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: deck-private
-        image: gcr.io/k8s-prow/deck:v20230328-15a98b0443
+        image: gcr.io/k8s-prow/deck:v20230412-a86d65c3c2
         ports:
         - name: http
           containerPort: 8080
@@ -41,7 +41,7 @@ spec:
         env:
         # Use KUBECONFIG envvar rather than --kubeconfig flag in order to provide multiple configs to merge.
         - name: KUBECONFIG
-          value: "/etc/kubeconfig/istio-config:/etc/kubeconfig-build-test-infra-trusted/kubeconfig"
+          value: "/etc/kubeconfig/istio-config:/etc/kubeconfig-build-test-infra-trusted/kubeconfig:/etc/kubeconfig-prow-arm-private/kubeconfig"
         volumeMounts:
         - name: oauth-config
           mountPath: /etc/githuboauth
@@ -63,6 +63,9 @@ spec:
           readOnly: true
         - mountPath: /etc/kubeconfig-build-test-infra-trusted
           name: kubeconfig-build-test-infra-trusted
+          readOnly: true
+        - name: kubeconfig-prow-arm-private
+          mountPath: /etc/kubeconfig-prow-arm-private
           readOnly: true
         - name: service-account
           mountPath: /etc/service-account
@@ -146,6 +149,10 @@ spec:
         secret:
           defaultMode: 420
           secretName: kubeconfig-build-test-infra-trusted
+      - name: kubeconfig-prow-arm-private
+        secret:
+          defaultMode: 420
+          secretName: kubeconfig-prow-arm-private
       - name: service-account
         secret:
           secretName: prow-internal-storage-service-account
