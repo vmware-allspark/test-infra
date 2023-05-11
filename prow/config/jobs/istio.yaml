@@ -9,7 +9,6 @@ jobs:
     resources: dedicated
 
   - name: release-test
-    service_account_name: prowjob-advanced-sa
     types: [presubmit]
     command: [entrypoint, prow/release-test.sh]
     requirements: [docker]
@@ -361,6 +360,12 @@ jobs:
       value: "true"
     command: [entrypoint, ../release-builder/release/build.sh]
     requirements: [release, docker, github-optional]
+
+  - name: bookinfo-build
+    types: [presubmit]
+    command: [entrypoint, make, bookinfo.build]
+    regex: '^samples/bookinfo/src/'
+    requirements: [docker]
 
   - name: update-go-control-plane
     types: [periodic]
