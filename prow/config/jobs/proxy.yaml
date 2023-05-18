@@ -1,7 +1,7 @@
 org: istio
 repo: proxy
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools-proxy:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+image: gcr.io/istio-testing/build-tools-proxy:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
 node_selector:
   testing: build-pool
 
@@ -49,7 +49,7 @@ jobs:
   service_account_name: prowjob-advanced-sa
   types: [presubmit]
   command: [./prow/proxy-presubmit-centos-release.sh]
-  image: gcr.io/istio-testing/build-tools-centos:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+  image: gcr.io/istio-testing/build-tools-centos:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
   timeout: 6h
 
 - name: check-wasm
@@ -86,14 +86,14 @@ jobs:
   service_account_name: prowjob-advanced-sa
   types: [postsubmit]
   command: [./prow/proxy-postsubmit-centos.sh]
-  image: gcr.io/istio-testing/build-tools-centos:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+  image: gcr.io/istio-testing/build-tools-centos:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
   timeout: 6h
 
 - name: update-istio
   types: [postsubmit]
   command:
   - ../test-infra/tools/automator/automator.sh
-  - --org=istio
+  - --org=$AUTOMATOR_ORG
   - --repo=istio
   - "--title=Automator: update proxy@$AUTOMATOR_SRC_BRANCH in $AUTOMATOR_ORG/$AUTOMATOR_REPO@$AUTOMATOR_BRANCH"
   - --labels=auto-merge,release-notes-none
@@ -103,7 +103,10 @@ jobs:
   - --cmd=bin/update_proxy.sh $AUTOMATOR_SHA
   requirements: [github]
   repos: [istio/test-infra@master]
-  image: gcr.io/istio-testing/build-tools:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+  image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
+  env:
+    - name: AUTOMATOR_ORG
+      value: istio
   timeout: 4h
 
 - name: update-proxy
@@ -111,7 +114,7 @@ jobs:
   interval: 24h
   command:
   - ../test-infra/tools/automator/automator.sh
-  - --org=istio
+  - --org=$AUTOMATOR_ORG
   - --repo=proxy
   - "--title=Automator: update envoy@$AUTOMATOR_SRC_BRANCH in $AUTOMATOR_ORG/$AUTOMATOR_REPO@$AUTOMATOR_BRANCH"
   - --labels=auto-merge
@@ -120,7 +123,10 @@ jobs:
   - --cmd=UPDATE_BRANCH=main scripts/update_envoy.sh
   requirements: [github]
   repos: [istio/test-infra@master]
-  image: gcr.io/istio-testing/build-tools:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+  image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
+  env:
+    - name: AUTOMATOR_ORG
+      value: istio
   timeout: 4h
 
 - name: update-go-control-plane
@@ -128,7 +134,7 @@ jobs:
   cron: "0 2 * * 0" # run each Sunday at 02:00AM UTC
   command:
   - ../test-infra/tools/automator/automator.sh
-  - --org=istio
+  - --org=$AUTOMATOR_ORG
   - --repo=proxy
   - "--title=Automator: update go-control-plane in $AUTOMATOR_ORG/$AUTOMATOR_REPO@$AUTOMATOR_BRANCH"
   - --labels=auto-merge,release-notes-none
@@ -138,7 +144,10 @@ jobs:
   disable_release_branching: true
   requirements: [github]
   repos: [istio/test-infra@master]
-  image: gcr.io/istio-testing/build-tools:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+  image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
+  env:
+    - name: AUTOMATOR_ORG
+      value: istio
 
 resources_presets:
   default:

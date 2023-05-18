@@ -20,7 +20,7 @@ periodics:
     containers:
     - command:
       - ../test-infra/tools/automator/automator.sh
-      - --org=istio
+      - --org=$AUTOMATOR_ORG
       - --repo=istio.io
       - '--title=Automator: update istio.io@$AUTOMATOR_SRC_BRANCH reference docs'
       - --labels=auto-merge,release-notes-none
@@ -28,9 +28,11 @@ periodics:
       - --token-path=/etc/github-token/oauth
       - --cmd=make update_ref_docs
       env:
+      - name: AUTOMATOR_ORG
+        value: istio
       - name: BUILD_WITH_CONTAINER
         value: "0"
-      image: gcr.io/istio-testing/build-tools:master-24cb3cb93708d8739901dfb5cfbae6574caa1f19
+      image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
       name: ""
       resources:
         limits:
@@ -79,16 +81,18 @@ periodics:
     containers:
     - command:
       - ../test-infra/tools/automator/automator.sh
-      - --org=istio
+      - --org=$AUTOMATOR_ORG
       - --repo=istio.io
       - '--title=Automator: update istio@$AUTOMATOR_SRC_BRANCH test reference'
       - --labels=release-notes-none
       - --token-path=/etc/github-token/oauth
       - --cmd=make update_test_reference
       env:
+      - name: AUTOMATOR_ORG
+        value: istio
       - name: BUILD_WITH_CONTAINER
         value: "0"
-      image: gcr.io/istio-testing/build-tools:master-24cb3cb93708d8739901dfb5cfbae6574caa1f19
+      image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
       name: ""
       resources:
         limits:
@@ -136,7 +140,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-24cb3cb93708d8739901dfb5cfbae6574caa1f19
+        image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -176,7 +180,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-24cb3cb93708d8739901dfb5cfbae6574caa1f19
+        image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -218,7 +222,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-24cb3cb93708d8739901dfb5cfbae6574caa1f19
+        image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -278,7 +282,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-24cb3cb93708d8739901dfb5cfbae6574caa1f19
+        image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -338,7 +342,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-24cb3cb93708d8739901dfb5cfbae6574caa1f19
+        image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -398,7 +402,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-24cb3cb93708d8739901dfb5cfbae6574caa1f19
+        image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -460,7 +464,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-24cb3cb93708d8739901dfb5cfbae6574caa1f19
+        image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -520,7 +524,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-24cb3cb93708d8739901dfb5cfbae6574caa1f19
+        image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -561,7 +565,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-24cb3cb93708d8739901dfb5cfbae6574caa1f19
+        image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -604,7 +608,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-24cb3cb93708d8739901dfb5cfbae6574caa1f19
+        image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -666,7 +670,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-24cb3cb93708d8739901dfb5cfbae6574caa1f19
+        image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -728,7 +732,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-24cb3cb93708d8739901dfb5cfbae6574caa1f19
+        image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -790,7 +794,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-24cb3cb93708d8739901dfb5cfbae6574caa1f19
+        image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -854,7 +858,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-24cb3cb93708d8739901dfb5cfbae6574caa1f19
+        image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -916,15 +920,17 @@ presubmits:
       containers:
       - command:
         - ../test-infra/tools/automator/automator.sh
-        - --org=istio
+        - --org=$AUTOMATOR_ORG
         - --repo=istio.io
         - --token-path=/etc/github-token/oauth
         - --cmd=make update_ref_docs
         - --dry-run
         env:
+        - name: AUTOMATOR_ORG
+          value: istio
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-24cb3cb93708d8739901dfb5cfbae6574caa1f19
+        image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:

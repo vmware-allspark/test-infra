@@ -22,7 +22,7 @@ periodics:
     containers:
     - command:
       - ../test-infra/tools/automator/automator.sh
-      - --org=istio
+      - --org=$AUTOMATOR_ORG
       - --repo=proxy
       - '--title=Automator: update envoy@$AUTOMATOR_SRC_BRANCH in $AUTOMATOR_ORG/$AUTOMATOR_REPO@$AUTOMATOR_BRANCH'
       - --labels=auto-merge
@@ -30,9 +30,11 @@ periodics:
       - --token-path=/etc/github-token/oauth
       - --cmd=UPDATE_BRANCH=main scripts/update_envoy.sh
       env:
+      - name: AUTOMATOR_ORG
+        value: istio
       - name: BUILD_WITH_CONTAINER
         value: "0"
-      image: gcr.io/istio-testing/build-tools:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+      image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
       name: ""
       resources:
         limits:
@@ -81,7 +83,7 @@ periodics:
     containers:
     - command:
       - ../test-infra/tools/automator/automator.sh
-      - --org=istio
+      - --org=$AUTOMATOR_ORG
       - --repo=proxy
       - '--title=Automator: update go-control-plane in $AUTOMATOR_ORG/$AUTOMATOR_REPO@$AUTOMATOR_BRANCH'
       - --labels=auto-merge,release-notes-none
@@ -89,9 +91,11 @@ periodics:
       - --token-path=/etc/github-token/oauth
       - --cmd=go get github.com/envoyproxy/go-control-plane@main && go mod tidy
       env:
+      - name: AUTOMATOR_ORG
+        value: istio
       - name: BUILD_WITH_CONTAINER
         value: "0"
-      image: gcr.io/istio-testing/build-tools:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+      image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
       name: ""
       resources:
         limits:
@@ -141,7 +145,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools-proxy:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+        image: gcr.io/istio-testing/build-tools-proxy:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -193,7 +197,7 @@ postsubmits:
           value: "1"
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools-proxy:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+        image: gcr.io/istio-testing/build-tools-proxy:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           requests:
@@ -241,7 +245,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools-centos:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+        image: gcr.io/istio-testing/build-tools-centos:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -285,7 +289,7 @@ postsubmits:
       containers:
       - command:
         - ../test-infra/tools/automator/automator.sh
-        - --org=istio
+        - --org=$AUTOMATOR_ORG
         - --repo=istio
         - '--title=Automator: update proxy@$AUTOMATOR_SRC_BRANCH in $AUTOMATOR_ORG/$AUTOMATOR_REPO@$AUTOMATOR_BRANCH'
         - --labels=auto-merge,release-notes-none
@@ -294,9 +298,11 @@ postsubmits:
         - --git-exclude=^common/
         - --cmd=bin/update_proxy.sh $AUTOMATOR_SHA
         env:
+        - name: AUTOMATOR_ORG
+          value: istio
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+        image: gcr.io/istio-testing/build-tools:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -345,7 +351,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools-proxy:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+        image: gcr.io/istio-testing/build-tools-proxy:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -388,7 +394,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools-proxy:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+        image: gcr.io/istio-testing/build-tools-proxy:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -431,7 +437,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools-proxy:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+        image: gcr.io/istio-testing/build-tools-proxy:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -474,7 +480,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools-proxy:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+        image: gcr.io/istio-testing/build-tools-proxy:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -522,7 +528,7 @@ presubmits:
           value: "1"
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools-proxy:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+        image: gcr.io/istio-testing/build-tools-proxy:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           requests:
@@ -567,7 +573,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools-centos:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+        image: gcr.io/istio-testing/build-tools-centos:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
@@ -611,7 +617,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools-proxy:master-d1c937bacd5fd54df479b065f2e56f3d643f68cb
+        image: gcr.io/istio-testing/build-tools-proxy:master-6a491d8a0a4c0e20232d55851286f3b8f62a15a6
         name: ""
         resources:
           limits:
