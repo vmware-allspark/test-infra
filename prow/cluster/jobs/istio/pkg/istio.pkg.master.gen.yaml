@@ -11,6 +11,7 @@ postsubmits:
     name: build_pkg_postsubmit
     path_alias: istio.io/pkg
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -18,7 +19,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -51,6 +52,7 @@ postsubmits:
     name: lint_pkg_postsubmit
     path_alias: istio.io/pkg
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -58,7 +60,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -91,6 +93,7 @@ postsubmits:
     name: test_pkg_postsubmit
     path_alias: istio.io/pkg
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -98,7 +101,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -131,6 +134,7 @@ postsubmits:
     name: gencheck_pkg_postsubmit
     path_alias: istio.io/pkg
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -138,7 +142,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -173,6 +177,7 @@ presubmits:
     path_alias: istio.io/pkg
     rerun_command: /test build
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -180,7 +185,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -214,6 +219,7 @@ presubmits:
     path_alias: istio.io/pkg
     rerun_command: /test lint
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -221,7 +227,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -255,6 +261,7 @@ presubmits:
     path_alias: istio.io/pkg
     rerun_command: /test test
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -262,7 +269,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -296,6 +303,7 @@ presubmits:
     path_alias: istio.io/pkg
     rerun_command: /test gencheck
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -303,7 +311,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:

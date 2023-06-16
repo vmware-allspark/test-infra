@@ -11,6 +11,7 @@ postsubmits:
     name: build_tools_release-1.16_postsubmit
     path_alias: istio.io/tools
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -18,7 +19,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -51,6 +52,7 @@ postsubmits:
     name: lint_tools_release-1.16_postsubmit
     path_alias: istio.io/tools
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -58,7 +60,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -91,6 +93,7 @@ postsubmits:
     name: test_tools_release-1.16_postsubmit
     path_alias: istio.io/tools
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -98,7 +101,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -131,6 +134,7 @@ postsubmits:
     name: gencheck_tools_release-1.16_postsubmit
     path_alias: istio.io/tools
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -138,7 +142,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -181,6 +185,7 @@ postsubmits:
     path_alias: istio.io/tools
     run_if_changed: docker/.+|cmd/.+|pkg/.+
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
@@ -197,7 +202,7 @@ postsubmits:
           value: "0"
         - name: MANIFEST_ARCH
           value: arm64 amd64
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -243,6 +248,7 @@ postsubmits:
     path_alias: istio.io/tools
     run_if_changed: docker/.+|cmd/.+|pkg/.+
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
@@ -252,7 +258,7 @@ postsubmits:
         - name: BUILD_WITH_CONTAINER
           value: "0"
         - name: MANIFEST_ARCH
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -296,6 +302,7 @@ postsubmits:
     path_alias: istio.io/tools
     run_if_changed: ^perf_dashboard/
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
@@ -306,7 +313,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -346,6 +353,7 @@ presubmits:
     path_alias: istio.io/tools
     rerun_command: /test build
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -353,7 +361,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -387,6 +395,7 @@ presubmits:
     path_alias: istio.io/tools
     rerun_command: /test lint
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -394,7 +403,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -428,6 +437,7 @@ presubmits:
     path_alias: istio.io/tools
     rerun_command: /test test
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -435,7 +445,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -469,6 +479,7 @@ presubmits:
     path_alias: istio.io/tools
     rerun_command: /test gencheck
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -476,7 +487,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -511,6 +522,7 @@ presubmits:
     rerun_command: /test containers-test
     run_if_changed: docker/.+|cmd/.+
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
@@ -519,7 +531,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -560,6 +572,7 @@ presubmits:
     rerun_command: /test containers-test-arm64
     run_if_changed: docker/.+|cmd/.+|pkg/.+
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
@@ -568,7 +581,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:

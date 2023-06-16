@@ -1,7 +1,7 @@
 org: istio
 repo: tools
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
 
 jobs:
   - name: build
@@ -15,17 +15,6 @@ jobs:
 
   - name: gencheck
     command: [make, gen-check]
-
-  - name: benchmark_check
-    service_account_name: prowjob-advanced-sa
-    disable_release_branching: true
-    regex: '^perf/benchmark/'
-    types: [presubmit]
-    command: [entrypoint, ./perf/benchmark/run_benchmark_job.sh]
-    env:
-      - name: TRIALRUN
-        value: "True"
-    modifiers: [presubmit_optional]
 
   # amd64 build
   - name: containers

@@ -14,6 +14,7 @@ postsubmits:
     name: build_api_release-1.16_postsubmit_pri
     path_alias: istio.io/api
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -21,7 +22,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -57,6 +58,7 @@ postsubmits:
     name: gencheck_api_release-1.16_postsubmit_pri
     path_alias: istio.io/api
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -64,7 +66,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -103,9 +105,10 @@ postsubmits:
     labels:
       preset-enable-ssh: "true"
       preset-override-envoy: "true"
-    name: update_api_dep_client_go_api_release-1.16_postsubmit_pri
+    name: update-api-dep-client-go_api_release-1.16_postsubmit_pri
     path_alias: istio.io/api
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - ../test-infra/tools/automator/automator.sh
@@ -120,7 +123,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:

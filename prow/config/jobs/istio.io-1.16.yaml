@@ -5,7 +5,7 @@ env:
   value: "0"
 - name: BUILD_WITH_CONTAINER
   value: "0"
-image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
 jobs:
 - command:
   - make
@@ -13,7 +13,7 @@ jobs:
   env:
   - name: BUILD_WITH_CONTAINER
     value: "0"
-  image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+  image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
   name: lint
   node_selector:
     testing: test-pool
@@ -149,7 +149,7 @@ jobs:
   env:
   - name: BUILD_WITH_CONTAINER
     value: "0"
-  image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+  image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
   name: gencheck
   node_selector:
     testing: test-pool
@@ -282,12 +282,12 @@ jobs:
 - command:
   - entrypoint
   - prow/integ-suite-kind.sh
-  - doc.test.profile_default
+  - doc.test.profile-default
   env:
   - name: BUILD_WITH_CONTAINER
     value: "0"
-  image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
-  name: doc.test.profile_default
+  image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
+  name: doc.test.profile-default
   node_selector:
     testing: test-pool
   regex: ^(go.mod$|tests/|pkg/test/|prow/|content/en/boilerplates/snips/|content/en/docs/.*(test\.sh|/snips\.sh)$)
@@ -421,12 +421,12 @@ jobs:
 - command:
   - entrypoint
   - prow/integ-suite-kind.sh
-  - doc.test.profile_demo
+  - doc.test.profile-demo
   env:
   - name: BUILD_WITH_CONTAINER
     value: "0"
-  image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
-  name: doc.test.profile_demo
+  image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
+  name: doc.test.profile-demo
   node_selector:
     testing: test-pool
   regex: ^(go.mod$|tests/|pkg/test/|prow/|content/en/boilerplates/snips/|content/en/docs/.*(test\.sh|/snips\.sh)$)
@@ -560,12 +560,12 @@ jobs:
 - command:
   - entrypoint
   - prow/integ-suite-kind.sh
-  - doc.test.profile_none
+  - doc.test.profile-none
   env:
   - name: BUILD_WITH_CONTAINER
     value: "0"
-  image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
-  name: doc.test.profile_none
+  image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
+  name: doc.test.profile-none
   node_selector:
     testing: test-pool
   regex: ^(go.mod$|tests/|pkg/test/|prow/|content/en/boilerplates/snips/|content/en/docs/.*(test\.sh|/snips\.sh)$)
@@ -705,7 +705,7 @@ jobs:
   env:
   - name: BUILD_WITH_CONTAINER
     value: "0"
-  image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+  image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
   name: doc.test.multicluster
   node_selector:
     testing: test-pool
@@ -847,7 +847,7 @@ jobs:
   env:
   - name: BUILD_WITH_CONTAINER
     value: "0"
-  image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+  image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
   modifiers:
   - presubmit_optional
   name: update-ref-docs-dry-run

@@ -13,6 +13,7 @@ postsubmits:
     name: lint_release-builder_postsubmit_pri
     path_alias: istio.io/release-builder
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -20,7 +21,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -55,6 +56,7 @@ postsubmits:
     name: test_release-builder_postsubmit_pri
     path_alias: istio.io/release-builder
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -62,7 +64,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -97,6 +99,7 @@ postsubmits:
     name: gencheck_release-builder_postsubmit_pri
     path_alias: istio.io/release-builder
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -104,7 +107,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -143,6 +146,7 @@ postsubmits:
     path_alias: istio.io/release-builder
     run_if_changed: ^release/trigger-build$
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
@@ -169,7 +173,7 @@ postsubmits:
           value: istio-private-build/dev/charts
         - name: PRERELEASE_DOCKER_HUB
           value: gcr.io/istio-prow-build
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -235,6 +239,7 @@ presubmits:
     path_alias: istio.io/release-builder
     rerun_command: /test lint
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -242,7 +247,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -280,6 +285,7 @@ presubmits:
     path_alias: istio.io/release-builder
     rerun_command: /test test
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -287,7 +293,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -325,6 +331,7 @@ presubmits:
     path_alias: istio.io/release-builder
     rerun_command: /test gencheck
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -332,7 +339,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -370,6 +377,7 @@ presubmits:
     rerun_command: /test build-warning
     run_if_changed: ^release/trigger-build$
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - release/build-warning.sh
@@ -382,7 +390,7 @@ presubmits:
           value: istio-private-build/dev/charts
         - name: PRERELEASE_DOCKER_HUB
           value: gcr.io/istio-prow-build
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:

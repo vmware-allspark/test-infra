@@ -15,6 +15,7 @@ postsubmits:
     name: release_proxy_postsubmit_master_priv
     path_alias: istio.io/proxy
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
@@ -33,7 +34,7 @@ postsubmits:
           value: istio-private-artifacts
         - name: GCS_BUILD_BUCKET
           value: istio-private-build
-        image: gcr.io/istio-testing/build-tools-proxy:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools-proxy:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -75,6 +76,7 @@ postsubmits:
     name: release-centos_proxy_postsubmit_master_priv
     path_alias: istio.io/proxy
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - ./prow/proxy-postsubmit-centos.sh
@@ -92,7 +94,7 @@ postsubmits:
           value: istio-private-artifacts
         - name: GCS_BUILD_BUCKET
           value: istio-private-build
-        image: gcr.io/istio-testing/build-tools-centos:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools-centos:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -130,6 +132,7 @@ postsubmits:
     name: release-arm64_proxy_postsubmit_master_priv
     path_alias: istio.io/proxy
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
@@ -152,7 +155,7 @@ postsubmits:
           value: istio-private-artifacts
         - name: GCS_BUILD_BUCKET
           value: istio-private-build
-        image: gcr.io/istio-testing/build-tools-proxy:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools-proxy:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           requests:
@@ -200,6 +203,7 @@ presubmits:
     path_alias: istio.io/proxy
     rerun_command: /test test
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - ./prow/proxy-presubmit.sh
@@ -211,7 +215,7 @@ presubmits:
           value: envoy
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-proxy:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools-proxy:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -252,6 +256,7 @@ presubmits:
     path_alias: istio.io/proxy
     rerun_command: /test test-asan
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - ./prow/proxy-presubmit-asan.sh
@@ -263,7 +268,7 @@ presubmits:
           value: envoy
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-proxy:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools-proxy:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -304,6 +309,7 @@ presubmits:
     path_alias: istio.io/proxy
     rerun_command: /test test-tsan
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - ./prow/proxy-presubmit-tsan.sh
@@ -315,7 +321,7 @@ presubmits:
           value: envoy
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-proxy:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools-proxy:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -356,6 +362,7 @@ presubmits:
     path_alias: istio.io/proxy
     rerun_command: /test release-test
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - ./prow/proxy-presubmit-release.sh
@@ -367,7 +374,7 @@ presubmits:
           value: envoy
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-proxy:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools-proxy:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -408,6 +415,7 @@ presubmits:
     path_alias: istio.io/proxy
     rerun_command: /test release-centos-test
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - ./prow/proxy-presubmit-centos-release.sh
@@ -419,7 +427,7 @@ presubmits:
           value: envoy
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-centos:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools-centos:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -460,6 +468,7 @@ presubmits:
     path_alias: istio.io/proxy
     rerun_command: /test check-wasm
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
@@ -472,7 +481,7 @@ presubmits:
           value: envoy
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-proxy:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools-proxy:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -513,10 +522,74 @@ presubmits:
       timeout: 6h0m0s
     labels:
       preset-enable-netrc: "true"
+    name: test-arm-arm64_proxy_master_priv
+    path_alias: istio.io/proxy
+    rerun_command: /test test-arm-arm64
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - command:
+        - ./prow/proxy-presubmit.sh
+        env:
+        - name: ARCH_SUFFIX
+          value: arm64
+        - name: BUILD_WITH_CONTAINER
+          value: "0"
+        - name: BAZEL_BUILD_RBE_INSTANCE
+        - name: DOCKER_REPOSITORY
+          value: istio-prow-build/envoy
+        - name: ENVOY_PREFIX
+          value: envoy
+        - name: ENVOY_REPOSITORY
+          value: https://github.com/istio-private/envoy
+        - name: GCS_ARTIFACTS_BUCKET
+          value: istio-private-artifacts
+        - name: GCS_BUILD_BUCKET
+          value: istio-private-build
+        image: gcr.io/istio-testing/build-tools-proxy:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
+        name: ""
+        resources:
+          requests:
+            cpu: "4"
+            memory: 16G
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /home/prow/go/pkg
+          name: build-cache
+          subPath: gomod
+      nodeSelector:
+        kubernetes.io/arch: arm64
+        testing: test-pool
+      serviceAccountName: prowjob-private-sa
+      tolerations:
+      - effect: NoSchedule
+        key: kubernetes.io/arch
+        operator: Equal
+        value: arm64
+      volumes:
+      - hostPath:
+          path: /var/tmp/prow/cache
+          type: DirectoryOrCreate
+        name: build-cache
+    trigger: ((?m)^/test( | .* )test-arm-arm64,?($|\s.*))|((?m)^/test( | .* )test-arm-arm64_proxy,?($|\s.*))
+  - always_run: true
+    annotations:
+      testgrid-create-test-group: "false"
+    branches:
+    - ^master$
+    clone_uri: git@github.com:istio-private/proxy.git
+    cluster: prow-arm-private
+    decorate: true
+    decoration_config:
+      timeout: 6h0m0s
+    labels:
+      preset-enable-netrc: "true"
     name: release-test-arm64_proxy_master_priv
     path_alias: istio.io/proxy
     rerun_command: /test release-test-arm64
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - ./prow/proxy-presubmit-release.sh
@@ -538,7 +611,7 @@ presubmits:
           value: istio-private-artifacts
         - name: GCS_BUILD_BUCKET
           value: istio-private-build
-        image: gcr.io/istio-testing/build-tools-proxy:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools-proxy:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           requests:

@@ -12,9 +12,10 @@ postsubmits:
       testgrid-alert-email: k8s-infra-oncall@google.com
     max_concurrency: 1
     spec:
+      automountServiceAccountToken: false
       serviceAccountName: testgrid-updater
       containers:
-      - image: gcr.io/k8s-prow/configurator:v20230605-b63f6f76cb
+      - image: gcr.io/k8s-prow/configurator:v20230613-9df263832f
         command:
         - configurator
         args:
@@ -37,10 +38,11 @@ postsubmits:
     branches:
     - ^master$
     spec:
+      automountServiceAccountToken: false
       serviceAccountName: gencred-refresher
       containers:
       - name: gencred
-        image: gcr.io/k8s-prow/gencred:v20230605-b63f6f76cb
+        image: gcr.io/k8s-prow/gencred:v20230613-9df263832f
         command:
         - gencred
         args:
@@ -63,8 +65,9 @@ periodics:
   annotations:
     testgrid-create-test-group: "false"
   spec:
+    automountServiceAccountToken: false
     containers:
-    - image: gcr.io/k8s-prow/branchprotector:v20230605-b63f6f76cb
+    - image: gcr.io/k8s-prow/branchprotector:v20230613-9df263832f
       command:
       - branchprotector
       args:
@@ -93,8 +96,9 @@ periodics:
   annotations:
     testgrid-create-test-group: "false"
   spec:
+    automountServiceAccountToken: false
     containers:
-    - image: gcr.io/k8s-prow/generic-autobumper:v20230605-b63f6f76cb
+    - image: gcr.io/k8s-prow/generic-autobumper:v20230613-9df263832f
       command:
       - generic-autobumper
       args:
@@ -127,8 +131,9 @@ periodics:
   annotations:
     testgrid-create-test-group: "false"
   spec:
+    automountServiceAccountToken: false
     containers:
-    - image: gcr.io/k8s-prow/generic-autobumper:v20230605-b63f6f76cb
+    - image: gcr.io/k8s-prow/generic-autobumper:v20230613-9df263832f
       command:
       - generic-autobumper
       args:
@@ -158,10 +163,11 @@ periodics:
     base_ref: master
   decorate: true
   spec:
+    automountServiceAccountToken: false
     serviceAccountName: gencred-refresher
     containers:
     - name: gencred
-      image: gcr.io/k8s-prow/gencred:v20230605-b63f6f76cb
+      image: gcr.io/k8s-prow/gencred:v20230613-9df263832f
       command:
       - gencred
       args:

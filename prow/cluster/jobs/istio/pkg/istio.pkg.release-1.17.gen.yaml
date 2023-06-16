@@ -11,6 +11,7 @@ postsubmits:
     name: build_pkg_release-1.17_postsubmit
     path_alias: istio.io/pkg
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -51,6 +52,7 @@ postsubmits:
     name: lint_pkg_release-1.17_postsubmit
     path_alias: istio.io/pkg
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -91,6 +93,7 @@ postsubmits:
     name: test_pkg_release-1.17_postsubmit
     path_alias: istio.io/pkg
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -131,6 +134,7 @@ postsubmits:
     name: gencheck_pkg_release-1.17_postsubmit
     path_alias: istio.io/pkg
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -173,9 +177,10 @@ postsubmits:
       org: istio
       path_alias: istio.io/test-infra
       repo: test-infra
-    name: update_pkg_dep_pkg_release-1.17_postsubmit
+    name: update-pkg-dep_pkg_release-1.17_postsubmit
     path_alias: istio.io/pkg
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - ../test-infra/tools/automator/automator.sh
@@ -184,7 +189,7 @@ postsubmits:
         - '--title=Automator: update istio/pkg@$AUTOMATOR_SRC_BRANCH dependency in
           $AUTOMATOR_ORG/$AUTOMATOR_REPO@$AUTOMATOR_BRANCH'
         - --labels=auto-merge,release-notes-none
-        - --modifier=update_pkg_dep
+        - --modifier=update-pkg-dep
         - --token-path=/etc/github-token/oauth
         - --git-exclude=^common/
         - --cmd=go get istio.io/pkg@$AUTOMATOR_SHA && go mod tidy && make clean gen
@@ -232,6 +237,7 @@ presubmits:
     path_alias: istio.io/pkg
     rerun_command: /test build
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -273,6 +279,7 @@ presubmits:
     path_alias: istio.io/pkg
     rerun_command: /test lint
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -314,6 +321,7 @@ presubmits:
     path_alias: istio.io/pkg
     rerun_command: /test test
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -355,6 +363,7 @@ presubmits:
     path_alias: istio.io/pkg
     rerun_command: /test gencheck
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make

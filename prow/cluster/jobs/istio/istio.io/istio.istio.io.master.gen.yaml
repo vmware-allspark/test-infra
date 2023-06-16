@@ -17,6 +17,7 @@ periodics:
     repo: test-infra
   name: update-ref-docs_istio.io_periodic
   spec:
+    automountServiceAccountToken: false
     containers:
     - command:
       - ../test-infra/tools/automator/automator.sh
@@ -32,7 +33,7 @@ periodics:
         value: istio
       - name: BUILD_WITH_CONTAINER
         value: "0"
-      image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+      image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
       name: ""
       resources:
         limits:
@@ -78,6 +79,7 @@ periodics:
     repo: test-infra
   name: update-istio-ref_istio.io_periodic
   spec:
+    automountServiceAccountToken: false
     containers:
     - command:
       - ../test-infra/tools/automator/automator.sh
@@ -92,7 +94,7 @@ periodics:
         value: istio
       - name: BUILD_WITH_CONTAINER
         value: "0"
-      image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+      image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
       name: ""
       resources:
         limits:
@@ -133,6 +135,7 @@ postsubmits:
     name: lint_istio.io_postsubmit
     path_alias: istio.io/istio.io
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -140,7 +143,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -173,6 +176,7 @@ postsubmits:
     name: gencheck_istio.io_postsubmit
     path_alias: istio.io/istio.io
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -180,7 +184,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -210,19 +214,20 @@ postsubmits:
     branches:
     - ^master$
     decorate: true
-    name: doc.test.profile_default_istio.io_postsubmit
+    name: doc.test.profile-default_istio.io_postsubmit
     path_alias: istio.io/istio.io
     run_if_changed: ^(go.mod$|tests/|pkg/test/|prow/|content/en/boilerplates/snips/|content/en/docs/.*(test\.sh|/snips\.sh)$)
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
         - prow/integ-suite-kind.sh
-        - doc.test.profile_default
+        - doc.test.profile-default
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -270,19 +275,20 @@ postsubmits:
     branches:
     - ^master$
     decorate: true
-    name: doc.test.profile_demo_istio.io_postsubmit
+    name: doc.test.profile-demo_istio.io_postsubmit
     path_alias: istio.io/istio.io
     run_if_changed: ^(go.mod$|tests/|pkg/test/|prow/|content/en/boilerplates/snips/|content/en/docs/.*(test\.sh|/snips\.sh)$)
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
         - prow/integ-suite-kind.sh
-        - doc.test.profile_demo
+        - doc.test.profile-demo
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -330,19 +336,20 @@ postsubmits:
     branches:
     - ^master$
     decorate: true
-    name: doc.test.profile_none_istio.io_postsubmit
+    name: doc.test.profile-none_istio.io_postsubmit
     path_alias: istio.io/istio.io
     run_if_changed: ^(go.mod$|tests/|pkg/test/|prow/|content/en/boilerplates/snips/|content/en/docs/.*(test\.sh|/snips\.sh)$)
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
         - prow/integ-suite-kind.sh
-        - doc.test.profile_none
+        - doc.test.profile-none
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -390,19 +397,20 @@ postsubmits:
     branches:
     - ^master$
     decorate: true
-    name: doc.test.profile_minimal_istio.io_postsubmit
+    name: doc.test.profile-minimal_istio.io_postsubmit
     path_alias: istio.io/istio.io
     run_if_changed: ^(go.mod$|tests/|pkg/test/|prow/|content/en/boilerplates/snips/|content/en/docs/.*(test\.sh|/snips\.sh)$)
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
         - prow/integ-suite-kind.sh
-        - doc.test.profile_minimal
+        - doc.test.profile-minimal
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -454,6 +462,7 @@ postsubmits:
     path_alias: istio.io/istio.io
     run_if_changed: ^(go.mod$|tests/|pkg/test/|prow/|content/en/boilerplates/snips/|content/en/docs/.*(test\.sh|/snips\.sh)$)
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
@@ -464,7 +473,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -517,6 +526,7 @@ presubmits:
     path_alias: istio.io/istio.io
     rerun_command: /test lint
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -524,7 +534,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -558,6 +568,7 @@ presubmits:
     path_alias: istio.io/istio.io
     rerun_command: /test gencheck
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -565,7 +576,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -595,20 +606,21 @@ presubmits:
     branches:
     - ^master$
     decorate: true
-    name: doc.test.profile_default_istio.io
+    name: doc.test.profile-default_istio.io
     path_alias: istio.io/istio.io
-    rerun_command: /test doc.test.profile_default
+    rerun_command: /test doc.test.profile-default
     run_if_changed: ^(go.mod$|tests/|pkg/test/|prow/|content/en/boilerplates/snips/|content/en/docs/.*(test\.sh|/snips\.sh)$)
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
         - prow/integ-suite-kind.sh
-        - doc.test.profile_default
+        - doc.test.profile-default
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -649,28 +661,29 @@ presubmits:
         name: cgroup
       - emptyDir: {}
         name: docker-root
-    trigger: ((?m)^/test( | .* )doc.test.profile_default,?($|\s.*))|((?m)^/test( |
-      .* )doc.test.profile_default_istio.io,?($|\s.*))
+    trigger: ((?m)^/test( | .* )doc.test.profile-default,?($|\s.*))|((?m)^/test( |
+      .* )doc.test.profile-default_istio.io,?($|\s.*))
   - always_run: false
     annotations:
       testgrid-dashboards: istio_istio.io
     branches:
     - ^master$
     decorate: true
-    name: doc.test.profile_demo_istio.io
+    name: doc.test.profile-demo_istio.io
     path_alias: istio.io/istio.io
-    rerun_command: /test doc.test.profile_demo
+    rerun_command: /test doc.test.profile-demo
     run_if_changed: ^(go.mod$|tests/|pkg/test/|prow/|content/en/boilerplates/snips/|content/en/docs/.*(test\.sh|/snips\.sh)$)
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
         - prow/integ-suite-kind.sh
-        - doc.test.profile_demo
+        - doc.test.profile-demo
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -711,28 +724,29 @@ presubmits:
         name: cgroup
       - emptyDir: {}
         name: docker-root
-    trigger: ((?m)^/test( | .* )doc.test.profile_demo,?($|\s.*))|((?m)^/test( | .*
-      )doc.test.profile_demo_istio.io,?($|\s.*))
+    trigger: ((?m)^/test( | .* )doc.test.profile-demo,?($|\s.*))|((?m)^/test( | .*
+      )doc.test.profile-demo_istio.io,?($|\s.*))
   - always_run: false
     annotations:
       testgrid-dashboards: istio_istio.io
     branches:
     - ^master$
     decorate: true
-    name: doc.test.profile_none_istio.io
+    name: doc.test.profile-none_istio.io
     path_alias: istio.io/istio.io
-    rerun_command: /test doc.test.profile_none
+    rerun_command: /test doc.test.profile-none
     run_if_changed: ^(go.mod$|tests/|pkg/test/|prow/|content/en/boilerplates/snips/|content/en/docs/.*(test\.sh|/snips\.sh)$)
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
         - prow/integ-suite-kind.sh
-        - doc.test.profile_none
+        - doc.test.profile-none
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -773,28 +787,29 @@ presubmits:
         name: cgroup
       - emptyDir: {}
         name: docker-root
-    trigger: ((?m)^/test( | .* )doc.test.profile_none,?($|\s.*))|((?m)^/test( | .*
-      )doc.test.profile_none_istio.io,?($|\s.*))
+    trigger: ((?m)^/test( | .* )doc.test.profile-none,?($|\s.*))|((?m)^/test( | .*
+      )doc.test.profile-none_istio.io,?($|\s.*))
   - always_run: false
     annotations:
       testgrid-dashboards: istio_istio.io
     branches:
     - ^master$
     decorate: true
-    name: doc.test.profile_minimal_istio.io
+    name: doc.test.profile-minimal_istio.io
     path_alias: istio.io/istio.io
-    rerun_command: /test doc.test.profile_minimal
+    rerun_command: /test doc.test.profile-minimal
     run_if_changed: ^(go.mod$|tests/|pkg/test/|prow/|content/en/boilerplates/snips/|content/en/docs/.*(test\.sh|/snips\.sh)$)
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
         - prow/integ-suite-kind.sh
-        - doc.test.profile_minimal
+        - doc.test.profile-minimal
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -835,8 +850,8 @@ presubmits:
         name: cgroup
       - emptyDir: {}
         name: docker-root
-    trigger: ((?m)^/test( | .* )doc.test.profile_minimal,?($|\s.*))|((?m)^/test( |
-      .* )doc.test.profile_minimal_istio.io,?($|\s.*))
+    trigger: ((?m)^/test( | .* )doc.test.profile-minimal,?($|\s.*))|((?m)^/test( |
+      .* )doc.test.profile-minimal_istio.io,?($|\s.*))
   - always_run: false
     annotations:
       testgrid-dashboards: istio_istio.io
@@ -848,6 +863,7 @@ presubmits:
     rerun_command: /test doc.test.multicluster
     run_if_changed: ^(go.mod$|tests/|pkg/test/|prow/|content/en/boilerplates/snips/|content/en/docs/.*(test\.sh|/snips\.sh)$)
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - entrypoint
@@ -858,7 +874,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:
@@ -917,6 +933,7 @@ presubmits:
     path_alias: istio.io/istio.io
     rerun_command: /test update-ref-docs-dry-run
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - ../test-infra/tools/automator/automator.sh
@@ -930,7 +947,7 @@ presubmits:
           value: istio
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-bbe2e62790ecce2acacb4aff74ec44318c09c276
+        image: gcr.io/istio-testing/build-tools:master-e015d93a2d1107fce1065d3fad4e4f29508a15d4
         name: ""
         resources:
           limits:

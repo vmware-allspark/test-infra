@@ -212,4 +212,3 @@ resource "google_container_node_pool" "prow_test" {
 
   version = "1.24.12-gke.500"
 }
-# terraform import google_container_node_pool.istio_test_pool_e2 istio-prow-build/us-west1-a/prow/istio-test-pool-e2

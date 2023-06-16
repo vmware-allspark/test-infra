@@ -11,6 +11,7 @@ postsubmits:
     name: build_client-go_release-1.16_postsubmit
     path_alias: istio.io/client-go
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -18,7 +19,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -51,6 +52,7 @@ postsubmits:
     name: lint_client-go_release-1.16_postsubmit
     path_alias: istio.io/client-go
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -58,7 +60,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -91,6 +93,7 @@ postsubmits:
     name: gencheck_client-go_release-1.16_postsubmit
     path_alias: istio.io/client-go
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -98,7 +101,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -133,9 +136,10 @@ postsubmits:
       org: istio
       path_alias: istio.io/test-infra
       repo: test-infra
-    name: update_client-go_dep_client-go_release-1.16_postsubmit
+    name: update-client-go-dep_client-go_release-1.16_postsubmit
     path_alias: istio.io/client-go
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - ../test-infra/tools/automator/automator.sh
@@ -144,7 +148,7 @@ postsubmits:
         - '--title=Automator: update istio/client-go@$AUTOMATOR_SRC_BRANCH dependency
           in $AUTOMATOR_ORG/$AUTOMATOR_REPO@$AUTOMATOR_BRANCH'
         - --labels=auto-merge,release-notes-none
-        - --modifier=update_client-go_dep
+        - --modifier=update-client-go-dep
         - --token-path=/etc/github-token/oauth
         - --git-exclude=^common/
         - --cmd=go get istio.io/client-go@$AUTOMATOR_SHA && go mod tidy && make clean
@@ -152,7 +156,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -193,6 +197,7 @@ presubmits:
     path_alias: istio.io/client-go
     rerun_command: /test build
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -200,7 +205,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -234,6 +239,7 @@ presubmits:
     path_alias: istio.io/client-go
     rerun_command: /test lint
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -241,7 +247,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -275,6 +281,7 @@ presubmits:
     path_alias: istio.io/client-go
     rerun_command: /test gencheck
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -282,7 +289,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:

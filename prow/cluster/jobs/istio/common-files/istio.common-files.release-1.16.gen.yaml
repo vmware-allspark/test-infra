@@ -11,6 +11,7 @@ postsubmits:
     name: lint_common-files_release-1.16_postsubmit
     path_alias: istio.io/common-files
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -18,7 +19,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -56,6 +57,7 @@ postsubmits:
     name: update-common_common-files_release-1.16_postsubmit
     path_alias: istio.io/common-files
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - ../test-infra/tools/automator/automator.sh
@@ -70,7 +72,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -114,6 +116,7 @@ postsubmits:
     name: update-common-istio.io_common-files_release-1.16_postsubmit
     path_alias: istio.io/common-files
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - ../test-infra/tools/automator/automator.sh
@@ -128,7 +131,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -172,6 +175,7 @@ postsubmits:
     name: update-build-tools-image_common-files_release-1.16_postsubmit
     path_alias: istio.io/common-files
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - ../test-infra/tools/automator/automator.sh
@@ -190,7 +194,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
@@ -231,6 +235,7 @@ presubmits:
     path_alias: istio.io/common-files
     rerun_command: /test lint
     spec:
+      automountServiceAccountToken: false
       containers:
       - command:
         - make
@@ -238,7 +243,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.16-b46bf793553c9bfedf6cf27ddacd67f3768b3a25
+        image: gcr.io/istio-testing/build-tools:release-1.16-0b7dd749b128a1dcf3f1a1a0c930cbe686446eb4
         name: ""
         resources:
           limits:
