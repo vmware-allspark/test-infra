@@ -19,7 +19,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: crier
-        image: gcr.io/k8s-prow/crier:v20230621-2a6a094857
+        image: gcr.io/k8s-prow/crier:v20230623-ea9b5f8eba
         args:
         - --blob-storage-workers=1
         - --config-path=/etc/config/config.yaml
@@ -28,14 +28,13 @@ spec:
         - --github-token-path=/etc/github/oauth
         - --github-workers=5
         - --job-config-path=/etc/job-config
-        - --kubeconfig=/etc/kubeconfig/istio-config
         - --kubernetes-blob-storage-workers=1
         - --slack-token-file=/etc/slack/token
         - --slack-workers=1
         env:
         # Use KUBECONFIG envvar rather than --kubeconfig flag in order to provide multiple configs to merge.
         - name: KUBECONFIG
-          value: "/etc/kubeconfig/istio-config:/etc/kubeconfig-build-test-infra-trusted/kubeconfig:/etc/kubeconfig-prow-arm-private/kubeconfig"
+          value: "/etc/kubeconfig/kubeconfig"
         ports:
         - name: metrics
           containerPort: 9090
@@ -48,12 +47,6 @@ spec:
           readOnly: true
         - mountPath: /etc/kubeconfig
           name: kubeconfig
-          readOnly: true
-        - name: kubeconfig-prow-arm-private
-          mountPath: /etc/kubeconfig-prow-arm-private
-          readOnly: true
-        - mountPath: /etc/kubeconfig-build-test-infra-trusted
-          name: kubeconfig-build-test-infra-trusted
           readOnly: true
         - name: config
           mountPath: /etc/config
@@ -69,17 +62,9 @@ spec:
         secret:
           secretName: slack-token
       - name: kubeconfig
-        secret:
+        configMap:
           defaultMode: 420
-          secretName: kubeconfig
-      - name: kubeconfig-prow-arm-private
-        secret:
-          defaultMode: 420
-          secretName: kubeconfig-prow-arm-private
-      - name: kubeconfig-build-test-infra-trusted
-        secret:
-          defaultMode: 420
-          secretName: kubeconfig-build-test-infra-trusted
+          name: kubeconfig
       - name: config
         configMap:
           name: config

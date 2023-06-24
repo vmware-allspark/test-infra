@@ -30,11 +30,9 @@ postsubmits:
           value: envoy
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        - name: GCS_ARTIFACTS_BUCKET
-          value: istio-private-artifacts
         - name: GCS_BUILD_BUCKET
           value: istio-private-build
-        image: gcr.io/istio-testing/build-tools-proxy:master-6ca22a4265c8306755fc53a5be49ceaeeae92003
+        image: gcr.io/istio-testing/build-tools-proxy:master-03285f22d0d1f21a8fa63b76aeac574e09c0c5d1
         name: ""
         resources:
           limits:
@@ -90,11 +88,9 @@ postsubmits:
           value: envoy
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        - name: GCS_ARTIFACTS_BUCKET
-          value: istio-private-artifacts
         - name: GCS_BUILD_BUCKET
           value: istio-private-build
-        image: gcr.io/istio-testing/build-tools-centos:master-6ca22a4265c8306755fc53a5be49ceaeeae92003
+        image: gcr.io/istio-testing/build-tools-centos:master-03285f22d0d1f21a8fa63b76aeac574e09c0c5d1
         name: ""
         resources:
           limits:
@@ -151,11 +147,9 @@ postsubmits:
           value: envoy
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        - name: GCS_ARTIFACTS_BUCKET
-          value: istio-private-artifacts
         - name: GCS_BUILD_BUCKET
           value: istio-private-build
-        image: gcr.io/istio-testing/build-tools-proxy:master-6ca22a4265c8306755fc53a5be49ceaeeae92003
+        image: gcr.io/istio-testing/build-tools-proxy:master-03285f22d0d1f21a8fa63b76aeac574e09c0c5d1
         name: ""
         resources:
           requests:
@@ -215,7 +209,7 @@ presubmits:
           value: envoy
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-proxy:master-6ca22a4265c8306755fc53a5be49ceaeeae92003
+        image: gcr.io/istio-testing/build-tools-proxy:master-03285f22d0d1f21a8fa63b76aeac574e09c0c5d1
         name: ""
         resources:
           limits:
@@ -268,7 +262,7 @@ presubmits:
           value: envoy
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-proxy:master-6ca22a4265c8306755fc53a5be49ceaeeae92003
+        image: gcr.io/istio-testing/build-tools-proxy:master-03285f22d0d1f21a8fa63b76aeac574e09c0c5d1
         name: ""
         resources:
           limits:
@@ -321,7 +315,7 @@ presubmits:
           value: envoy
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-proxy:master-6ca22a4265c8306755fc53a5be49ceaeeae92003
+        image: gcr.io/istio-testing/build-tools-proxy:master-03285f22d0d1f21a8fa63b76aeac574e09c0c5d1
         name: ""
         resources:
           limits:
@@ -374,7 +368,7 @@ presubmits:
           value: envoy
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-proxy:master-6ca22a4265c8306755fc53a5be49ceaeeae92003
+        image: gcr.io/istio-testing/build-tools-proxy:master-03285f22d0d1f21a8fa63b76aeac574e09c0c5d1
         name: ""
         resources:
           limits:
@@ -427,7 +421,7 @@ presubmits:
           value: envoy
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-centos:master-6ca22a4265c8306755fc53a5be49ceaeeae92003
+        image: gcr.io/istio-testing/build-tools-centos:master-03285f22d0d1f21a8fa63b76aeac574e09c0c5d1
         name: ""
         resources:
           limits:
@@ -481,7 +475,7 @@ presubmits:
           value: envoy
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-proxy:master-6ca22a4265c8306755fc53a5be49ceaeeae92003
+        image: gcr.io/istio-testing/build-tools-proxy:master-03285f22d0d1f21a8fa63b76aeac574e09c0c5d1
         name: ""
         resources:
           limits:
@@ -542,11 +536,9 @@ presubmits:
           value: envoy
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        - name: GCS_ARTIFACTS_BUCKET
-          value: istio-private-artifacts
         - name: GCS_BUILD_BUCKET
           value: istio-private-build
-        image: gcr.io/istio-testing/build-tools-proxy:master-6ca22a4265c8306755fc53a5be49ceaeeae92003
+        image: gcr.io/istio-testing/build-tools-proxy:master-03285f22d0d1f21a8fa63b76aeac574e09c0c5d1
         name: ""
         resources:
           requests:
@@ -607,11 +599,9 @@ presubmits:
           value: envoy
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        - name: GCS_ARTIFACTS_BUCKET
-          value: istio-private-artifacts
         - name: GCS_BUILD_BUCKET
           value: istio-private-build
-        image: gcr.io/istio-testing/build-tools-proxy:master-6ca22a4265c8306755fc53a5be49ceaeeae92003
+        image: gcr.io/istio-testing/build-tools-proxy:master-03285f22d0d1f21a8fa63b76aeac574e09c0c5d1
         name: ""
         resources:
           requests:
