@@ -5806,8 +5806,10 @@ jobs:
   types:
   - presubmit
 - command:
-  - ../test-infra/tools/check_release_notes.sh
-  - --token-path=/etc/github-token/oauth
+  - entrypoint
+  - gen-release-notes
+  - --checkLabel
+  - --validateOnly
   env:
   - name: BUILD_WITH_CONTAINER
     value: "0"
@@ -5815,9 +5817,6 @@ jobs:
   name: release-notes
   node_selector:
     testing: test-pool
-  repos:
-  - istio/test-infra@master
-  - istio/tools@master
   requirement_presets:
     cache:
       volumeMounts:
@@ -5927,7 +5926,7 @@ jobs:
   - cache
   - cache
   - gocache
-  - github
+  - github-readonly
   resources_presets:
     dedicated:
       limits:
