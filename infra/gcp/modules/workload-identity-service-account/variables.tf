@@ -62,6 +62,24 @@ variable "project_roles" {
   default = []
 }
 
+variable "secrets" {
+  description = "A list of secrets to give access to the serviceaccount in its project"
+  type        = list(object({
+    name    = string
+    project = optional(string)
+  }))
+  default = []
+}
+
+variable "gcs_acls" {
+  description = "A list of buckets to add ACLs for. Note: prefer using IAM for GCS; this is for legacy bucket configurations"
+  type        = list(object({
+    bucket = string
+    role = string
+  }))
+  default = []
+}
+
 variable "prowjob" {
   description = "Set to true if this service account will be used for prowjobs"
   type        = bool

@@ -52,6 +52,22 @@ resource "google_project_iam_member" "project_roles" {
   role     = each.value.role
   member   = "serviceAccount:${google_service_account.serviceaccount.email}"
 }
+// optional: GCS ACLs to grant the serviceaccount on the project
+resource "google_storage_bucket_access_control" "acls" {
+  for_each = {for k, v in var.gcs_acls : k => v}
+  bucket = each.value.bucket
+  role   = each.value.role
+  entity = "user-${google_service_account.serviceaccount.email}"
+}
+
+// optional: secrets to grant access to the serviceaccount on the project
+resource "google_secret_manager_secret_iam_member" "member" {
+  for_each = {for k, v in var.secrets : k => v}
+  project  = coalesce(each.value.project, var.project_id)
+  secret_id = each.value.name
+  role = "roles/secretmanager.secretAccessor"
+  member   = "serviceAccount:${google_service_account.serviceaccount.email}"
+}
 // If this is going to be used for prowjobs, then we need to give it access to gs://istio-prow to write logs.
 resource "google_storage_bucket_iam_member" "member" {
   count  = var.prowjob ? 1 : 0
