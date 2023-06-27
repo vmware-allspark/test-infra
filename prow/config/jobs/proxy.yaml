@@ -1,7 +1,7 @@
 org: istio
 repo: proxy
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools-proxy:master-7c2cba5679671f40312e6324d270a0d70ad097d0
+image: gcr.io/istio-testing/build-tools-proxy:master-4c71169512fe79b59b89664ef1b273da813d1c93
 node_selector:
   testing: build-pool
 
@@ -64,7 +64,7 @@ jobs:
   service_account_name: prowjob-rbe
   types: [presubmit]
   command: [./prow/proxy-presubmit-centos-release.sh]
-  image: gcr.io/istio-testing/build-tools-centos:master-7c2cba5679671f40312e6324d270a0d70ad097d0
+  image: gcr.io/istio-testing/build-tools-centos:master-4c71169512fe79b59b89664ef1b273da813d1c93
   timeout: 6h
 
 - name: check-wasm
@@ -101,7 +101,7 @@ jobs:
   service_account_name: prowjob-advanced-sa
   types: [postsubmit]
   command: [./prow/proxy-postsubmit-centos.sh]
-  image: gcr.io/istio-testing/build-tools-centos:master-7c2cba5679671f40312e6324d270a0d70ad097d0
+  image: gcr.io/istio-testing/build-tools-centos:master-4c71169512fe79b59b89664ef1b273da813d1c93
   timeout: 6h
 
 - name: update-istio
@@ -117,9 +117,9 @@ jobs:
   - --token-env
   - --git-exclude=^common/
   - --cmd=bin/update_proxy.sh $AUTOMATOR_SHA
-  requirements: [github-istio-testing-push]
+  requirements: [github-istio-testing]
   repos: [istio/test-infra@master]
-  image: gcr.io/istio-testing/build-tools:master-7c2cba5679671f40312e6324d270a0d70ad097d0
+  image: gcr.io/istio-testing/build-tools:master-4c71169512fe79b59b89664ef1b273da813d1c93
   env:
     - name: AUTOMATOR_ORG
       value: istio
@@ -138,9 +138,9 @@ jobs:
   - --modifier=update_envoy_dep
   - --token-env
   - --cmd=UPDATE_BRANCH=main scripts/update_envoy.sh
-  requirements: [github-istio-testing-push]
+  requirements: [github-istio-testing]
   repos: [istio/test-infra@master]
-  image: gcr.io/istio-testing/build-tools:master-7c2cba5679671f40312e6324d270a0d70ad097d0
+  image: gcr.io/istio-testing/build-tools:master-4c71169512fe79b59b89664ef1b273da813d1c93
   env:
     - name: AUTOMATOR_ORG
       value: istio
@@ -160,9 +160,9 @@ jobs:
   - --token-env
   - --cmd=go get github.com/envoyproxy/go-control-plane@main && go mod tidy
   disable_release_branching: true
-  requirements: [github-istio-testing-push]
+  requirements: [github-istio-testing]
   repos: [istio/test-infra@master]
-  image: gcr.io/istio-testing/build-tools:master-7c2cba5679671f40312e6324d270a0d70ad097d0
+  image: gcr.io/istio-testing/build-tools:master-4c71169512fe79b59b89664ef1b273da813d1c93
   env:
     - name: AUTOMATOR_ORG
       value: istio

@@ -118,7 +118,7 @@ func TestJobs(t *testing.T) {
 	RunTest("org volumes only used in org jobs", func(j Job) error {
 		orgJob := (j.RepoOrg == "istio/community" && j.Type == Postsubmit) ||
 			(j.Name == "ci-test-infra-branchprotector" && j.Type == Periodic) ||
-			// TODO: move these to use `github-istio-testing-push`
+			// TODO: move these to use `github-istio-testing`
 			(j.Name == "ci-prow-autobump" && j.Type == Periodic) ||
 			(j.Name == "ci-prow-autobump-for-auto-deploy" && j.Type == Periodic)
 		if orgJob {
@@ -251,6 +251,9 @@ func TestJobs(t *testing.T) {
 			for _, e := range c.Env {
 				if e.Name == "GCP_SECRETS" {
 					gcpSecrets := []Secret{}
+					if e.Value == "" {
+						continue
+					}
 					if err := json.Unmarshal([]byte(e.Value), &gcpSecrets); err != nil {
 						return err
 					}
@@ -271,6 +274,11 @@ func TestJobs(t *testing.T) {
 			sets.NewString("istio-prow-build/github-read_github_read").IsSuperset(secrets)
 		if !allowedSecret && j.Type == Presubmit {
 			return fmt.Errorf("jobs with secrets %v cannot be presubmits", secrets.UnsortedList())
+		}
+
+		secretSA := SecretServiceAccounts.Has(j.ServiceAccount())
+		if !secretSA {
+			return fmt.Errorf("service account %v does not have Secrets access", j.ServiceAccount())
 		}
 		return nil
 	})
@@ -460,24 +468,34 @@ const (
 )
 
 var ServiceAccounts = map[string]Sensitivity{
-	"":                                  LowPrivilege, // Default is prowjob-default-sa
-	"prowjob-default-sa":                LowPrivilege,
-	"prowjob-private-sa":                LowPrivilege,
-	"prowjob-rbe":                       MediumPrivilege,
-	"prowjob-github-read":               MediumPrivilege,
-	"prow-deployer":                     HighPrivilege,
-	"testgrid-updater":                  HighPrivilege,
-	"prowjob-advanced-sa":               HighPrivilege,
-	"prowjob-github-istio-testing-push": HighPrivilege,
-	"prowjob-release":                   HighPrivilege,
+	"":                             LowPrivilege, // Default is prowjob-default-sa
+	"prowjob-default-sa":           LowPrivilege,
+	"prowjob-private-sa":           LowPrivilege,
+	"prowjob-rbe":                  MediumPrivilege,
+	"prowjob-github-read":          MediumPrivilege,
+	"prow-deployer":                HighPrivilege,
+	"testgrid-updater":             HighPrivilege,
+	"prowjob-advanced-sa":          HighPrivilege,
+	"prowjob-github-istio-testing": HighPrivilege,
+	"prowjob-release":              HighPrivilege,
+	"prowjob-build-tools":          HighPrivilege,
 }
 
 var PrivateServiceAccounts = sets.NewString(
 	"prowjob-private-sa",
 )
 
+// SA with Secret access
+var SecretServiceAccounts = sets.NewString(
+	"prowjob-github-istio-testing",
+	"prowjob-github-read",
+	"prowjob-release",
+	"prowjob-build-tools",
+)
+
 type Secret struct {
 	Name    string `json:"secret,omitempty"`
 	Project string `json:"project,omitempty"`
 	Env     string `json:"env,omitempty"`
+	File    string `json:"file,omitempty"`
 }

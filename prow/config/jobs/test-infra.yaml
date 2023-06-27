@@ -1,6 +1,6 @@
 org: istio
 repo: test-infra
-image: gcr.io/istio-testing/build-tools:master-7c2cba5679671f40312e6324d270a0d70ad097d0
+image: gcr.io/istio-testing/build-tools:master-4c71169512fe79b59b89664ef1b273da813d1c93
 
 jobs:
   - name: lint
@@ -28,7 +28,7 @@ jobs:
     excluded_requirements: [cache]
     node_selector:
       prod: prow
-  
+
   - name: push-prowgen
     service_account_name: prowjob-advanced-sa
     types: [postsubmit]
@@ -82,7 +82,7 @@ jobs:
     - --image=gcr.io/k8s-prow/.*
     - --tag=v[0-9]{8}-[a-f0-9]{10}
     - --var=image
-    requirements: [github-istio-testing-push]
+    requirements: [github-istio-testing]
     env:
     - name: AUTOMATOR_ORG
       value: istio

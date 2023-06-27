@@ -1,7 +1,7 @@
 org: istio
 repo: tools
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools:master-7c2cba5679671f40312e6324d270a0d70ad097d0
+image: gcr.io/istio-testing/build-tools:master-4c71169512fe79b59b89664ef1b273da813d1c93
 
 jobs:
   - name: build
@@ -18,7 +18,7 @@ jobs:
 
   # amd64 build
   - name: containers
-    service_account_name: prowjob-advanced-sa
+    service_account_name: prowjob-build-tools
     types: [postsubmit]
     command:
     - entrypoint
@@ -32,7 +32,7 @@ jobs:
     - --script-path=../common-files/bin/create-buildtools-and-update.sh
     resources: build
     regex: 'docker/.+|cmd/.+|pkg/.+'
-    requirements: [docker, github-istio-testing-push]
+    requirements: [docker, github-istio-testing]
     repos: [istio/test-infra@master,istio/common-files@master]
     env:
     # For amd64, publish the manifest for arm64+amd64
@@ -42,7 +42,7 @@ jobs:
       value: istio
   # arm64 build
   - name: containers
-    service_account_name: prowjob-advanced-sa
+    service_account_name: prowjob-build-tools
     architectures: [arm64]
     types: [postsubmit]
     command:

@@ -1,7 +1,7 @@
 org: istio
 support_release_branching: true
 repo: common-files
-image: gcr.io/istio-testing/build-tools:master-7c2cba5679671f40312e6324d270a0d70ad097d0
+image: gcr.io/istio-testing/build-tools:master-4c71169512fe79b59b89664ef1b273da813d1c93
 
 jobs:
   - name: lint
@@ -20,7 +20,7 @@ jobs:
     - --modifier=commonfiles
     - --token-env
     - --cmd=make update-common && make gen
-    requirements: [github-istio-testing-push]
+    requirements: [github-istio-testing]
     repos: [istio/test-infra@master]
     env:
     - name: AUTOMATOR_ORG
@@ -40,7 +40,7 @@ jobs:
     - --modifier=commonfiles
     - --token-env
     - --cmd=make update-common && make gen
-    requirements: [github-istio-testing-push]
+    requirements: [github-istio-testing]
     repos: [istio/test-infra@master]
     env:
     - name: AUTOMATOR_ORG
@@ -59,7 +59,7 @@ jobs:
     - --modifier=commonfiles
     - --token-env
     - --cmd=make update-common && make gen
-    requirements: [github-istio-testing-push]
+    requirements: [github-istio-testing]
     repos: [istio/test-infra@master]
     env:
     - name: AUTOMATOR_ORG
@@ -82,7 +82,7 @@ jobs:
     - --
     - --post=make gen
     - --source=$AUTOMATOR_ROOT_DIR/files/common/scripts/setup_env.sh
-    requirements: [github-istio-testing-push]
+    requirements: [github-istio-testing]
     repos: [istio/test-infra@master]
     env:
     - name: AUTOMATOR_ORG
