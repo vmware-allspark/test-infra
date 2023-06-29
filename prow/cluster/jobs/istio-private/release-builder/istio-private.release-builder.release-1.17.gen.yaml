@@ -5,7 +5,6 @@ postsubmits:
       testgrid-create-test-group: "false"
     branches:
     - ^release-1.17$
-    clone_uri: git@github.com:istio-private/release-builder.git
     cluster: private
     decorate: true
     labels:
@@ -37,12 +36,12 @@ postsubmits:
           value: /etc/service-account/rel-pipeline-service-account.json
         - name: GCP_SECRETS
         - name: GCS_BUCKET
-          value: istio-private-prerelease/prerelease
+          value: istio-prerelease-private/prerelease
         - name: HELM_BUCKET
-          value: istio-private-build/dev/charts
+          value: istio-prerelease-private/charts
         - name: PRERELEASE_DOCKER_HUB
-          value: gcr.io/istio-prow-build
-        image: gcr.io/istio-testing/build-tools:release-1.17-fd4e8747931dd1d3fa57f5a562e99420f079152b
+          value: us-docker.pkg.dev/istio-prow-private/istio-prow-private
+        image: gcr.io/istio-testing/build-tools:release-1.17-23e3713f79cb748106e9b407dcff8d7d3546cbea
         name: ""
         resources:
           limits:
@@ -96,7 +95,6 @@ postsubmits:
       testgrid-create-test-group: "false"
     branches:
     - ^release-1.17$
-    clone_uri: git@github.com:istio-private/release-builder.git
     cluster: private
     decorate: true
     labels:
@@ -112,7 +110,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.17-fd4e8747931dd1d3fa57f5a562e99420f079152b
+        image: gcr.io/istio-testing/build-tools:release-1.17-23e3713f79cb748106e9b407dcff8d7d3546cbea
         name: ""
         resources:
           limits:
@@ -139,7 +137,6 @@ postsubmits:
       testgrid-create-test-group: "false"
     branches:
     - ^release-1.17$
-    clone_uri: git@github.com:istio-private/release-builder.git
     cluster: private
     decorate: true
     labels:
@@ -155,7 +152,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.17-fd4e8747931dd1d3fa57f5a562e99420f079152b
+        image: gcr.io/istio-testing/build-tools:release-1.17-23e3713f79cb748106e9b407dcff8d7d3546cbea
         name: ""
         resources:
           limits:
@@ -182,7 +179,6 @@ postsubmits:
       testgrid-create-test-group: "false"
     branches:
     - ^release-1.17$
-    clone_uri: git@github.com:istio-private/release-builder.git
     cluster: private
     decorate: true
     labels:
@@ -198,7 +194,7 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.17-fd4e8747931dd1d3fa57f5a562e99420f079152b
+        image: gcr.io/istio-testing/build-tools:release-1.17-23e3713f79cb748106e9b407dcff8d7d3546cbea
         name: ""
         resources:
           limits:
@@ -228,7 +224,6 @@ presubmits:
       testgrid-create-test-group: "false"
     branches:
     - ^release-1.17$
-    clone_uri: git@github.com:istio-private/release-builder.git
     cluster: private
     decorate: true
     name: build-warning_release-builder_release-1.17_pri
@@ -245,12 +240,12 @@ presubmits:
         - name: BUILD_WITH_CONTAINER
           value: "0"
         - name: GCS_BUCKET
-          value: istio-private-prerelease/prerelease
+          value: istio-prerelease-private/prerelease
         - name: HELM_BUCKET
-          value: istio-private-build/dev/charts
+          value: istio-prerelease-private/charts
         - name: PRERELEASE_DOCKER_HUB
-          value: gcr.io/istio-prow-build
-        image: gcr.io/istio-testing/build-tools:release-1.17-fd4e8747931dd1d3fa57f5a562e99420f079152b
+          value: us-docker.pkg.dev/istio-prow-private/istio-prow-private
+        image: gcr.io/istio-testing/build-tools:release-1.17-23e3713f79cb748106e9b407dcff8d7d3546cbea
         name: ""
         resources:
           limits:
@@ -279,7 +274,6 @@ presubmits:
       testgrid-create-test-group: "false"
     branches:
     - ^release-1.17$
-    clone_uri: git@github.com:istio-private/release-builder.git
     cluster: private
     decorate: true
     labels:
@@ -296,7 +290,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.17-fd4e8747931dd1d3fa57f5a562e99420f079152b
+        image: gcr.io/istio-testing/build-tools:release-1.17-23e3713f79cb748106e9b407dcff8d7d3546cbea
         name: ""
         resources:
           limits:
@@ -325,7 +319,6 @@ presubmits:
       testgrid-create-test-group: "false"
     branches:
     - ^release-1.17$
-    clone_uri: git@github.com:istio-private/release-builder.git
     cluster: private
     decorate: true
     labels:
@@ -342,7 +335,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.17-fd4e8747931dd1d3fa57f5a562e99420f079152b
+        image: gcr.io/istio-testing/build-tools:release-1.17-23e3713f79cb748106e9b407dcff8d7d3546cbea
         name: ""
         resources:
           limits:
@@ -371,7 +364,6 @@ presubmits:
       testgrid-create-test-group: "false"
     branches:
     - ^release-1.17$
-    clone_uri: git@github.com:istio-private/release-builder.git
     cluster: private
     decorate: true
     labels:
@@ -388,7 +380,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:release-1.17-fd4e8747931dd1d3fa57f5a562e99420f079152b
+        image: gcr.io/istio-testing/build-tools:release-1.17-23e3713f79cb748106e9b407dcff8d7d3546cbea
         name: ""
         resources:
           limits:
