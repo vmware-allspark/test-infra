@@ -51,6 +51,7 @@ resource "google_service_account" "istio_prow_test_job_private" {
   project      = "istio-testing"
 }
 # Used with WI as the "prowjob-advanced-sa" service account. This is used for jobs that need elevated permissions
+# Now obsolete; prowjob-advanced-sa is not used.
 resource "google_service_account" "istio_prow_test_job" {
   account_id   = "istio-prow-test-job"
   display_name = "Istio Prow Test Job Service Account"
@@ -79,6 +80,13 @@ resource "google_service_account" "kubernetes_external_secrets_sa" {
   display_name = "kubernetes-external-secrets-sa"
   project      = "istio-testing"
 }
+# External Secrets has project level IAM to secrets in istio-testing. Grant it access to one it needs in istio-prow-build as well.
+resource "google_secret_manager_secret_iam_member" "member" {
+  project   = "istio-prow-build"
+  secret_id = "github_istio-testing_pusher"
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:${google_service_account.kubernetes_external_secrets_sa.email}"
+}
 
 # Used for WI for prow control plane deployment
 resource "google_service_account" "prow_control_plane" {
@@ -97,6 +105,7 @@ data "google_iam_policy" "prow_control_plane" {
       "serviceAccount:istio-testing.svc.id.goog[default/deck-private]",
       "serviceAccount:istio-testing.svc.id.goog[default/hook]",
       "serviceAccount:istio-testing.svc.id.goog[default/prow-controller-manager]",
+      "serviceAccount:istio-testing.svc.id.goog[default/sinker]",
       "serviceAccount:istio-testing.svc.id.goog[default/tide]",
     ]
   }
@@ -104,4 +113,17 @@ data "google_iam_policy" "prow_control_plane" {
 resource "google_service_account_iam_policy" "prow_control_plane" {
   service_account_id = google_service_account.prow_control_plane.name
   policy_data        = data.google_iam_policy.prow_control_plane.policy_data
+}
+
+module "prowjob_bots_deployer_account" {
+  source            = "../modules/workload-identity-service-account"
+  project_id        = local.project_id
+  name              = "prowjob-bots-deployer"
+  description       = "ProwJob SA for deploying istio/bots"
+  cluster_namespace = local.pod_namespace
+  # Grant container admin so we can get credentials to deploy to the policy-bot GKE cluster
+  project_roles = [
+    { role = "roles/container.admin" },
+  ]
+  prowjob = true
 }
