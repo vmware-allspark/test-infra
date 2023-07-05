@@ -29,7 +29,7 @@ postsubmits:
           value: https://github.com/istio-private/envoy
         - name: GCS_BUILD_BUCKET
           value: istio-build-private
-        image: gcr.io/istio-testing/build-tools-proxy:master-a6aacea56463a118b848ae002e42d72075e00f02
+        image: gcr.io/istio-testing/build-tools-proxy:master-bb3a18f9d6ecb6f876d08fbfa6fde229979bcb1e
         name: ""
         resources:
           requests:
@@ -89,12 +89,14 @@ postsubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
+        - name: GOMAXPROCS
+          value: "64"
         - name: BAZEL_BUILD_RBE_INSTANCE
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
         - name: GCS_BUILD_BUCKET
           value: istio-build-private
-        image: gcr.io/istio-testing/build-tools-proxy:master-a6aacea56463a118b848ae002e42d72075e00f02
+        image: gcr.io/istio-testing/build-tools-proxy:master-bb3a18f9d6ecb6f876d08fbfa6fde229979bcb1e
         name: ""
         resources:
           limits:
@@ -156,10 +158,12 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
+        - name: GOMAXPROCS
+          value: "64"
         - name: BAZEL_BUILD_RBE_INSTANCE
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-proxy:master-a6aacea56463a118b848ae002e42d72075e00f02
+        image: gcr.io/istio-testing/build-tools-proxy:master-bb3a18f9d6ecb6f876d08fbfa6fde229979bcb1e
         name: ""
         resources:
           limits:
@@ -226,7 +230,7 @@ presubmits:
         - name: BAZEL_BUILD_RBE_INSTANCE
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-proxy:master-a6aacea56463a118b848ae002e42d72075e00f02
+        image: gcr.io/istio-testing/build-tools-proxy:master-bb3a18f9d6ecb6f876d08fbfa6fde229979bcb1e
         name: ""
         resources:
           requests:
@@ -284,10 +288,12 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
+        - name: GOMAXPROCS
+          value: "64"
         - name: BAZEL_BUILD_RBE_INSTANCE
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-proxy:master-a6aacea56463a118b848ae002e42d72075e00f02
+        image: gcr.io/istio-testing/build-tools-proxy:master-bb3a18f9d6ecb6f876d08fbfa6fde229979bcb1e
         name: ""
         resources:
           limits:
@@ -348,7 +354,7 @@ presubmits:
         - name: BAZEL_BUILD_RBE_INSTANCE
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-proxy:master-a6aacea56463a118b848ae002e42d72075e00f02
+        image: gcr.io/istio-testing/build-tools-proxy:master-bb3a18f9d6ecb6f876d08fbfa6fde229979bcb1e
         name: ""
         resources:
           requests:
@@ -406,10 +412,12 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
+        - name: GOMAXPROCS
+          value: "64"
         - name: BAZEL_BUILD_RBE_INSTANCE
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-proxy:master-a6aacea56463a118b848ae002e42d72075e00f02
+        image: gcr.io/istio-testing/build-tools-proxy:master-bb3a18f9d6ecb6f876d08fbfa6fde229979bcb1e
         name: ""
         resources:
           limits:
@@ -465,10 +473,12 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
+        - name: GOMAXPROCS
+          value: "64"
         - name: BAZEL_BUILD_RBE_INSTANCE
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-proxy:master-a6aacea56463a118b848ae002e42d72075e00f02
+        image: gcr.io/istio-testing/build-tools-proxy:master-bb3a18f9d6ecb6f876d08fbfa6fde229979bcb1e
         name: ""
         resources:
           limits:
@@ -524,10 +534,12 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
+        - name: GOMAXPROCS
+          value: "64"
         - name: BAZEL_BUILD_RBE_INSTANCE
         - name: ENVOY_REPOSITORY
           value: https://github.com/istio-private/envoy
-        image: gcr.io/istio-testing/build-tools-proxy:master-a6aacea56463a118b848ae002e42d72075e00f02
+        image: gcr.io/istio-testing/build-tools-proxy:master-bb3a18f9d6ecb6f876d08fbfa6fde229979bcb1e
         name: ""
         resources:
           limits:
