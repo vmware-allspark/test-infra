@@ -1,7 +1,7 @@
 org: istio
 repo: istio
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools:master-3e6374cdef2a685629b265997d21b877f0e57913
+image: gcr.io/istio-testing/build-tools:master-b243f443862c075054d6061ce7d753d47b6c0a11
 jobs:
   - name: unit-tests
     architectures: [amd64, arm64]
@@ -303,7 +303,7 @@ jobs:
       - entrypoint
       - prow/integ-suite-kind.sh
       - --node-image
-      - gcr.io/istio-testing/kind-node:v1.28.0-alpha.3
+      - gcr.io/istio-testing/kind-node:v1.28.0-beta.0
       - --kind-config
       - prow/config/modern.yaml
       - test.integration.kube
