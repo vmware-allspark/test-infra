@@ -20,6 +20,7 @@ postsubmits:
         env:
         - name: ARCH_SUFFIX
           value: arm64
+        - name: BAZEL_BUILD_RBE_INSTANCE
         - name: BUILD_ENVOY_BINARY_ONLY
           value: "1"
         - name: BUILD_WITH_CONTAINER
@@ -28,6 +29,7 @@ postsubmits:
           value: https://github.com/istio-private/envoy
         - name: GCS_BUILD_BUCKET
           value: istio-build-private
+        - name: PUSH_RELEASE_FLAGS
         image: gcr.io/istio-testing/build-tools-proxy:release-1.17-6c7535f4b170af845367915982c488bc99f36f2e
         name: ""
         resources:
@@ -85,6 +87,7 @@ postsubmits:
       - command:
         - ./prow/proxy-postsubmit-centos.sh
         env:
+        - name: BAZEL_BUILD_RBE_INSTANCE
         - name: BUILD_WITH_CONTAINER
           value: "0"
         - name: ENVOY_REPOSITORY
@@ -93,6 +96,7 @@ postsubmits:
           value: istio-build-private
         - name: GOMAXPROCS
           value: "64"
+        - name: PUSH_RELEASE_FLAGS
         image: gcr.io/istio-testing/build-tools-centos:release-1.17-6c7535f4b170af845367915982c488bc99f36f2e
         name: ""
         resources:
@@ -145,6 +149,7 @@ postsubmits:
         - entrypoint
         - ./prow/proxy-postsubmit.sh
         env:
+        - name: BAZEL_BUILD_RBE_INSTANCE
         - name: BUILD_WITH_CONTAINER
           value: "0"
         - name: ENVOY_REPOSITORY
@@ -153,6 +158,7 @@ postsubmits:
           value: istio-build-private
         - name: GOMAXPROCS
           value: "64"
+        - name: PUSH_RELEASE_FLAGS
         image: gcr.io/istio-testing/build-tools-proxy:release-1.17-6c7535f4b170af845367915982c488bc99f36f2e
         name: ""
         resources:
@@ -213,6 +219,7 @@ presubmits:
         - entrypoint
         - ./prow/proxy-presubmit-wasm.sh
         env:
+        - name: BAZEL_BUILD_RBE_INSTANCE
         - name: BUILD_WITH_CONTAINER
           value: "0"
         - name: ENVOY_REPOSITORY
@@ -277,6 +284,7 @@ presubmits:
       - command:
         - ./prow/proxy-presubmit-centos-release.sh
         env:
+        - name: BAZEL_BUILD_RBE_INSTANCE
         - name: BUILD_WITH_CONTAINER
           value: "0"
         - name: ENVOY_REPOSITORY
@@ -339,6 +347,7 @@ presubmits:
         env:
         - name: ARCH_SUFFIX
           value: arm64
+        - name: BAZEL_BUILD_RBE_INSTANCE
         - name: BUILD_ENVOY_BINARY_ONLY
           value: "1"
         - name: BUILD_WITH_CONTAINER
@@ -401,6 +410,7 @@ presubmits:
       - command:
         - ./prow/proxy-presubmit-release.sh
         env:
+        - name: BAZEL_BUILD_RBE_INSTANCE
         - name: BUILD_WITH_CONTAINER
           value: "0"
         - name: ENVOY_REPOSITORY
@@ -461,6 +471,7 @@ presubmits:
       - command:
         - ./prow/proxy-presubmit-asan.sh
         env:
+        - name: BAZEL_BUILD_RBE_INSTANCE
         - name: BUILD_WITH_CONTAINER
           value: "0"
         - name: ENVOY_REPOSITORY
@@ -521,6 +532,7 @@ presubmits:
       - command:
         - ./prow/proxy-presubmit-tsan.sh
         env:
+        - name: BAZEL_BUILD_RBE_INSTANCE
         - name: BUILD_WITH_CONTAINER
           value: "0"
         - name: ENVOY_REPOSITORY
@@ -581,6 +593,7 @@ presubmits:
       - command:
         - ./prow/proxy-presubmit.sh
         env:
+        - name: BAZEL_BUILD_RBE_INSTANCE
         - name: BUILD_WITH_CONTAINER
           value: "0"
         - name: ENVOY_REPOSITORY

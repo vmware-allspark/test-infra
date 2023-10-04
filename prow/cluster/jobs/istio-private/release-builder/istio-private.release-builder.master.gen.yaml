@@ -17,6 +17,7 @@ postsubmits:
         - entrypoint
         - release/build.sh
         env:
+        - name: BAZEL_BUILD_RBE_INSTANCE
         - name: BUILD_WITH_CONTAINER
           value: "0"
         - name: GCS_BUCKET
@@ -32,7 +33,7 @@ postsubmits:
               name: master-release-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-0eaa9253ee7d0ed14d1f97cfaafa3f298ea7a117
+        image: gcr.io/istio-testing/build-tools:master-ba83efa035ca4957a5a737d7286bf21268f91c48
         name: ""
         resources:
           limits:
@@ -85,11 +86,12 @@ postsubmits:
         - make
         - gen-check
         env:
+        - name: BAZEL_BUILD_RBE_INSTANCE
         - name: BUILD_WITH_CONTAINER
           value: "0"
         - name: GOMAXPROCS
           value: "3"
-        image: gcr.io/istio-testing/build-tools:master-0eaa9253ee7d0ed14d1f97cfaafa3f298ea7a117
+        image: gcr.io/istio-testing/build-tools:master-ba83efa035ca4957a5a737d7286bf21268f91c48
         name: ""
         resources:
           limits:
@@ -138,11 +140,12 @@ postsubmits:
         - make
         - lint
         env:
+        - name: BAZEL_BUILD_RBE_INSTANCE
         - name: BUILD_WITH_CONTAINER
           value: "0"
         - name: GOMAXPROCS
           value: "3"
-        image: gcr.io/istio-testing/build-tools:master-0eaa9253ee7d0ed14d1f97cfaafa3f298ea7a117
+        image: gcr.io/istio-testing/build-tools:master-ba83efa035ca4957a5a737d7286bf21268f91c48
         name: ""
         resources:
           limits:
@@ -191,11 +194,12 @@ postsubmits:
         - make
         - test
         env:
+        - name: BAZEL_BUILD_RBE_INSTANCE
         - name: BUILD_WITH_CONTAINER
           value: "0"
         - name: GOMAXPROCS
           value: "3"
-        image: gcr.io/istio-testing/build-tools:master-0eaa9253ee7d0ed14d1f97cfaafa3f298ea7a117
+        image: gcr.io/istio-testing/build-tools:master-ba83efa035ca4957a5a737d7286bf21268f91c48
         name: ""
         resources:
           limits:
@@ -249,6 +253,7 @@ presubmits:
       - command:
         - release/build-warning.sh
         env:
+        - name: BAZEL_BUILD_RBE_INSTANCE
         - name: BUILD_WITH_CONTAINER
           value: "0"
         - name: GCS_BUCKET
@@ -259,7 +264,7 @@ presubmits:
           value: istio-prerelease-private/charts
         - name: PRERELEASE_DOCKER_HUB
           value: us-docker.pkg.dev/istio-prow-private/istio-prow-private
-        image: gcr.io/istio-testing/build-tools:master-0eaa9253ee7d0ed14d1f97cfaafa3f298ea7a117
+        image: gcr.io/istio-testing/build-tools:master-ba83efa035ca4957a5a737d7286bf21268f91c48
         name: ""
         resources:
           limits:
@@ -300,11 +305,12 @@ presubmits:
         - make
         - gen-check
         env:
+        - name: BAZEL_BUILD_RBE_INSTANCE
         - name: BUILD_WITH_CONTAINER
           value: "0"
         - name: GOMAXPROCS
           value: "3"
-        image: gcr.io/istio-testing/build-tools:master-0eaa9253ee7d0ed14d1f97cfaafa3f298ea7a117
+        image: gcr.io/istio-testing/build-tools:master-ba83efa035ca4957a5a737d7286bf21268f91c48
         name: ""
         resources:
           limits:
@@ -356,11 +362,12 @@ presubmits:
         - make
         - lint
         env:
+        - name: BAZEL_BUILD_RBE_INSTANCE
         - name: BUILD_WITH_CONTAINER
           value: "0"
         - name: GOMAXPROCS
           value: "3"
-        image: gcr.io/istio-testing/build-tools:master-0eaa9253ee7d0ed14d1f97cfaafa3f298ea7a117
+        image: gcr.io/istio-testing/build-tools:master-ba83efa035ca4957a5a737d7286bf21268f91c48
         name: ""
         resources:
           limits:
@@ -412,11 +419,12 @@ presubmits:
         - make
         - test
         env:
+        - name: BAZEL_BUILD_RBE_INSTANCE
         - name: BUILD_WITH_CONTAINER
           value: "0"
         - name: GOMAXPROCS
           value: "3"
-        image: gcr.io/istio-testing/build-tools:master-0eaa9253ee7d0ed14d1f97cfaafa3f298ea7a117
+        image: gcr.io/istio-testing/build-tools:master-ba83efa035ca4957a5a737d7286bf21268f91c48
         name: ""
         resources:
           limits:
