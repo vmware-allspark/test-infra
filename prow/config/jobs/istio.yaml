@@ -44,6 +44,14 @@ jobs:
     command: [entrypoint, prow/integ-suite-kind.sh, test.integration.telemetry.kube]
     requirements: [kind]
 
+  - name: integ-telemetry-discovery
+    modifiers: [presubmit_optional, hidden]
+    env:
+    - name: INTEGRATION_TEST_FLAGS
+      value: --istio.test.peer_metadata_discovery
+    command: [entrypoint, prow/integ-suite-kind.sh, test.integration.telemetry.kube]
+    requirements: [kind]
+
   - name: integ-telemetry-mc
     command:
       - entrypoint
