@@ -33,7 +33,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -120,7 +120,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -203,7 +203,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -297,7 +297,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -382,7 +382,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -469,7 +469,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -552,7 +552,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -639,189 +639,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
-        name: ""
-        resources:
-          limits:
-            cpu: "5"
-            memory: 24Gi
-          requests:
-            cpu: "5"
-            memory: 3Gi
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /home/prow/go/pkg
-          name: build-cache
-          subPath: gomod
-        - mountPath: /gocache
-          name: build-cache
-          subPath: gocache
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-          readOnly: true
-        - mountPath: /var/lib/docker
-          name: docker-root
-        - mountPath: /home/.netrc
-          name: netrc
-          readOnly: true
-          subPath: .netrc
-      nodeSelector:
-        kubernetes.io/arch: amd64
-        testing: test-pool
-      volumes:
-      - hostPath:
-          path: /var/tmp/prow/cache
-          type: DirectoryOrCreate
-        name: build-cache
-      - hostPath:
-          path: /lib/modules
-          type: Directory
-        name: modules
-      - hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-        name: cgroup
-      - emptyDir: {}
-        name: docker-root
-      - name: netrc
-        secret:
-          items:
-          - key: secret
-            mode: 384
-            path: .netrc
-          secretName: netrc-secret
-  - annotations:
-      testgrid-create-test-group: "false"
-    branches:
-    - ^master$
-    cluster: private
-    decorate: true
-    decoration_config:
-      timeout: 4h0m0s
-    name: integ-k8s-121_istio_postsubmit_pri
-    path_alias: istio.io/istio
-    spec:
-      automountServiceAccountToken: false
-      containers:
-      - command:
-        - entrypoint
-        - prow/integ-suite-kind.sh
-        - --node-image
-        - gcr.io/istio-testing/kind-node:v1.21.9
-        - --kind-config
-        - prow/config/mixedlb-service.yaml
-        - test.integration.kube
-        env:
-        - name: BAZEL_BUILD_RBE_INSTANCE
-        - name: BUILD_WITH_CONTAINER
-          value: "0"
-        - name: GOMAXPROCS
-          value: "5"
-        - name: INTEGRATION_TEST_FLAGS
-          value: ' --istio.test.retries=1 '
-        - name: DEPENDENCIES
-          valueFrom:
-            configMapKeyRef:
-              key: dependencies
-              name: master-istio-deps
-        - name: ISTIO_ENVOY_BASE_URL
-          value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
-        name: ""
-        resources:
-          limits:
-            cpu: "5"
-            memory: 24Gi
-          requests:
-            cpu: "5"
-            memory: 3Gi
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /home/prow/go/pkg
-          name: build-cache
-          subPath: gomod
-        - mountPath: /gocache
-          name: build-cache
-          subPath: gocache
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-          readOnly: true
-        - mountPath: /var/lib/docker
-          name: docker-root
-        - mountPath: /home/.netrc
-          name: netrc
-          readOnly: true
-          subPath: .netrc
-      nodeSelector:
-        kubernetes.io/arch: amd64
-        testing: test-pool
-      volumes:
-      - hostPath:
-          path: /var/tmp/prow/cache
-          type: DirectoryOrCreate
-        name: build-cache
-      - hostPath:
-          path: /lib/modules
-          type: Directory
-        name: modules
-      - hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-        name: cgroup
-      - emptyDir: {}
-        name: docker-root
-      - name: netrc
-        secret:
-          items:
-          - key: secret
-            mode: 384
-            path: .netrc
-          secretName: netrc-secret
-  - annotations:
-      testgrid-create-test-group: "false"
-    branches:
-    - ^master$
-    cluster: private
-    decorate: true
-    decoration_config:
-      timeout: 4h0m0s
-    name: integ-k8s-122_istio_postsubmit_pri
-    path_alias: istio.io/istio
-    spec:
-      automountServiceAccountToken: false
-      containers:
-      - command:
-        - entrypoint
-        - prow/integ-suite-kind.sh
-        - --node-image
-        - gcr.io/istio-testing/kind-node:v1.22.9
-        - --kind-config
-        - prow/config/mixedlb-service.yaml
-        - test.integration.kube
-        env:
-        - name: BAZEL_BUILD_RBE_INSTANCE
-        - name: BUILD_WITH_CONTAINER
-          value: "0"
-        - name: GOMAXPROCS
-          value: "5"
-        - name: INTEGRATION_TEST_FLAGS
-          value: ' --istio.test.retries=1 '
-        - name: DEPENDENCIES
-          valueFrom:
-            configMapKeyRef:
-              key: dependencies
-              name: master-istio-deps
-        - name: ISTIO_ENVOY_BASE_URL
-          value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -910,7 +728,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -999,7 +817,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -1088,7 +906,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -1177,7 +995,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -1268,7 +1086,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -1351,7 +1169,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -1436,7 +1254,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -1525,7 +1343,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -1614,7 +1432,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -1699,7 +1517,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -1782,7 +1600,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -1871,7 +1689,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -1956,7 +1774,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -2039,7 +1857,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -2128,7 +1946,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -2217,7 +2035,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -2302,7 +2120,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -2385,7 +2203,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -2469,7 +2287,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -2540,7 +2358,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -2611,7 +2429,7 @@ postsubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -2678,7 +2496,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -2745,7 +2563,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -2813,7 +2631,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -2888,7 +2706,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -2974,7 +2792,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -3046,7 +2864,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -3137,7 +2955,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -3223,7 +3041,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -3316,7 +3134,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -3404,7 +3222,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -3494,7 +3312,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -3580,7 +3398,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -3670,7 +3488,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -3756,7 +3574,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -3849,7 +3667,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -3942,7 +3760,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -4031,7 +3849,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -4118,7 +3936,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -4210,7 +4028,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -4299,7 +4117,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -4386,7 +4204,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -4478,7 +4296,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -4571,7 +4389,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -4660,7 +4478,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -4746,7 +4564,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -4829,7 +4647,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -4893,7 +4711,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -4966,7 +4784,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:
@@ -5040,7 +4858,7 @@ presubmits:
               name: master-istio-deps
         - name: ISTIO_ENVOY_BASE_URL
           value: https://storage.googleapis.com/istio-build-private/proxy
-        image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+        image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
         name: ""
         resources:
           limits:

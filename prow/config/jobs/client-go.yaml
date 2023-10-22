@@ -1,7 +1,7 @@
 org: istio
 repo: client-go
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
 
 jobs:
   - name: build

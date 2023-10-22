@@ -11,10 +11,10 @@ plank:
       timeout: 2h
       grace_period: 15s
       utility_images:
-        clonerefs: "gcr.io/k8s-prow/clonerefs:v20231011-33fbc60185"
-        initupload: "gcr.io/k8s-prow/initupload:v20231011-33fbc60185"
-        entrypoint: "gcr.io/k8s-prow/entrypoint:v20231011-33fbc60185"
-        sidecar: "gcr.io/k8s-prow/sidecar:v20231011-33fbc60185"
+        clonerefs: "gcr.io/k8s-prow/clonerefs:v20231019-811baf28f3"
+        initupload: "gcr.io/k8s-prow/initupload:v20231019-811baf28f3"
+        entrypoint: "gcr.io/k8s-prow/entrypoint:v20231019-811baf28f3"
+        sidecar: "gcr.io/k8s-prow/sidecar:v20231019-811baf28f3"
       gcs_configuration:
         bucket: "istio-prow"
         path_strategy: "explicit"
@@ -275,6 +275,11 @@ branch-protection:
               restrictions:
                 teams:
                   - release-managers-1.19
+            release-1.20: &release120
+              protect: true
+              restrictions:
+                teams:
+                  - release-managers-1.20
         operator:
           branches: *blocked_branches
         istio.io:
@@ -368,6 +373,12 @@ branch-protection:
               <<: *release116
             release-1.17:
               <<: *release117
+            release-1.18:
+              <<: *release118
+            release-1.19:
+              <<: *release119
+            release-1.20:
+              <<: *release120
         proxy:
           branches:
             <<: *blocked_branches

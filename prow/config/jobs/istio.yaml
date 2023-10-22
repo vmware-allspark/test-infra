@@ -1,7 +1,7 @@
 org: istio
 repo: istio
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools:master-ff93080f0b66b1649fd6f3bfa6b63f74be377937
+image: gcr.io/istio-testing/build-tools:master-cb84934ed39bb86dc8291fc80405105bdb3f3100
 jobs:
   - name: unit-tests
     architectures: [amd64, arm64]
@@ -230,38 +230,6 @@ jobs:
 
     # The node image must be kept in sync with the kind version we use.
     # See istio.io/tools/docker/build-tools to build a kind image
-  - name: integ-k8s-121
-    types: [postsubmit]
-    command:
-      - entrypoint
-      - prow/integ-suite-kind.sh
-      - --node-image
-      - gcr.io/istio-testing/kind-node:v1.21.9
-      - --kind-config
-      - prow/config/mixedlb-service.yaml
-      - test.integration.kube
-    requirements: [kind]
-    timeout: 4h
-    env:
-      - name: INTEGRATION_TEST_FLAGS
-        value: " --istio.test.retries=1 "
-
-  - name: integ-k8s-122
-    types: [postsubmit]
-    command:
-      - entrypoint
-      - prow/integ-suite-kind.sh
-      - --node-image
-      - gcr.io/istio-testing/kind-node:v1.22.9
-      - --kind-config
-      - prow/config/mixedlb-service.yaml
-      - test.integration.kube
-    requirements: [kind]
-    timeout: 4h
-    env:
-      - name: INTEGRATION_TEST_FLAGS
-        value: " --istio.test.retries=1 "
-
   - name: integ-k8s-123
     types: [postsubmit]
     command:
