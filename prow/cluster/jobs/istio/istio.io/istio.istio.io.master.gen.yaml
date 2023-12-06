@@ -38,7 +38,7 @@ periodics:
         value: '[{"secret":"github_istio-testing_pusher","project":"istio-prow-build","env":"GH_TOKEN"}]'
       - name: GOMAXPROCS
         value: "8"
-      image: gcr.io/istio-testing/build-tools:master-7ad7b0d523dd40ef4b7161ecb03b70e25f1856cf
+      image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
       name: ""
       resources:
         limits:
@@ -99,7 +99,7 @@ periodics:
         value: '[{"secret":"github_istio-testing_pusher","project":"istio-prow-build","env":"GH_TOKEN"}]'
       - name: GOMAXPROCS
         value: "8"
-      image: gcr.io/istio-testing/build-tools:master-7ad7b0d523dd40ef4b7161ecb03b70e25f1856cf
+      image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
       name: ""
       resources:
         limits:
@@ -145,7 +145,7 @@ postsubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "8"
-        image: gcr.io/istio-testing/build-tools:master-7ad7b0d523dd40ef4b7161ecb03b70e25f1856cf
+        image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
         name: ""
         resources:
           limits:
@@ -188,7 +188,7 @@ postsubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "8"
-        image: gcr.io/istio-testing/build-tools:master-7ad7b0d523dd40ef4b7161ecb03b70e25f1856cf
+        image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
         name: ""
         resources:
           limits:
@@ -233,7 +233,7 @@ postsubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "8"
-        image: gcr.io/istio-testing/build-tools:master-7ad7b0d523dd40ef4b7161ecb03b70e25f1856cf
+        image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
         name: ""
         resources:
           limits:
@@ -296,7 +296,7 @@ postsubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "8"
-        image: gcr.io/istio-testing/build-tools:master-7ad7b0d523dd40ef4b7161ecb03b70e25f1856cf
+        image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
         name: ""
         resources:
           limits:
@@ -359,7 +359,7 @@ postsubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "8"
-        image: gcr.io/istio-testing/build-tools:master-7ad7b0d523dd40ef4b7161ecb03b70e25f1856cf
+        image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
         name: ""
         resources:
           limits:
@@ -422,7 +422,7 @@ postsubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "8"
-        image: gcr.io/istio-testing/build-tools:master-7ad7b0d523dd40ef4b7161ecb03b70e25f1856cf
+        image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
         name: ""
         resources:
           limits:
@@ -487,7 +487,74 @@ postsubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "8"
-        image: gcr.io/istio-testing/build-tools:master-7ad7b0d523dd40ef4b7161ecb03b70e25f1856cf
+        image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
+        name: ""
+        resources:
+          limits:
+            cpu: "8"
+            memory: 24Gi
+          requests:
+            cpu: "5"
+            memory: 3Gi
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /home/prow/go/pkg
+          name: build-cache
+          subPath: gomod
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+          readOnly: true
+        - mountPath: /var/lib/docker
+          name: docker-root
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        testing: test-pool
+      volumes:
+      - hostPath:
+          path: /var/tmp/prow/cache
+          type: DirectoryOrCreate
+        name: build-cache
+      - hostPath:
+          path: /lib/modules
+          type: Directory
+        name: modules
+      - hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+        name: cgroup
+      - emptyDir: {}
+        name: docker-root
+  - annotations:
+      testgrid-alert-email: istio-oncall@googlegroups.com
+      testgrid-dashboards: istio_istio.io_postsubmit
+      testgrid-num-failures-to-alert: "1"
+    branches:
+    - ^master$
+    decorate: true
+    name: doc.test.dualstack_istio.io_postsubmit
+    path_alias: istio.io/istio.io
+    run_if_changed: ^(go.mod$|tests/|pkg/test/|prow/|content/en/boilerplates/snips/|content/en/docs/.*(test\.sh|/snips\.sh)$)
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - command:
+        - entrypoint
+        - prow/integ-suite-kind.sh
+        - doc.test.dualstack
+        env:
+        - name: BUILD_WITH_CONTAINER
+          value: "0"
+        - name: DOCKER_IN_DOCKER_IPV6_ENABLED
+          value: "true"
+        - name: IP_FAMILY
+          value: dual
+        - name: GOMAXPROCS
+          value: "8"
+        image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
         name: ""
         resources:
           limits:
@@ -550,7 +617,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "8"
-        image: gcr.io/istio-testing/build-tools:master-7ad7b0d523dd40ef4b7161ecb03b70e25f1856cf
+        image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
         name: ""
         resources:
           limits:
@@ -594,7 +661,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "8"
-        image: gcr.io/istio-testing/build-tools:master-7ad7b0d523dd40ef4b7161ecb03b70e25f1856cf
+        image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
         name: ""
         resources:
           limits:
@@ -640,7 +707,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "8"
-        image: gcr.io/istio-testing/build-tools:master-7ad7b0d523dd40ef4b7161ecb03b70e25f1856cf
+        image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
         name: ""
         resources:
           limits:
@@ -705,7 +772,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "8"
-        image: gcr.io/istio-testing/build-tools:master-7ad7b0d523dd40ef4b7161ecb03b70e25f1856cf
+        image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
         name: ""
         resources:
           limits:
@@ -770,7 +837,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "8"
-        image: gcr.io/istio-testing/build-tools:master-7ad7b0d523dd40ef4b7161ecb03b70e25f1856cf
+        image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
         name: ""
         resources:
           limits:
@@ -835,7 +902,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "8"
-        image: gcr.io/istio-testing/build-tools:master-7ad7b0d523dd40ef4b7161ecb03b70e25f1856cf
+        image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
         name: ""
         resources:
           limits:
@@ -902,7 +969,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "8"
-        image: gcr.io/istio-testing/build-tools:master-7ad7b0d523dd40ef4b7161ecb03b70e25f1856cf
+        image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
         name: ""
         resources:
           limits:
@@ -945,6 +1012,75 @@ presubmits:
         name: docker-root
     trigger: ((?m)^/test( | .* )doc.test.multicluster,?($|\s.*))|((?m)^/test( | .*
       )doc.test.multicluster_istio.io,?($|\s.*))
+  - always_run: false
+    annotations:
+      testgrid-dashboards: istio_istio.io
+    branches:
+    - ^master$
+    decorate: true
+    name: doc.test.dualstack_istio.io
+    optional: true
+    path_alias: istio.io/istio.io
+    rerun_command: /test doc.test.dualstack
+    run_if_changed: ^(go.mod$|tests/|pkg/test/|prow/|content/en/boilerplates/snips/|content/en/docs/.*(test\.sh|/snips\.sh)$)
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - command:
+        - entrypoint
+        - prow/integ-suite-kind.sh
+        - doc.test.dualstack
+        env:
+        - name: BUILD_WITH_CONTAINER
+          value: "0"
+        - name: DOCKER_IN_DOCKER_IPV6_ENABLED
+          value: "true"
+        - name: IP_FAMILY
+          value: dual
+        - name: GOMAXPROCS
+          value: "8"
+        image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
+        name: ""
+        resources:
+          limits:
+            cpu: "8"
+            memory: 24Gi
+          requests:
+            cpu: "5"
+            memory: 3Gi
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /home/prow/go/pkg
+          name: build-cache
+          subPath: gomod
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+          readOnly: true
+        - mountPath: /var/lib/docker
+          name: docker-root
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        testing: test-pool
+      volumes:
+      - hostPath:
+          path: /var/tmp/prow/cache
+          type: DirectoryOrCreate
+        name: build-cache
+      - hostPath:
+          path: /lib/modules
+          type: Directory
+        name: modules
+      - hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+        name: cgroup
+      - emptyDir: {}
+        name: docker-root
+    trigger: ((?m)^/test( | .* )doc.test.dualstack,?($|\s.*))|((?m)^/test( | .* )doc.test.dualstack_istio.io,?($|\s.*))
   - always_run: true
     annotations:
       testgrid-dashboards: istio_istio.io
@@ -977,7 +1113,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "8"
-        image: gcr.io/istio-testing/build-tools:master-7ad7b0d523dd40ef4b7161ecb03b70e25f1856cf
+        image: gcr.io/istio-testing/build-tools:master-26cd1985031cf8c9a1ba671026b3871bd0b19750
         name: ""
         resources:
           limits:
