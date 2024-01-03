@@ -40,7 +40,7 @@ periodics:
         value: '[{"secret":"github_istio-testing_pusher","project":"istio-prow-build","env":"GH_TOKEN"}]'
       - name: GOMAXPROCS
         value: "3"
-      image: gcr.io/istio-testing/build-tools:master-a27b9b60db555184f332436a42268021826344f2
+      image: gcr.io/istio-testing/build-tools:master-ed9be6366bc55d8601d45c601903ba0c6e172713
       name: ""
       resources:
         limits:
@@ -73,92 +73,6 @@ postsubmits:
     branches:
     - ^master$
     decorate: true
-    name: lint_test-infra_postsubmit
-    path_alias: istio.io/test-infra
-    spec:
-      automountServiceAccountToken: false
-      containers:
-      - command:
-        - make
-        - lint
-        env:
-        - name: BUILD_WITH_CONTAINER
-          value: "0"
-        - name: GOMAXPROCS
-          value: "3"
-        image: gcr.io/istio-testing/build-tools:master-a27b9b60db555184f332436a42268021826344f2
-        name: ""
-        resources:
-          limits:
-            cpu: "3"
-            memory: 24Gi
-          requests:
-            cpu: "1"
-            memory: 3Gi
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /home/prow/go/pkg
-          name: build-cache
-          subPath: gomod
-      nodeSelector:
-        kubernetes.io/arch: amd64
-        testing: test-pool
-      volumes:
-      - hostPath:
-          path: /var/tmp/prow/cache
-          type: DirectoryOrCreate
-        name: build-cache
-  - annotations:
-      testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_test-infra_postsubmit
-      testgrid-num-failures-to-alert: "1"
-    branches:
-    - ^master$
-    decorate: true
-    name: test_test-infra_postsubmit
-    path_alias: istio.io/test-infra
-    spec:
-      automountServiceAccountToken: false
-      containers:
-      - command:
-        - make
-        - test
-        env:
-        - name: BUILD_WITH_CONTAINER
-          value: "0"
-        - name: GOMAXPROCS
-          value: "3"
-        image: gcr.io/istio-testing/build-tools:master-a27b9b60db555184f332436a42268021826344f2
-        name: ""
-        resources:
-          limits:
-            cpu: "3"
-            memory: 24Gi
-          requests:
-            cpu: "1"
-            memory: 3Gi
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /home/prow/go/pkg
-          name: build-cache
-          subPath: gomod
-      nodeSelector:
-        kubernetes.io/arch: amd64
-        testing: test-pool
-      volumes:
-      - hostPath:
-          path: /var/tmp/prow/cache
-          type: DirectoryOrCreate
-        name: build-cache
-  - annotations:
-      testgrid-alert-email: istio-oncall@googlegroups.com
-      testgrid-dashboards: istio_test-infra_postsubmit
-      testgrid-num-failures-to-alert: "1"
-    branches:
-    - ^master$
-    decorate: true
     name: gencheck_test-infra_postsubmit
     path_alias: istio.io/test-infra
     spec:
@@ -172,7 +86,50 @@ postsubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "3"
-        image: gcr.io/istio-testing/build-tools:master-a27b9b60db555184f332436a42268021826344f2
+        image: gcr.io/istio-testing/build-tools:master-ed9be6366bc55d8601d45c601903ba0c6e172713
+        name: ""
+        resources:
+          limits:
+            cpu: "3"
+            memory: 24Gi
+          requests:
+            cpu: "1"
+            memory: 3Gi
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /home/prow/go/pkg
+          name: build-cache
+          subPath: gomod
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        testing: test-pool
+      volumes:
+      - hostPath:
+          path: /var/tmp/prow/cache
+          type: DirectoryOrCreate
+        name: build-cache
+  - annotations:
+      testgrid-alert-email: istio-oncall@googlegroups.com
+      testgrid-dashboards: istio_test-infra_postsubmit
+      testgrid-num-failures-to-alert: "1"
+    branches:
+    - ^master$
+    decorate: true
+    name: lint_test-infra_postsubmit
+    path_alias: istio.io/test-infra
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - command:
+        - make
+        - lint
+        env:
+        - name: BUILD_WITH_CONTAINER
+          value: "0"
+        - name: GOMAXPROCS
+          value: "3"
+        image: gcr.io/istio-testing/build-tools:master-ed9be6366bc55d8601d45c601903ba0c6e172713
         name: ""
         resources:
           limits:
@@ -221,7 +178,7 @@ postsubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "3"
-        image: gcr.io/istio-testing/build-tools:master-a27b9b60db555184f332436a42268021826344f2
+        image: gcr.io/istio-testing/build-tools:master-ed9be6366bc55d8601d45c601903ba0c6e172713
         name: ""
         resources:
           limits:
@@ -268,7 +225,7 @@ postsubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "3"
-        image: gcr.io/istio-testing/build-tools:master-a27b9b60db555184f332436a42268021826344f2
+        image: gcr.io/istio-testing/build-tools:master-ed9be6366bc55d8601d45c601903ba0c6e172713
         name: ""
         resources:
           limits:
@@ -315,7 +272,7 @@ postsubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "3"
-        image: gcr.io/istio-testing/build-tools:master-a27b9b60db555184f332436a42268021826344f2
+        image: gcr.io/istio-testing/build-tools:master-ed9be6366bc55d8601d45c601903ba0c6e172713
         name: ""
         resources:
           limits:
@@ -336,8 +293,95 @@ postsubmits:
       volumes:
       - emptyDir: {}
         name: docker-root
+  - annotations:
+      testgrid-alert-email: istio-oncall@googlegroups.com
+      testgrid-dashboards: istio_test-infra_postsubmit
+      testgrid-num-failures-to-alert: "1"
+    branches:
+    - ^master$
+    decorate: true
+    name: test_test-infra_postsubmit
+    path_alias: istio.io/test-infra
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - command:
+        - make
+        - test
+        env:
+        - name: BUILD_WITH_CONTAINER
+          value: "0"
+        - name: GOMAXPROCS
+          value: "3"
+        image: gcr.io/istio-testing/build-tools:master-ed9be6366bc55d8601d45c601903ba0c6e172713
+        name: ""
+        resources:
+          limits:
+            cpu: "3"
+            memory: 24Gi
+          requests:
+            cpu: "1"
+            memory: 3Gi
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /home/prow/go/pkg
+          name: build-cache
+          subPath: gomod
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        testing: test-pool
+      volumes:
+      - hostPath:
+          path: /var/tmp/prow/cache
+          type: DirectoryOrCreate
+        name: build-cache
 presubmits:
   istio/test-infra:
+  - always_run: true
+    annotations:
+      testgrid-dashboards: istio_test-infra
+    branches:
+    - ^master$
+    decorate: true
+    name: gencheck_test-infra
+    path_alias: istio.io/test-infra
+    rerun_command: /test gencheck
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - command:
+        - make
+        - gen-check
+        env:
+        - name: BUILD_WITH_CONTAINER
+          value: "0"
+        - name: GOMAXPROCS
+          value: "3"
+        image: gcr.io/istio-testing/build-tools:master-ed9be6366bc55d8601d45c601903ba0c6e172713
+        name: ""
+        resources:
+          limits:
+            cpu: "3"
+            memory: 24Gi
+          requests:
+            cpu: "1"
+            memory: 3Gi
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /home/prow/go/pkg
+          name: build-cache
+          subPath: gomod
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        testing: test-pool
+      volumes:
+      - hostPath:
+          path: /var/tmp/prow/cache
+          type: DirectoryOrCreate
+        name: build-cache
+    trigger: ((?m)^/test( | .* )gencheck,?($|\s.*))|((?m)^/test( | .* )gencheck_test-infra,?($|\s.*))
   - always_run: true
     annotations:
       testgrid-dashboards: istio_test-infra
@@ -358,7 +402,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "3"
-        image: gcr.io/istio-testing/build-tools:master-a27b9b60db555184f332436a42268021826344f2
+        image: gcr.io/istio-testing/build-tools:master-ed9be6366bc55d8601d45c601903ba0c6e172713
         name: ""
         resources:
           limits:
@@ -402,7 +446,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "3"
-        image: gcr.io/istio-testing/build-tools:master-a27b9b60db555184f332436a42268021826344f2
+        image: gcr.io/istio-testing/build-tools:master-ed9be6366bc55d8601d45c601903ba0c6e172713
         name: ""
         resources:
           limits:
@@ -426,47 +470,3 @@ presubmits:
           type: DirectoryOrCreate
         name: build-cache
     trigger: ((?m)^/test( | .* )test,?($|\s.*))|((?m)^/test( | .* )test_test-infra,?($|\s.*))
-  - always_run: true
-    annotations:
-      testgrid-dashboards: istio_test-infra
-    branches:
-    - ^master$
-    decorate: true
-    name: gencheck_test-infra
-    path_alias: istio.io/test-infra
-    rerun_command: /test gencheck
-    spec:
-      automountServiceAccountToken: false
-      containers:
-      - command:
-        - make
-        - gen-check
-        env:
-        - name: BUILD_WITH_CONTAINER
-          value: "0"
-        - name: GOMAXPROCS
-          value: "3"
-        image: gcr.io/istio-testing/build-tools:master-a27b9b60db555184f332436a42268021826344f2
-        name: ""
-        resources:
-          limits:
-            cpu: "3"
-            memory: 24Gi
-          requests:
-            cpu: "1"
-            memory: 3Gi
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /home/prow/go/pkg
-          name: build-cache
-          subPath: gomod
-      nodeSelector:
-        kubernetes.io/arch: amd64
-        testing: test-pool
-      volumes:
-      - hostPath:
-          path: /var/tmp/prow/cache
-          type: DirectoryOrCreate
-        name: build-cache
-    trigger: ((?m)^/test( | .* )gencheck,?($|\s.*))|((?m)^/test( | .* )gencheck_test-infra,?($|\s.*))
