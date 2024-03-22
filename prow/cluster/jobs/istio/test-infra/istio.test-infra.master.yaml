@@ -13,7 +13,7 @@ presubmits:
         kubernetes.io/arch: amd64
         testing: test-pool
       containers:
-      - image: gcr.io/k8s-prow/configurator:v20240314-cb5a1d1e4e
+      - image: gcr.io/k8s-prow/configurator:v20240321-13d9f43946
         command:
         - configurator
         args:
@@ -69,7 +69,7 @@ postsubmits:
         - deploy-build
         - deploy-private
         - deploy-arm
-        image: gcr.io/istio-testing/build-tools:master-1ee4cbbec23a26932c8795961dcf4e604ef6dc50
+        image: gcr.io/istio-testing/build-tools:master-061780fd3181da88f895dcfe350a34daa4aa1076
         resources:
           limits:
             cpu: "3"
