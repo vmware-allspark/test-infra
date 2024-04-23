@@ -1,6 +1,6 @@
 org: istio
 repo: ztunnel
-image: gcr.io/istio-testing/build-tools:master-186b999d72782125ee1fe7da44df3efc4e7b00a3
+image: gcr.io/istio-testing/build-tools:master-8fb9ce88f6ad4cdd35c1660cd0ad0ab67eff4c6c
 support_release_branching: true
 
 jobs:
@@ -20,3 +20,13 @@ jobs:
     types: [postsubmit]
     command: [make, release]
     requirements: [cratescache]
+
+resources_presets:
+  # Rust jobs are CPU intensive. Bump up defaults (from 1/3) to 3/8 to speed up jobs.
+  default:
+    requests:
+      memory: "3Gi"
+      cpu: "5000m"
+    limits:
+      memory: "24Gi"
+      cpu: "8000m"
