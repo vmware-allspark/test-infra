@@ -1,6 +1,6 @@
 org: istio
 repo: test-infra
-image: gcr.io/istio-testing/build-tools:master-f24be7b713480aab44d862ac839ead0b5324d593
+image: gcr.io/istio-testing/build-tools:master-186b999d72782125ee1fe7da44df3efc4e7b00a3
 
 jobs:
   - name: lint
@@ -80,7 +80,7 @@ jobs:
     - --paths=prow/cluster/jobs/**/!(*test-infra*).yaml,prow/config/jobs/**/!(*test-infra*).yaml
     - --source=$AUTOMATOR_ROOT_DIR/prow/cluster/prow-controller-manager.yaml
     - --image=gcr.io/k8s-prow/.*
-    - --tag=v[0-9]{8}-[a-f0-9]{10}
+    - --tag=v[0-9]{8}-[a-f0-9]{9}
     - --var=image
     requirements: [github-istio-testing]
     env:
