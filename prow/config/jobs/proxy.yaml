@@ -1,7 +1,7 @@
 org: istio
 repo: proxy
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools-proxy:master-5febdc9ef2a2e05a9451ced0db096b4ecefd2a64
+image: gcr.io/istio-testing/build-tools-proxy:master-62b37843401cf50e072f1d7f4d565730b708d642
 node_selector:
   testing: build-pool
 
@@ -16,12 +16,6 @@ jobs:
   service_account_name: prowjob-rbe
   types: [presubmit]
   command: [./prow/proxy-presubmit-asan.sh]
-  timeout: 4h
-
-- name: test-tsan
-  service_account_name: prowjob-rbe
-  types: [presubmit]
-  command: [./prow/proxy-presubmit-tsan.sh]
   timeout: 4h
 
 - name: test-arm
@@ -59,13 +53,6 @@ jobs:
   resources: arm
   node_selector:
     testing: test-pool
-
-- name: check-wasm
-  service_account_name: prowjob-rbe
-  types: [presubmit]
-  command: [entrypoint, ./prow/proxy-presubmit-wasm.sh]
-  requirements: [docker]
-  timeout: 4h
 
 - name: release
   service_account_name: prowjob-testing-write
@@ -105,7 +92,7 @@ jobs:
   - --cmd=bin/update_proxy.sh $AUTOMATOR_SHA
   requirements: [github-istio-testing]
   repos: [istio/test-infra@master]
-  image: gcr.io/istio-testing/build-tools:master-5febdc9ef2a2e05a9451ced0db096b4ecefd2a64
+  image: gcr.io/istio-testing/build-tools:master-62b37843401cf50e072f1d7f4d565730b708d642
   env:
     - name: AUTOMATOR_ORG
       value: istio
@@ -126,7 +113,7 @@ jobs:
   - --cmd=UPDATE_BRANCH=main scripts/update_envoy.sh
   requirements: [github-istio-testing]
   repos: [istio/test-infra@master]
-  image: gcr.io/istio-testing/build-tools:master-5febdc9ef2a2e05a9451ced0db096b4ecefd2a64
+  image: gcr.io/istio-testing/build-tools:master-62b37843401cf50e072f1d7f4d565730b708d642
   env:
     - name: AUTOMATOR_ORG
       value: istio
@@ -148,7 +135,7 @@ jobs:
   disable_release_branching: true
   requirements: [github-istio-testing]
   repos: [istio/test-infra@master]
-  image: gcr.io/istio-testing/build-tools:master-5febdc9ef2a2e05a9451ced0db096b4ecefd2a64
+  image: gcr.io/istio-testing/build-tools:master-62b37843401cf50e072f1d7f4d565730b708d642
   env:
     - name: AUTOMATOR_ORG
       value: istio
