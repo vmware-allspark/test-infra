@@ -1,7 +1,7 @@
 org: istio
 repo: istio.io
 support_release_branching: true
-image: gcr.io/istio-testing/build-tools:master-19ae86d66a54c72ca3041ff75677b630083b8463
+image: gcr.io/istio-testing/build-tools:master-35d1af3085fd0016dd4e61fd4d878107281ebee0
 
 jobs:
   - name: lint
@@ -30,6 +30,12 @@ jobs:
   - name: doc.test.profile-minimal
     command: [entrypoint, prow/integ-suite-kind.sh, doc.test.profile-minimal]
     requirements: [kind]
+    regex: ^(go.mod$|tests/|pkg/test/|prow/|content/en/boilerplates/snips/|content/en/docs/.*(test\.sh|/snips\.sh)$)
+  
+  - name: doc.test.profile-ambient
+    command: [entrypoint, prow/integ-suite-kind.sh, doc.test.profile-ambient]
+    requirements: [kind]
+    modifiers: [presubmit_optional]
     regex: ^(go.mod$|tests/|pkg/test/|prow/|content/en/boilerplates/snips/|content/en/docs/.*(test\.sh|/snips\.sh)$)
 
   - name: doc.test.multicluster
