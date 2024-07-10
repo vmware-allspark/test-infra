@@ -1,6 +1,6 @@
 org: istio
 repo: ztunnel
-image: gcr.io/istio-testing/build-tools:master-c99bbd718c95a007fc7433c6d8d047bdeda2e561
+image: gcr.io/istio-testing/build-tools:master-3a1982fd09c72f345f85d394d5cce906b5484b76
 support_release_branching: true
 
 jobs:
