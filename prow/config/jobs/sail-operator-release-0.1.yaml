@@ -4,12 +4,17 @@ branches:
   - release-0.1
 
 support_release_branching: false
-image: gcr.io/istio-testing/build-tools:release-1.22-46fce460ef8547fb88a20de8494683bfb3bfa8e5
+image: gcr.io/istio-testing/build-tools:release-1.22-02098ccc0766fde1c577cf9f9258fb43a08ec8c8
 jobs:
   - name: unit-tests
     types: [presubmit]
     architectures: [amd64, arm64]
-    command: [entrypoint, make, -e, "T=-v -count=1", build, test]
+    command: [entrypoint, make, -e, "T=-v -count=1", build, test.unit]
+
+  - name: integ-tests
+    types: [presubmit]
+    architectures: [amd64, arm64]
+    command: [entrypoint, make, test.integration]
 
   - name: gencheck
     types: [presubmit]
