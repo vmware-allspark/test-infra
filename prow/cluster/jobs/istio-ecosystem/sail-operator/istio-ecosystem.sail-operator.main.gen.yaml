@@ -38,7 +38,7 @@ periodics:
         value: '[{"secret":"github_istio-testing_pusher","project":"istio-prow-build","env":"GH_TOKEN"}]'
       - name: GOMAXPROCS
         value: "5"
-      image: gcr.io/istio-testing/build-tools:master-1fec76d441c9ed8960d9d5c37ca09353f8ce6c7a
+      image: gcr.io/istio-testing/build-tools:master-8463430ba963638b35745d773045701f6d02014d
       name: ""
       resources:
         limits:
@@ -73,6 +73,77 @@ presubmits:
     branches:
     - ^main$
     decorate: true
+    name: e2e-kind-ds_sail-operator_main
+    rerun_command: /test e2e-kind-ds
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - command:
+        - entrypoint
+        - make
+        - -e
+        - IP_FAMILY=dual
+        - test.e2e.kind
+        env:
+        - name: BUILD_WITH_CONTAINER
+          value: "0"
+        - name: DOCKER_IN_DOCKER_IPV6_ENABLED
+          value: "true"
+        - name: IP_FAMILY
+          value: dual
+        - name: GOMAXPROCS
+          value: "5"
+        image: gcr.io/istio-testing/build-tools:master-8463430ba963638b35745d773045701f6d02014d
+        name: ""
+        resources:
+          limits:
+            cpu: "5"
+            memory: 24Gi
+          requests:
+            cpu: "5"
+            memory: 3Gi
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /home/prow/go/pkg
+          name: build-cache
+          subPath: gomod
+        - mountPath: /gocache
+          name: build-cache
+          subPath: gocache
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+          readOnly: true
+        - mountPath: /var/lib/docker
+          name: docker-root
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        testing: test-pool
+      volumes:
+      - hostPath:
+          path: /var/tmp/prow/cache
+          type: DirectoryOrCreate
+        name: build-cache
+      - hostPath:
+          path: /lib/modules
+          type: Directory
+        name: modules
+      - hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+        name: cgroup
+      - emptyDir: {}
+        name: docker-root
+    trigger: ((?m)^/test( | .* )e2e-kind-ds,?($|\s.*))|((?m)^/test( | .* )e2e-kind-ds_sail-operator_main,?($|\s.*))
+  - always_run: true
+    annotations:
+      testgrid-dashboards: istio-ecosystem_main_sail-operator
+    branches:
+    - ^main$
+    decorate: true
     name: e2e-kind-multicluster_sail-operator_main
     rerun_command: /test e2e-kind-multicluster
     spec:
@@ -89,7 +160,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-1fec76d441c9ed8960d9d5c37ca09353f8ce6c7a
+        image: gcr.io/istio-testing/build-tools:master-8463430ba963638b35745d773045701f6d02014d
         name: ""
         resources:
           limits:
@@ -157,7 +228,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-1fec76d441c9ed8960d9d5c37ca09353f8ce6c7a
+        image: gcr.io/istio-testing/build-tools:master-8463430ba963638b35745d773045701f6d02014d
         name: ""
         resources:
           limits:
@@ -222,7 +293,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-1fec76d441c9ed8960d9d5c37ca09353f8ce6c7a
+        image: gcr.io/istio-testing/build-tools:master-8463430ba963638b35745d773045701f6d02014d
         name: ""
         resources:
           limits:
@@ -286,7 +357,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-1fec76d441c9ed8960d9d5c37ca09353f8ce6c7a
+        image: gcr.io/istio-testing/build-tools:master-8463430ba963638b35745d773045701f6d02014d
         name: ""
         resources:
           limits:
@@ -334,7 +405,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-1fec76d441c9ed8960d9d5c37ca09353f8ce6c7a
+        image: gcr.io/istio-testing/build-tools:master-8463430ba963638b35745d773045701f6d02014d
         name: ""
         resources:
           limits:
@@ -386,7 +457,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-1fec76d441c9ed8960d9d5c37ca09353f8ce6c7a
+        image: gcr.io/istio-testing/build-tools:master-8463430ba963638b35745d773045701f6d02014d
         name: ""
         resources:
           limits:
@@ -430,7 +501,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-1fec76d441c9ed8960d9d5c37ca09353f8ce6c7a
+        image: gcr.io/istio-testing/build-tools:master-8463430ba963638b35745d773045701f6d02014d
         name: ""
         resources:
           limits:
@@ -476,7 +547,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-1fec76d441c9ed8960d9d5c37ca09353f8ce6c7a
+        image: gcr.io/istio-testing/build-tools:master-8463430ba963638b35745d773045701f6d02014d
         name: ""
         resources:
           limits:
@@ -545,7 +616,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-1fec76d441c9ed8960d9d5c37ca09353f8ce6c7a
+        image: gcr.io/istio-testing/build-tools:master-8463430ba963638b35745d773045701f6d02014d
         name: ""
         resources:
           limits:
@@ -600,7 +671,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-1fec76d441c9ed8960d9d5c37ca09353f8ce6c7a
+        image: gcr.io/istio-testing/build-tools:master-8463430ba963638b35745d773045701f6d02014d
         name: ""
         resources:
           limits:
