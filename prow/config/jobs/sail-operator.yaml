@@ -4,7 +4,7 @@ branches:
   - main
 
 support_release_branching: false
-image: gcr.io/istio-testing/build-tools:master-8463430ba963638b35745d773045701f6d02014d
+image: gcr.io/istio-testing/build-tools:master-621a64a11b30f703b2e887df91862fffdd16112e
 jobs:
   - name: unit-tests
     types: [presubmit]
@@ -40,7 +40,7 @@ jobs:
     command: [entrypoint, make, -e, "MULTICLUSTER=true", test.e2e.kind]
     requirements: [kind]
 
-  - name: e2e-kind-ds
+  - name: e2e-kind-dualstack
     types: [presubmit]
     command: [entrypoint, make, -e, "IP_FAMILY=dual", test.e2e.kind]
     requirements: [kind]
@@ -54,26 +54,6 @@ jobs:
     types: [presubmit]
     command: [entrypoint, make, test.scorecard]
     requirements: [kind]
-
-  - name: update-deps
-    types: [periodic]
-    cron: "0 23 * * 1-5" # run Mon-Fri at 11:00PM UTC
-    command:
-    - entrypoint
-    - ../../../istio.io/test-infra/tools/automator/automator.sh # Switch from .../src/github.com/istio-ecosystem/sail-operator to .../src/istio.io/test-infra
-    - --org=$AUTOMATOR_ORG
-    - --repo=sail-operator
-    - "--title=Automator: Update dependencies in $AUTOMATOR_ORG/$AUTOMATOR_REPO@$AUTOMATOR_BRANCH"
-    - --labels=auto-merge
-    - --modifier=update_deps
-    - --token-env
-    - --cmd=./tools/update_deps.sh
-    - --signoff
-    requirements: [github-istio-testing]
-    repos: [istio/test-infra@master]
-    env:
-    - name: AUTOMATOR_ORG
-      value: istio-ecosystem
 
 resources_presets:
   default:
