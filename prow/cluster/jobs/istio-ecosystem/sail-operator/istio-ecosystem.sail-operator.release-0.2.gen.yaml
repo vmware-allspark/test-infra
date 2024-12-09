@@ -3,11 +3,11 @@ presubmits:
   istio-ecosystem/sail-operator:
   - always_run: true
     annotations:
-      testgrid-dashboards: istio-ecosystem_main_sail-operator
+      testgrid-dashboards: istio-ecosystem_release-0.2_sail-operator
     branches:
-    - ^main$
+    - ^release-0.2$
     decorate: true
-    name: e2e-kind-dualstack_sail-operator_main
+    name: e2e-kind-dualstack_sail-operator_release-0.2
     rerun_command: /test e2e-kind-dualstack
     spec:
       automountServiceAccountToken: false
@@ -27,7 +27,7 @@ presubmits:
           value: dual
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-9b28a57f4095507d0bba5fbc73295ce7c12d2712
+        image: gcr.io/istio-testing/build-tools:release-1.24-11b19fe84b6aee84bb50f5ceddb115783e9cb4e0
         name: ""
         resources:
           limits:
@@ -71,14 +71,14 @@ presubmits:
         name: cgroup
       - emptyDir: {}
         name: docker-root
-    trigger: ((?m)^/test( | .* )e2e-kind-dualstack,?($|\s.*))|((?m)^/test( | .* )e2e-kind-dualstack_sail-operator_main,?($|\s.*))
+    trigger: ((?m)^/test( | .* )e2e-kind-dualstack,?($|\s.*))|((?m)^/test( | .* )e2e-kind-dualstack_sail-operator_release-0.2,?($|\s.*))
   - always_run: true
     annotations:
-      testgrid-dashboards: istio-ecosystem_main_sail-operator
+      testgrid-dashboards: istio-ecosystem_release-0.2_sail-operator
     branches:
-    - ^main$
+    - ^release-0.2$
     decorate: true
-    name: e2e-kind-multicluster_sail-operator_main
+    name: e2e-kind-multicluster_sail-operator_release-0.2
     rerun_command: /test e2e-kind-multicluster
     spec:
       automountServiceAccountToken: false
@@ -94,7 +94,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-9b28a57f4095507d0bba5fbc73295ce7c12d2712
+        image: gcr.io/istio-testing/build-tools:release-1.24-11b19fe84b6aee84bb50f5ceddb115783e9cb4e0
         name: ""
         resources:
           limits:
@@ -139,14 +139,14 @@ presubmits:
       - emptyDir: {}
         name: docker-root
     trigger: ((?m)^/test( | .* )e2e-kind-multicluster,?($|\s.*))|((?m)^/test( | .*
-      )e2e-kind-multicluster_sail-operator_main,?($|\s.*))
+      )e2e-kind-multicluster_sail-operator_release-0.2,?($|\s.*))
   - always_run: true
     annotations:
-      testgrid-dashboards: istio-ecosystem_main_sail-operator
+      testgrid-dashboards: istio-ecosystem_release-0.2_sail-operator
     branches:
-    - ^main$
+    - ^release-0.2$
     decorate: true
-    name: e2e-kind-olm_sail-operator_main
+    name: e2e-kind-olm_sail-operator_release-0.2
     rerun_command: /test e2e-kind-olm
     spec:
       automountServiceAccountToken: false
@@ -162,7 +162,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-9b28a57f4095507d0bba5fbc73295ce7c12d2712
+        image: gcr.io/istio-testing/build-tools:release-1.24-11b19fe84b6aee84bb50f5ceddb115783e9cb4e0
         name: ""
         resources:
           limits:
@@ -206,14 +206,14 @@ presubmits:
         name: cgroup
       - emptyDir: {}
         name: docker-root
-    trigger: ((?m)^/test( | .* )e2e-kind-olm,?($|\s.*))|((?m)^/test( | .* )e2e-kind-olm_sail-operator_main,?($|\s.*))
+    trigger: ((?m)^/test( | .* )e2e-kind-olm,?($|\s.*))|((?m)^/test( | .* )e2e-kind-olm_sail-operator_release-0.2,?($|\s.*))
   - always_run: true
     annotations:
-      testgrid-dashboards: istio-ecosystem_main_sail-operator
+      testgrid-dashboards: istio-ecosystem_release-0.2_sail-operator
     branches:
-    - ^main$
+    - ^release-0.2$
     decorate: true
-    name: e2e-kind_sail-operator_main
+    name: e2e-kind_sail-operator_release-0.2
     rerun_command: /test e2e-kind
     spec:
       automountServiceAccountToken: false
@@ -227,7 +227,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-9b28a57f4095507d0bba5fbc73295ce7c12d2712
+        image: gcr.io/istio-testing/build-tools:release-1.24-11b19fe84b6aee84bb50f5ceddb115783e9cb4e0
         name: ""
         resources:
           limits:
@@ -271,14 +271,14 @@ presubmits:
         name: cgroup
       - emptyDir: {}
         name: docker-root
-    trigger: ((?m)^/test( | .* )e2e-kind,?($|\s.*))|((?m)^/test( | .* )e2e-kind_sail-operator_main,?($|\s.*))
+    trigger: ((?m)^/test( | .* )e2e-kind,?($|\s.*))|((?m)^/test( | .* )e2e-kind_sail-operator_release-0.2,?($|\s.*))
   - always_run: true
     annotations:
-      testgrid-dashboards: istio-ecosystem_main_sail-operator
+      testgrid-dashboards: istio-ecosystem_release-0.2_sail-operator
     branches:
-    - ^main$
+    - ^release-0.2$
     decorate: true
-    name: gencheck_sail-operator_main
+    name: gencheck_sail-operator_release-0.2
     rerun_command: /test gencheck
     spec:
       automountServiceAccountToken: false
@@ -291,7 +291,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-9b28a57f4095507d0bba5fbc73295ce7c12d2712
+        image: gcr.io/istio-testing/build-tools:release-1.24-11b19fe84b6aee84bb50f5ceddb115783e9cb4e0
         name: ""
         resources:
           limits:
@@ -317,15 +317,15 @@ presubmits:
           path: /var/tmp/prow/cache
           type: DirectoryOrCreate
         name: build-cache
-    trigger: ((?m)^/test( | .* )gencheck,?($|\s.*))|((?m)^/test( | .* )gencheck_sail-operator_main,?($|\s.*))
+    trigger: ((?m)^/test( | .* )gencheck,?($|\s.*))|((?m)^/test( | .* )gencheck_sail-operator_release-0.2,?($|\s.*))
   - always_run: true
     annotations:
-      testgrid-dashboards: istio-ecosystem_main_sail-operator
+      testgrid-dashboards: istio-ecosystem_release-0.2_sail-operator
     branches:
-    - ^main$
+    - ^release-0.2$
     cluster: prow-arm
     decorate: true
-    name: integ-tests-arm64_sail-operator_main
+    name: integ-tests-arm64_sail-operator_release-0.2
     rerun_command: /test integ-tests-arm64
     spec:
       automountServiceAccountToken: false
@@ -339,7 +339,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-9b28a57f4095507d0bba5fbc73295ce7c12d2712
+        image: gcr.io/istio-testing/build-tools:release-1.24-11b19fe84b6aee84bb50f5ceddb115783e9cb4e0
         name: ""
         resources:
           limits:
@@ -370,14 +370,14 @@ presubmits:
           path: /var/tmp/prow/cache
           type: DirectoryOrCreate
         name: build-cache
-    trigger: ((?m)^/test( | .* )integ-tests-arm64,?($|\s.*))|((?m)^/test( | .* )integ-tests-arm64_sail-operator_main,?($|\s.*))
+    trigger: ((?m)^/test( | .* )integ-tests-arm64,?($|\s.*))|((?m)^/test( | .* )integ-tests-arm64_sail-operator_release-0.2,?($|\s.*))
   - always_run: true
     annotations:
-      testgrid-dashboards: istio-ecosystem_main_sail-operator
+      testgrid-dashboards: istio-ecosystem_release-0.2_sail-operator
     branches:
-    - ^main$
+    - ^release-0.2$
     decorate: true
-    name: integ-tests_sail-operator_main
+    name: integ-tests_sail-operator_release-0.2
     rerun_command: /test integ-tests
     spec:
       automountServiceAccountToken: false
@@ -391,7 +391,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-9b28a57f4095507d0bba5fbc73295ce7c12d2712
+        image: gcr.io/istio-testing/build-tools:release-1.24-11b19fe84b6aee84bb50f5ceddb115783e9cb4e0
         name: ""
         resources:
           limits:
@@ -417,14 +417,14 @@ presubmits:
           path: /var/tmp/prow/cache
           type: DirectoryOrCreate
         name: build-cache
-    trigger: ((?m)^/test( | .* )integ-tests,?($|\s.*))|((?m)^/test( | .* )integ-tests_sail-operator_main,?($|\s.*))
+    trigger: ((?m)^/test( | .* )integ-tests,?($|\s.*))|((?m)^/test( | .* )integ-tests_sail-operator_release-0.2,?($|\s.*))
   - always_run: true
     annotations:
-      testgrid-dashboards: istio-ecosystem_main_sail-operator
+      testgrid-dashboards: istio-ecosystem_release-0.2_sail-operator
     branches:
-    - ^main$
+    - ^release-0.2$
     decorate: true
-    name: lint_sail-operator_main
+    name: lint_sail-operator_release-0.2
     rerun_command: /test lint
     spec:
       automountServiceAccountToken: false
@@ -435,7 +435,7 @@ presubmits:
         env:
         - name: BUILD_WITH_CONTAINER
           value: "0"
-        image: gcr.io/istio-testing/build-tools:master-9b28a57f4095507d0bba5fbc73295ce7c12d2712
+        image: gcr.io/istio-testing/build-tools:release-1.24-11b19fe84b6aee84bb50f5ceddb115783e9cb4e0
         name: ""
         resources:
           limits:
@@ -460,14 +460,14 @@ presubmits:
           path: /var/tmp/prow/cache
           type: DirectoryOrCreate
         name: build-cache
-    trigger: ((?m)^/test( | .* )lint,?($|\s.*))|((?m)^/test( | .* )lint_sail-operator_main,?($|\s.*))
+    trigger: ((?m)^/test( | .* )lint,?($|\s.*))|((?m)^/test( | .* )lint_sail-operator_release-0.2,?($|\s.*))
   - always_run: true
     annotations:
-      testgrid-dashboards: istio-ecosystem_main_sail-operator
+      testgrid-dashboards: istio-ecosystem_release-0.2_sail-operator
     branches:
-    - ^main$
+    - ^release-0.2$
     decorate: true
-    name: scorecard_sail-operator_main
+    name: scorecard_sail-operator_release-0.2
     rerun_command: /test scorecard
     spec:
       automountServiceAccountToken: false
@@ -481,7 +481,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-9b28a57f4095507d0bba5fbc73295ce7c12d2712
+        image: gcr.io/istio-testing/build-tools:release-1.24-11b19fe84b6aee84bb50f5ceddb115783e9cb4e0
         name: ""
         resources:
           limits:
@@ -525,15 +525,15 @@ presubmits:
         name: cgroup
       - emptyDir: {}
         name: docker-root
-    trigger: ((?m)^/test( | .* )scorecard,?($|\s.*))|((?m)^/test( | .* )scorecard_sail-operator_main,?($|\s.*))
+    trigger: ((?m)^/test( | .* )scorecard,?($|\s.*))|((?m)^/test( | .* )scorecard_sail-operator_release-0.2,?($|\s.*))
   - always_run: true
     annotations:
-      testgrid-dashboards: istio-ecosystem_main_sail-operator
+      testgrid-dashboards: istio-ecosystem_release-0.2_sail-operator
     branches:
-    - ^main$
+    - ^release-0.2$
     cluster: prow-arm
     decorate: true
-    name: unit-tests-arm64_sail-operator_main
+    name: unit-tests-arm64_sail-operator_release-0.2
     rerun_command: /test unit-tests-arm64
     spec:
       automountServiceAccountToken: false
@@ -550,7 +550,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-9b28a57f4095507d0bba5fbc73295ce7c12d2712
+        image: gcr.io/istio-testing/build-tools:release-1.24-11b19fe84b6aee84bb50f5ceddb115783e9cb4e0
         name: ""
         resources:
           limits:
@@ -581,14 +581,14 @@ presubmits:
           path: /var/tmp/prow/cache
           type: DirectoryOrCreate
         name: build-cache
-    trigger: ((?m)^/test( | .* )unit-tests-arm64,?($|\s.*))|((?m)^/test( | .* )unit-tests-arm64_sail-operator_main,?($|\s.*))
+    trigger: ((?m)^/test( | .* )unit-tests-arm64,?($|\s.*))|((?m)^/test( | .* )unit-tests-arm64_sail-operator_release-0.2,?($|\s.*))
   - always_run: true
     annotations:
-      testgrid-dashboards: istio-ecosystem_main_sail-operator
+      testgrid-dashboards: istio-ecosystem_release-0.2_sail-operator
     branches:
-    - ^main$
+    - ^release-0.2$
     decorate: true
-    name: unit-tests_sail-operator_main
+    name: unit-tests_sail-operator_release-0.2
     rerun_command: /test unit-tests
     spec:
       automountServiceAccountToken: false
@@ -605,7 +605,7 @@ presubmits:
           value: "0"
         - name: GOMAXPROCS
           value: "5"
-        image: gcr.io/istio-testing/build-tools:master-9b28a57f4095507d0bba5fbc73295ce7c12d2712
+        image: gcr.io/istio-testing/build-tools:release-1.24-11b19fe84b6aee84bb50f5ceddb115783e9cb4e0
         name: ""
         resources:
           limits:
@@ -631,4 +631,4 @@ presubmits:
           path: /var/tmp/prow/cache
           type: DirectoryOrCreate
         name: build-cache
-    trigger: ((?m)^/test( | .* )unit-tests,?($|\s.*))|((?m)^/test( | .* )unit-tests_sail-operator_main,?($|\s.*))
+    trigger: ((?m)^/test( | .* )unit-tests,?($|\s.*))|((?m)^/test( | .* )unit-tests_sail-operator_release-0.2,?($|\s.*))
